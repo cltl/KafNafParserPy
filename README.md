@@ -10,7 +10,7 @@ Installation
 Clone the repository from github
 
 ````shell
-git clone git@bitbucket.org:rubenizquierdo/nafparserpy.git
+git clone git@github.com:cltl/NafParserPy.git
 ````
 
 Go to the folder just created and install the module (recommend to use virtual environment for python)
