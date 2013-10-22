@@ -1,45 +1,40 @@
 from term_sentiment_data import term_sentiment
+from lxml import etree
 
 class externalReference:
-    def __init__(self,node):
-        self.resource = self.reference = self.refType = self.status = self.source = self.confidence = ''
-        self.sentiment = None
-        self.subreferences = []
-        if node is not None:
-            self.resource = node.get('resource','')
-            self.reference = node.get('reference','')
-            self.reftype = node.get('reftype','')
-            self.status = node.get('status','')
-            self.source = node.get('source','')
-            self.confidence = node.get('confidence','')
-            self.sentiment = term_sentiment(node.find('sentiment'))
-            for subref_node in node.findall('externalRef'):
-                self.subreferences.append(externalReference(subref_node))
-            
-    def __str__(self):
-        s = 'externalReference\n'
-        s += '  Res: '+self.resource+' Ref:'+self.reference+'  Type:'+self.reftype+' stat:'+self.status+' src:'+self.source+' Conf:'+self.confidence+'\n'
-        s += '  Sentiment:'+str(self.sentiment)
-        if len(self.subreferences) != 0:
-            s += '\n    Subreferences:\n'
-            for subref in self.subreferences:
-                s+= '    '+str(subref)+'\n'                 
-        return s
+    def __init__(self,node=None):
+        #self.resource = self.reference = self.reftype = self.status = self.source = self.confidence = ''
+        if node is None:
+            self.node = etree.Element('externalRef')
+        else:
+            self.node = node
+        
+    def get_node(self):
+        return self.node
+        
+    def set_resource(self,resource):
+        self.node.set('resource',resource)
     
+    def set_confidence(self,confidence):
+        self.node.set('confidence',confidence)
+    
+    def set_reference(self,reference):
+        self.node.set('reference',reference)
+        
 
 class externalReferences:
-    def __init__(self,node):
-        self.references = []
-        if node is not None:
-            for node_ref in node.findall('externalRef'):
-                self.references.append(externalReference(node_ref))
+    def __init__(self,node=None):
+        if node is None:
+            self.node = etree.Element('externalReferences')
+        else:
+            self.node = node
                 
-    def __str__(self):
-        s = 'externalReferences\n'
-        for r in self.references:
-            s += '\t\t\t'+str(r)+'\n'
-        return s
-    
+    def add_external_reference(self,ext_ref):
+        self.node.append(ext_ref.get_node())
+        
+    def get_node(self):
+        return self.node
+        
 
 if __name__=='__main__':
     from lxml import etree

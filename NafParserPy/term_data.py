@@ -1,87 +1,76 @@
 from span_data import span
 from external_references_data import *
 from term_sentiment_data import term_sentiment
+from lxml import etree
 
 
 class term:
-    def __init__(self,node):
-        self.id = self.type = self.lemma = self.pos = self.morphofeat = self.head = self.case = ''
-        self.span = None
-        self.term_sentiment = None
-        self.externalReferences = None
-        
-        if node is not None:
-            self.id = node.get('id','')
-            self.type = node.get('type','')
-            self.lemma = node.get('lemma','')
-            self.pos = node.get('pos','')
-            self.morphofeat = node.get('morphofeat','')
-            self.head = node.get('head','')
-            self.case = node.get('case','')
+    def __init__(self,node=None):
+        if node is None:
+            self.node = etree.Element('term')
+        else:
+            self.node = node
             
-            node_span = node.find('span')
-            if node_span is not None: self.span = span(node_span)
-            
-            node_sentiment = node.find('sentiment')
-            if node_sentiment is not None: self.term_sentiment = term_sentiment(node_sentiment)
-            
-            node_extref = node.find('externalReferences')
-            if node_extref is not None: self.externalReferences = externalReferences(node_extref)
+        #self.id = self.type = self.lemma = self.pos = self.morphofeat = self.head = self.case = ''
+        #self.span = None
+        #self.term_sentiment = None
+        #self.externalReferences = None
+        #self.node = node
             
     def get_id(self):
-        return self.id
+        return self.node.get('id')
     
     def get_lemma(self):
-        return self.lemma
+        return self.node.get('lemma')
     
     def get_pos(self):
-        return self.pos
+        return self.node.get('pos')
     
     def get_span(self):
-        return self.span
+        return self.node.find('span')
         
+    def add_external_reference(self,ext_ref):
+        ext_refs_node = self.node.find('externalReferences')
+        if ext_refs_node is None:
+            ext_refs_obj = externalReferences()
+            self.node.append(ext_refs_obj.get_node())
+        else:
+            ext_refs_obj = externalReferences(ext_refs_node)
             
-    def __str__(self):
-        #s='Term: '+self.id+'  lemma:'+self.lemma+'.'+self.pos+' '+self.morphofeat+' '+self.head+' '+self.case+'\n'
-        s='Term: '+self.id+'  lemma:'+self.lemma+'.'+self.pos+' '+self.morphofeat+'\n'
-        s += str(self.span)+'\n'
-        if self.term_sentiment is not None:
-            s += 'Sentiment:'+str(self.term_sentiment)+'\n'
-        if self.externalReferences is not None:
-            s += 'ExternalRefs:'+str(self.externalReferences) +'\n'
-        return s
+        ext_refs_obj.add_external_reference(ext_ref)
             
+           
         
     
 class terms:
-    def __init__(self,node):
-        self.terms = []
+    def __init__(self,node=None):
         self.idx = {}
-        if node is not None:
-            for term_node in node.findall('term'):
-                self.terms.append(term(term_node))
-                this_id = self.terms[-1].get_id()
-                this_pos = len(self.terms)-1
-                self.idx[this_id] = this_pos
-                
+        if node is None:
+            self.node = etree.Element('terms')
+        else:
+            self.node = node
+            for node_term in self.__get_node_terms():
+                self.idx[node_term.get('id')] = node_term    
     
+    def __get_node_terms(self):
+        for node_term in self.node.findall('term'):
+            yield node_term
+            
     def __iter__(self):
-        for term in self.terms:
-            yield term
+        for node_term in self.__get_node_terms():
+            yield term(node_term)
             
     def get_term(self,term_id):
-        this_position = self.idx.get(term_id,None)
-        if this_position is not None:
-            return self.terms[this_position]
+        if term_id in self.idx:
+            return term(self.idx[term_id])
         else:
             return None
-    
-    def __str__(self):
-        s = 'Terms\n'
-        for t in self.terms:
-            s+=str(t)+'\n'
-        return s
-    
+           
+    def add_external_reference(self,term_id, external_ref):
+        if term_id in self.idx:
+            term_obj = term(self.idx[term_id])
+            term_obj.add_external_reference(external_ref)
+
 
 if __name__ == '__main__':
     from lxml import etree

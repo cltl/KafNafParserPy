@@ -3,6 +3,7 @@ from lxml import etree
 from nafHeader_data import *
 from text_data import *
 from term_data import *
+import sys
 
 
 class NafParser:
@@ -49,5 +50,14 @@ class NafParser:
 			return self.term_layer.get_term(term_id)
 		else:
 			return None
+		
+		
+	def add_external_reference(self,lemma_id, external_ref):
+		self.term_layer.add_external_reference(lemma_id, external_ref)
+		
+	
+	def dump(self,filename=sys.stdout):
+		self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
+		
 			
 		

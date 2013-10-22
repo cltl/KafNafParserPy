@@ -1,66 +1,49 @@
+from lxml import etree
 
 class wf:
-    def __init__(self,node):
-        self.id = ''
-        self.sent = ''
-        self.para = ''
-        self.page = ''
-        self.offset = ''
-        self.lenght = ''
-        self.xpath = ''
-        self.text = ''
-        if node is not None:
-            self.id = node.get('id','')
-            self.sent = node.get('sent','')
-            self.para = node.get('para','')
-            self.page = node.get('page','')
-            self.offset = node.get('offset','')
-            self.lenght = node.get('lenght','')
-            self.xpath = node.get('xpath','')
-            self.text = node.text
-    def __str__(self):
-        s = 'WF:  '
-        s += 'Id: '+self.id+'  Text:'+self.text+'  Sent:'+self.sent+'  Para:'+self.para+'  Page:'+self.page+'  Offset:'+self.offset+'  Length'+self.lenght+'  xpath:'+self.xpath+'\n'
-        return s
+    def __init__(self,node=None):
+        ##self.id = ''    self.sent = ''      self.para = ''      self.page = ''      self.offset = ''      self.lenght = '' s
+        if node is None:
+            self.node = etree.Element('wf')
+        else:
+            self.node = node
+
 
     def get_id(self):
-        return self.id
+        return self.node.get('id')
     
     def get_text(self):
-        return self.text
+        return self.node.text
     
     def get_sent(self):
-        return self.sent
+        return self.node.get('sent')
     
 class text:
-    def __init__(self,node):
-        self.wfs = []
-        self.idx_id_to_obj = {}
-        if node is not None:
-            for wfnode in node.findall('wf'):
-                self.wfs.append(wf(wfnode))
-                this_id = self.wfs[-1].get_id()
-                this_pos = len(self.wfs)-1
-                self.idx_id_to_obj[this_id]=this_pos
-    
-    def __iter__(self):
-        for wf in self.wfs:
-            yield wf
+    def __init__(self,node=None):
+        self.idx = {}
+        if node is None:
+            self.node = etree.Element('text')
+        else:
+            self.node = node
+            for wf_node in self.__get_wf_nodes():
+                self.idx[wf_node.get('id')] = wf_node
+                
+    def __get_wf_nodes(self):
+        for wf_node in self.node.findall('wf'):
+            yield wf_node
             
-    def get_wf(self,tokenid):
-        wf_position = self.idx_id_to_obj.get(tokenid,None)
-        if wf_position is not None:
-            return self.wfs[wf_position]
+    def __iter__(self):
+        for wf_node in self.__get_wf_nodes():
+            yield wf(wf_node)
+            
+    def get_wf(self,token_id):
+        wf_node = self.idx.get(token_id)
+        if wf_node is not None:
+            return wf(wf_node)
         else:
             return None
-            
-    def __str__(self):
-        s = 'Text:\n'
-        for wf in self.wfs:
-            s+=str(wf)
-        s += '\n'
-        return s
-    
+        
+   
     
 if __name__ == '__main__':
     from lxml import etree
