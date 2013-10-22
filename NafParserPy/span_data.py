@@ -23,7 +23,7 @@ class span:
 
     def __get_target_nodes(self):
         for target_node in self.node.findall('target'):
-            return target_node
+            yield target_node
     
     def __iter__(self):
         for target_node in self.__get_target_nodes():

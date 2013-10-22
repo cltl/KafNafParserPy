@@ -27,7 +27,12 @@ class term:
         return self.node.get('pos')
     
     def get_span(self):
-        return self.node.find('span')
+        node_span = self.node.find('span')
+        if node_span is not None:
+            return span(node_span)
+        else:
+            return None
+        
         
     def add_external_reference(self,ext_ref):
         ext_refs_node = self.node.find('externalReferences')
