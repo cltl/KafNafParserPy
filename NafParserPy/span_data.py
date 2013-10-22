@@ -1,16 +1,31 @@
+from lxml import etree
+
+class target:
+    def __init__(self,node=None):
+        if node is None:
+            self.node = etree.Element('target')
+        else:
+            self.node = node
+            
+    def get_id(self):
+        return self.node.get('id')
+
 
 class span:
-    def __init__(self,node):
-        self.targets = []
-        if node is not None:
-            for target_node in node.findall('target'):
-                self.targets.append(target_node.get('id'))
-    
-    def __str__(self):
-        s = ' '.join(self.targets)
-        return s
+    def __init__(self,node=None):
+        if node is None:
+            self.node = etree.Element('span')
+        else:
+            self.node = node
+             
+        #self.targets = []
+        
+
+    def __get_target_nodes(self):
+        for target_node in self.node.findall('target'):
+            return target_node
     
     def __iter__(self):
-        for target in self.targets:
-            yield target
+        for target_node in self.__get_target_nodes():
+            yield target(target_node)
                                             
