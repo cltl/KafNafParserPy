@@ -1,4 +1,5 @@
 from lxml import etree
+import time
 
 class fileDesc:
     def __init__(self,node=None):
@@ -27,8 +28,22 @@ class lp:
             self.node = etree.Element('lp')
         else:
             self.node = node
+            
+    def set_name(self,name):
+        self.node.set('name',name)
         
-        #self.name = ''        self.version =''        self.timestamp = ''
+    def set_version(self,version):
+        self.node.set('version',version)
+        
+    def set_timestamp(self,timestamp=None):
+        if timestamp is None:
+            import time
+            timestamp = time.strftime('%Y-%m-%dT%H:%M:%S%Z')
+        self.node.set('timestamp',timestamp)
+        
+    def get_node(self):
+        return self.node
+        
     
 class linguisticProcessors:
     def __init__(self,node=None):
@@ -37,8 +52,17 @@ class linguisticProcessors:
         else:
             self.node = node
             
-        #self.layer = ''
-        #self.lps =  []
+    def get_layer(self):
+        return self.node.get('layer')
+    
+    def set_layer(self,layer):
+        self.node.set('layer',layer)
+    
+    def add_linguistic_processor(self,my_lp):
+        self.node.append(my_lp.get_node())
+        
+    def get_node(self):
+        return self.node
 
     
 class nafHeader:
@@ -48,9 +72,27 @@ class nafHeader:
         else:
             self.node = node
       
-    #self.fileDesc = None
-    #self.public = None
-    #self.linguisticProcessors = []
+    def add_linguistic_processors(self,linpro):
+        self.node.append(linpro.get_node())
+        
+    def add_linguistic_processor(self, layer ,my_lp):
+        ## Locate the linguisticProcessor element for taht layer
+        found_lp_obj = None
+        for this_lp in self.node.findall('linguisticProcessors'):
+            lp_obj = linguisticProcessors(this_lp)
+            if lp_obj.get_layer() == layer:
+                found_lp_obj = lp_obj
+                break
+        
+        if found_lp_obj is None:    #Not found
+            found_lp_obj = linguisticProcessors()
+            found_lp_obj.set_layer(layer)
+            self.node.add_linguistic_processors(found_lp_obj)
+            
+        found_lp_obj.add_linguistic_processor(my_lp)
+        
+        
+            
     
          
   

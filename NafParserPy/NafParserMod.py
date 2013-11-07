@@ -55,6 +55,10 @@ class NafParser:
 	def add_external_reference(self,lemma_id, external_ref):
 		self.term_layer.add_external_reference(lemma_id, external_ref)
 		
+
+	def add_linguistic_processor(self, layer ,my_lp):
+		self.naf_header.add_linguistic_processor(layer,my_lp)
+
 	
 	def dump(self,filename=sys.stdout):
 		self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
