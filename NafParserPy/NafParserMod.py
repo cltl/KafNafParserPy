@@ -1,5 +1,11 @@
-from lxml import etree
+## LIST OF CHANGES
+# Ruben 8-nov-2013 
+#    + included layers for entities, properties, opinions
+#    + renamed all classes to Cnameoftheclass
 
+__last_modified='8nov2013'
+
+from lxml import etree
 from nafHeader_data import *
 from text_data import *
 from term_data import *
@@ -9,7 +15,7 @@ from opinion_data import *
 
 import sys
 
-__last_modified='8nov2013'
+
 
 class NafParser:
 	def __init__(self,filename):
