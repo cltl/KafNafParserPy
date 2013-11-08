@@ -87,7 +87,7 @@ class nafHeader:
         if found_lp_obj is None:    #Not found
             found_lp_obj = linguisticProcessors()
             found_lp_obj.set_layer(layer)
-            self.node.add_linguistic_processors(found_lp_obj)
+            self.add_linguistic_processors(found_lp_obj)
             
         found_lp_obj.add_linguistic_processor(my_lp)
         

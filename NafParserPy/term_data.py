@@ -33,6 +33,14 @@ class term:
         else:
             return None
         
+    def get_sentiment(self):
+        sent_node = self.node.find('sentiment')
+        
+        if sent_node is None:
+            return None
+        else:
+            return term_sentiment(sent_node)
+        
         
     def add_external_reference(self,ext_ref):
         ext_refs_node = self.node.find('externalReferences')

@@ -17,9 +17,7 @@ class span:
             self.node = etree.Element('span')
         else:
             self.node = node
-             
-        #self.targets = []
-        
+                    
 
     def __get_target_nodes(self):
         for target_node in self.node.findall('target'):
@@ -28,4 +26,7 @@ class span:
     def __iter__(self):
         for target_node in self.__get_target_nodes():
             yield target(target_node)
+            
+    def get_span_ids(self):
+        return [t_obj.get_id() for t_obj in self]
                                             
