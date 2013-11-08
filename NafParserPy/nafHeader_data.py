@@ -1,7 +1,7 @@
 from lxml import etree
 import time
 
-class fileDesc:
+class CfileDesc:
     def __init__(self,node=None):
         if node is None:
             self.node = etree.Element('fileDesc')
@@ -11,7 +11,7 @@ class fileDesc:
     #self.title=''    #self.author=''    #self.creationtime=''    #self.filename=''    #self.filetype=''    #self.pages=''
     
  
-class public:
+class Cpublic:
     def __init__(self,node=None):
         if node is None:
             self.node = etree.Element('public')
@@ -22,7 +22,7 @@ class public:
         #slf.uri = ''
 
    
-class lp:
+class Clp:
     def __init__(self,node=None):
         if node is None:
             self.node = etree.Element('lp')
@@ -45,7 +45,7 @@ class lp:
         return self.node
         
     
-class linguisticProcessors:
+class ClinguisticProcessors:
     def __init__(self,node=None):
         if node is None:
             self.node = etree.Element('linguisticProcessors')
@@ -65,7 +65,7 @@ class linguisticProcessors:
         return self.node
 
     
-class nafHeader:
+class CnafHeader:
     def __init__(self,node=None):
         if node is None:
             self.node = etree.Element('nafHeader')
@@ -79,13 +79,13 @@ class nafHeader:
         ## Locate the linguisticProcessor element for taht layer
         found_lp_obj = None
         for this_lp in self.node.findall('linguisticProcessors'):
-            lp_obj = linguisticProcessors(this_lp)
+            lp_obj = ClinguisticProcessors(this_lp)
             if lp_obj.get_layer() == layer:
                 found_lp_obj = lp_obj
                 break
         
         if found_lp_obj is None:    #Not found
-            found_lp_obj = linguisticProcessors()
+            found_lp_obj = ClinguisticProcessors()
             found_lp_obj.set_layer(layer)
             self.add_linguistic_processors(found_lp_obj)
             
@@ -93,35 +93,4 @@ class nafHeader:
         
         
             
-    
-         
-  
-  
-## To try if it works
-if __name__ == '__main__':
-    from lxml import etree
-    data = '''  <nafHeader>
-                <fileDesc title="3_3012" author="casa400"
-                filename="residence_hostal"
-                filetype="PDF" pages="19"/>
-                <public publicId="3_3012"
-                uri="http://casa400.com/docs/residence.pdf" />
-                <linguisticProcessors layer="text">
-                <lp name="Freeling" version="2.1"
-                timestamp="2012-06-25T10:05:00Z"/>
-                </linguisticProcessors>
-                <linguisticProcessors layer="terms">
-                <lp name="Freeling" version="2.1"
-                timestamp="2009-06-25T10:10:19Z"/>
-                <lp name="ukb" version="0.1.2" timestamp="2012-06-25T16:10:19Z"/>
-                </linguisticProcessors>
-                <linguisticProcessors layer="namedEntities">
-                <lp name="kybot_NE" version="0.1"
-                timestamp="2012-06-26T00:10:19Z"/>
-                </linguisticProcessors>
-                </nafHeader>'''
-    node = etree.fromstring(data, parser=None, base_url=None)
-    obj = nafHeader(node)
-    print obj
-    
     

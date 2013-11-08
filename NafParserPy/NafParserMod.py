@@ -5,6 +5,7 @@ from text_data import *
 from term_data import *
 from entity_data import *
 from features_data import *
+from opinion_data import *
 
 import sys
 
@@ -20,29 +21,34 @@ class NafParser:
 		self.term_layer = None
 		self.entity_layer = None
 		self.features_layer = None
+		self.opinion_layer = None
 		
 		self.lang = self.root.get('{http://www.w3.org/XML/1998/namespace}lang')
 		self.version = self.root.get('version')
 		
 		node_header = self.root.find('nafHeader')
 		if node_header is not None:
-			self.naf_header = nafHeader(node_header)
+			self.naf_header = CnafHeader(node_header)
 		
 		node_text = self.root.find('text')
 		if node_text is not None:
-			self.text_layer = text(node_text)
+			self.text_layer = Ctext(node_text)
 			
 		node_term = self.root.find('terms')
 		if node_term is not None:
-			self.term_layer = terms(node_term)
+			self.term_layer = Cterms(node_term)
 			
 		node_entity = self.root.find('entities')
 		if node_entity is not None:
-			self.entity_layer = entities(node_entity)
+			self.entity_layer = Centities(node_entity)
 			
 		node_features = self.root.find('features')
 		if node_features is not None:
-			self.features_layer = features(node_features)
+			self.features_layer = Cfeatures(node_features)
+
+		node_opinions = self.root.find('opinions')
+		if node_opinions is not None:
+			self.opinion_layer = Copinions(node_opinions)
 			
 	def get_language(self):
 		return self.lang
@@ -87,6 +93,12 @@ class NafParser:
 	
 	def dump(self,filename=sys.stdout):
 		self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
+		
+	def add_opinion(self,opinion_obj):
+		if self.opinion_layer is None:
+			self.opinion_layer = Copinions()
+			self.root.append(self.opinion_layer.get_node())
+		self.opinion_layer.add_opinion(opinion_obj)
 		
 			
 		

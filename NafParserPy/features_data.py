@@ -4,7 +4,7 @@ from references_data import *
 
 
 
-class property:
+class Cproperty:
     def __init__(self,node=None):
         if node is None:
             self.node = etree.Element('property')
@@ -19,11 +19,11 @@ class property:
     
     def get_references(self):
         for ref_node in self.node.findall('references'):
-            yield references(ref_node)
+            yield Creferences(ref_node)
                              
                         
                 
-class properties:
+class Cproperties:
     def __init__(self,node=None):
         if node is None:
             self.node = etree.Element('properties')
@@ -32,9 +32,9 @@ class properties:
             
     def __iter__(self):
         for prop_node in self.node.findall('property'):
-            yield property(prop_node)
+            yield Cproperty(prop_node)
                 
-class features:
+class Cfeatures:
     def __init__(self,node=None):
         if node is None:
             self.node = etree.Element('features')
@@ -44,7 +44,7 @@ class features:
     def get_properties(self):
         node_prop = self.node.find('properties')
         if node_prop is not None:
-            obj_properties = properties(node_prop)
+            obj_properties = Cproperties(node_prop)
             for prop in obj_properties:
                 yield prop
                 

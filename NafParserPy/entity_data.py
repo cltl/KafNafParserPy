@@ -3,7 +3,7 @@ from lxml.objectify import dump
 from references_data import *
     
     
-class entity:
+class Centity:
     def __init__(self,node=None):
         if node is None:
             self.node = etree.Element('entity')
@@ -18,9 +18,9 @@ class entity:
     
     def get_references(self):
         for ref_node in self.node.findall('references'):
-            yield references(ref_node)
+            yield Creferences(ref_node)
     
-class entities:
+class Centities:
     def __init__(self,node=None):
         if node is None:
             self.node = etree.Element('entities')
@@ -33,7 +33,7 @@ class entities:
                 
     def __iter__(self):
         for ent_node in self.__get_entity_nodes():
-            yield entity(ent_node)
+            yield Centity(ent_node)
         
         
     def __str__(self):
