@@ -2,8 +2,11 @@
 # Ruben 8-nov-2013 
 #    + included layers for entities, properties, opinions
 #    + renamed all classes to Cnameoftheclass
+# Ruben 15-nov-2013
+#	+ included constituency layer
 
-__last_modified='8nov2013'
+
+__last_modified='15nov2013'
 
 from lxml import etree
 from nafHeader_data import *
@@ -12,6 +15,7 @@ from term_data import *
 from entity_data import *
 from features_data import *
 from opinion_data import *
+from constituency_data import *
 
 import sys
 
@@ -28,6 +32,7 @@ class NafParser:
 		self.entity_layer = None
 		self.features_layer = None
 		self.opinion_layer = None
+		self.constituency_layer = None
 		
 		self.lang = self.root.get('{http://www.w3.org/XML/1998/namespace}lang')
 		self.version = self.root.get('version')
@@ -56,6 +61,17 @@ class NafParser:
 		if node_opinions is not None:
 			self.opinion_layer = Copinions(node_opinions)
 			
+		node_constituency = self.root.find('constituency')
+		if node_constituency is not None:
+			self.constituency_layer = Cconstituency(node_constituency)
+			
+	def print_constituency(self):
+		print self.constituency_layer
+		
+	def get_trees(self):
+		for tree in self.constituency_layer.get_trees():
+			yield tree
+		
 	def get_language(self):
 		return self.lang
 		
