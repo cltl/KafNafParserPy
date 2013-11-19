@@ -4,9 +4,12 @@
 #    + renamed all classes to Cnameoftheclass
 # Ruben 15-nov-2013
 #	+ included constituency layer
+#
+# Ruben 19-nov-2013
+#	+ included dependency layer
 
 
-__last_modified='15nov2013'
+__last_modified='19nov2013'
 
 from lxml import etree
 from nafHeader_data import *
@@ -16,6 +19,7 @@ from entity_data import *
 from features_data import *
 from opinion_data import *
 from constituency_data import *
+from dependency_data import *
 
 import sys
 
@@ -33,6 +37,7 @@ class NafParser:
 		self.features_layer = None
 		self.opinion_layer = None
 		self.constituency_layer = None
+		self.dependency_layer = None
 		
 		self.lang = self.root.get('{http://www.w3.org/XML/1998/namespace}lang')
 		self.version = self.root.get('version')
@@ -64,6 +69,10 @@ class NafParser:
 		node_constituency = self.root.find('constituency')
 		if node_constituency is not None:
 			self.constituency_layer = Cconstituency(node_constituency)
+
+		node_dependency = self.root.find('deps')
+		if node_dependency is not None:
+			self.dependency_layer = Cdependencies(node_dependency)
 			
 	def print_constituency(self):
 		print self.constituency_layer
@@ -72,6 +81,12 @@ class NafParser:
 		for tree in self.constituency_layer.get_trees():
 			yield tree
 		
+		
+	def get_dependencies(self):
+		if self.dependency_layer is not None:
+			for dep in self.dependency_layer.get_dependencies():
+				yield dep
+				
 	def get_language(self):
 		return self.lang
 		
