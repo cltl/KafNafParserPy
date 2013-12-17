@@ -85,6 +85,9 @@ class KafNafParser:
 		if node_dependency is not None:
 			self.dependency_layer = Cdependencies(node_dependency)
 	
+	def get_type(self):
+		return self.type
+		
 	def to_kaf(self):
 		#Convert the root
 		if self.type == 'NAF':

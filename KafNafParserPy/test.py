@@ -3,7 +3,18 @@
 from KafNafParserMod import *
 import sys
 
-obj = KafNafParser(sys.stdin)
+obj = KafNafParser('kaf_example.xml')
+
+print 'I) The object type is: ',obj.get_type()
+obj.to_naf()
+print 'II) The object type is: ',obj.get_type()
+obj.to_kaf()
+print 'III) The object type is: ',obj.get_type()
+obj.dump('my_file.kaf')
+print 'object saved in my_file.kaf as ',obj.get_type()
+
+sys.exit(0)
+
 
 print>>sys.stderr,'ERA:',obj.type
 obj.to_naf()
