@@ -1,8 +1,11 @@
+# Modified to KAF / NAF
+
 from lxml import etree
 import time
 
 class CfileDesc:
     def __init__(self,node=None):
+        self.type = 'KAF/NAF'
         if node is None:
             self.node = etree.Element('fileDesc')
         else:
@@ -13,6 +16,7 @@ class CfileDesc:
  
 class Cpublic:
     def __init__(self,node=None):
+        self.type = 'KAF/NAF'
         if node is None:
             self.node = etree.Element('public')
         else:
@@ -24,6 +28,7 @@ class Cpublic:
    
 class Clp:
     def __init__(self,node=None):
+        self.type = 'KAF/NAF'
         if node is None:
             self.node = etree.Element('lp')
         else:
@@ -47,6 +52,7 @@ class Clp:
     
 class ClinguisticProcessors:
     def __init__(self,node=None):
+        self.type = 'KAF/NAF'
         if node is None:
             self.node = etree.Element('linguisticProcessors')
         else:
@@ -65,12 +71,26 @@ class ClinguisticProcessors:
         return self.node
 
     
-class CnafHeader:
-    def __init__(self,node=None):
+class CHeader:
+    def __init__(self,node=None,type='NAF'):
+        self.type = type
         if node is None:
-            self.node = etree.Element('nafHeader')
+            if self.type == 'NAF':
+                self.node = etree.Element('nafHeader')
+            elif self.type == 'KAF':
+                self.node = etree.Element('kafHeader')
         else:
             self.node = node
+    
+    def to_kaf(self):
+        if self.type == 'NAF':
+            self.node.tag = 'kafHeader'
+            self.type = 'KAF'
+        
+    def to_naf(self):
+        if self.type == 'KAF':
+            self.node.tag = 'nafHeader'
+            self.type = 'NAF'
       
     def add_linguistic_processors(self,linpro):
         self.node.append(linpro.get_node())

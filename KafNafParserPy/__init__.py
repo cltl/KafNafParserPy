@@ -1,5 +1,5 @@
-from NafParserMod import NafParser
-from nafHeader_data import *
+from KafNafParserMod import KafNafParser
+from header_data import *
 from external_references_data import *
 from span_data import *
 from term_data import *

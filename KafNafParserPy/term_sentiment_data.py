@@ -1,8 +1,10 @@
+# Modified for NAF KAF
 from lxml import etree
 from lxml.objectify import dump
 
 class Cterm_sentiment:
     def __init__(self,node=None):
+        self.type = 'NAF/KAF'
         if node is None:
             self.node = etree.Element('sentiment')
         else:

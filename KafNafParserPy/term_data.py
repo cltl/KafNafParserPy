@@ -1,3 +1,6 @@
+# included code for NAF/KAF
+
+
 from span_data import *
 from external_references_data import *
 from term_sentiment_data import *
@@ -5,7 +8,8 @@ from lxml import etree
 
 
 class Cterm:
-    def __init__(self,node=None):
+    def __init__(self,node=None,type='NAF'):
+        self.type = type
         if node is None:
             self.node = etree.Element('term')
         else:
@@ -13,7 +17,10 @@ class Cterm:
 
             
     def get_id(self):
-        return self.node.get('id')
+        if self.type == 'NAF':
+            return self.node.get('id')
+        elif self.type == 'KAF':
+            return self.node.get('tid')
     
     def get_lemma(self):
         return self.node.get('lemma')
@@ -51,8 +58,9 @@ class Cterm:
         
     
 class Cterms:
-    def __init__(self,node=None):
+    def __init__(self,node=None,type='NAF'):
         self.idx = {}
+        self.type = type
         if node is None:
             self.node = etree.Element('terms')
         else:
@@ -60,21 +68,36 @@ class Cterms:
             for node_term in self.__get_node_terms():
                 self.idx[node_term.get('id')] = node_term    
     
+    
+    def to_kaf(self):
+        if self.type == 'NAF':
+            self.type = 'KAF'
+            for node in self.__get_node_terms():
+                node.set('tid',node.get('id'))
+                del node.attrib['id']
+
+    def to_naf(self):
+        if self.type == 'KAF':
+            self.type = 'NAF'
+            for node in self.__get_node_terms():
+                node.set('id',node.get('tid'))
+                del node.attrib['tid']
+                
     def __get_node_terms(self):
         for node_term in self.node.findall('term'):
             yield node_term
             
     def __iter__(self):
         for node_term in self.__get_node_terms():
-            yield Cterm(node_term)
+            yield Cterm(node_term,self.type)
             
     def get_term(self,term_id):
         if term_id in self.idx:
-            return Cterm(self.idx[term_id])
+            return Cterm(self.idx[term_id],self.type)
         else:
             return None
            
     def add_external_reference(self,term_id, external_ref):
         if term_id in self.idx:
-            term_obj = Cterm(self.idx[term_id])
+            term_obj = Cterm(self.idx[term_id],self.type)
             term_obj.add_external_reference(external_ref)

@@ -1,8 +1,10 @@
+# included modification for KAF/NAF
 from term_sentiment_data import Cterm_sentiment
 from lxml import etree
 
 class CexternalReference:
     def __init__(self,node=None):
+        self.type= 'NAF/KAF'
         #self.resource = self.reference = self.reftype = self.status = self.source = self.confidence = ''
         if node is None:
             self.node = etree.Element('externalRef')

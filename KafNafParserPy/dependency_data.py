@@ -32,6 +32,12 @@ class Cdependencies:
         else:
             self.node = node
             
+    def to_kaf(self):
+        pass
+    
+    def to_naf(self):
+        pass
+            
     def __str__(self):
         return dump(self.node)
 

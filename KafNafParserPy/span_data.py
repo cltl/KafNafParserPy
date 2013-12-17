@@ -1,8 +1,11 @@
+# Modified for KAF/NAF
+
 from lxml import etree
 from lxml.objectify import dump
 
 class Ctarget:
     def __init__(self,node=None):
+        self.type = 'NAF/KAF'
         if node is None:
             self.node = etree.Element('target')
         else:
@@ -20,6 +23,7 @@ class Ctarget:
 
 class Cspan:
     def __init__(self,node=None):
+        self.type = 'NAF/KAF'
         if node is None:
             self.node = etree.Element('span')
         else:

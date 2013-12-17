@@ -101,10 +101,17 @@ class Ctree:
 
 class Cconstituency:
     def __init__(self,node=None):
+        self.type = 'NAF/NAF'
         if node is None:
             self.node = etree.Element('constituency')
         else:
             self.node = node
+            
+    def to_kaf(self):
+        pass
+    
+    def to_naf(self):
+        pass
     
     def __get_tree_nodes(self):
         for tree_node in self.node.findall('tree'):
