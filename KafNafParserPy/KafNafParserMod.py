@@ -231,7 +231,7 @@ class KafNafParser:
 		
 
 	def add_linguistic_processor(self, layer ,my_lp):
-		self.naf_header.add_linguistic_processor(layer,my_lp)
+		self.header.add_linguistic_processor(layer,my_lp)
 
 	
 	def dump(self,filename=sys.stdout):
