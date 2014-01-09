@@ -28,6 +28,9 @@ class Cterm:
     def get_pos(self):
         return self.node.get('pos')
     
+    def get_morphofeat(self):
+        return self.node.get('morphofeat')
+    
     def get_span(self):
         node_span = self.node.find('span')
         if node_span is not None:
