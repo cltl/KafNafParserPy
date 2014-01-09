@@ -225,6 +225,11 @@ class KafNafParser:
 		if self.entity_layer is not None:
 			for entity in self.entity_layer:
 				yield entity
+				
+	def get_opinions(self):
+		if self.opinion_layer is not None:
+			for opinion in self.opinion_layer.get_opinions():
+				yield opinion
 		
 	def add_external_reference(self,lemma_id, external_ref):
 		self.term_layer.add_external_reference(lemma_id, external_ref)

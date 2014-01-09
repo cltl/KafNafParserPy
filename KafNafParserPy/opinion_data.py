@@ -85,12 +85,33 @@ class Copinion:
         
     def set_holder(self,hol):
         self.node.append(hol.get_node())
+        
+    def get_holder(self):
+        node_hol = self.node.find('opinion_holder')
+        if node_hol is not None:
+            return Cholder(node_hol)
+        else:
+            return None
 
     def set_target(self,tar):
         self.node.append(tar.get_node())
         
+    def get_target(self):
+        node_hol = self.node.find('opinion_target')
+        if node_hol is not None:
+            return Cholder(node_hol)
+        else:
+            return None
+        
     def set_expression(self,exp):
         self.node.append(exp.get_node())
+
+    def get_expression(self):
+        node_hol = self.node.find('opinion_expression')
+        if node_hol is not None:
+            return Cholder(node_hol)
+        else:
+            return None
         
     def __str__(self):
         return dump(self.node)  
@@ -113,6 +134,10 @@ class Copinions:
     def __get_opinion_nodes(self):
         for node in self.node.findall('opinion'):
             yield node
+            
+    def get_opinions(self):
+        for node in self.__get_opinion_nodes():
+            yield Copinion(node,self.type)
             
     def to_kaf(self):
         if self.type == 'NAF':
