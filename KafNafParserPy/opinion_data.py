@@ -2,6 +2,8 @@
 
 from lxml import etree
 from lxml.objectify import dump
+from span_data import *
+
 
 
 class Cholder:
@@ -14,6 +16,12 @@ class Cholder:
     
     def set_span(self,my_span):
         self.node.append(my_span.get_node())
+        
+    def get_span(self):
+        span_obj = self.node.find('span')
+        if span_obj is not None:
+            return Cspan(span_obj)
+        return None
         
     def __str__(self):
         return dump(self.node)  
@@ -32,7 +40,13 @@ class Ctarget:
     
     def set_span(self,my_span):
         self.node.append(my_span.get_node())  
-        
+    
+    def get_span(self):
+        span_obj = self.node.find('span')
+        if span_obj is not None:
+            return Cspan(span_obj)
+        return None
+    
     def __str__(self):
         return dump(self.node)  
 
@@ -51,11 +65,23 @@ class Cexpression:
     def set_polarity(self,pol):
         self.node.set('polarity',pol)
         
+    def get_polarity(self):
+        return self.node.get('polarity')
+        
     def set_strength(self,st):
         self.node.set('strength',st)
         
+    def get_strength(self):
+        return self.node.get('strength')
+        
     def set_span(self,my_span):
         self.node.append(my_span.get_node())
+        
+    def get_span(self):
+        span_obj = self.node.find('span')
+        if span_obj is not None:
+            return Cspan(span_obj)
+        return None
 
     def __str__(self):
         return dump(self.node)  
@@ -97,9 +123,9 @@ class Copinion:
         self.node.append(tar.get_node())
         
     def get_target(self):
-        node_hol = self.node.find('opinion_target')
-        if node_hol is not None:
-            return Cholder(node_hol)
+        node_target = self.node.find('opinion_target')
+        if node_target is not None:
+            return Ctarget(node_target)
         else:
             return None
         
@@ -107,9 +133,9 @@ class Copinion:
         self.node.append(exp.get_node())
 
     def get_expression(self):
-        node_hol = self.node.find('opinion_expression')
-        if node_hol is not None:
-            return Cholder(node_hol)
+        node_exp = self.node.find('opinion_expression')
+        if node_exp is not None:
+            return Cexpression(node_exp)
         else:
             return None
         
