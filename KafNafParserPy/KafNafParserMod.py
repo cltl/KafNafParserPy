@@ -248,5 +248,12 @@ class KafNafParser:
 			self.root.append(self.opinion_layer.get_node())
 		self.opinion_layer.add_opinion(opinion_obj)
 		
+	def remove_opinion_layer(self):
+		if self.opinion_layer is not None:
+			this_node = self.opinion_layer.get_node()
+			del this_node
+			self.opinion_layer = None
+		
+		
 			
 		
