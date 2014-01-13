@@ -1,0 +1,259 @@
+## LIST OF CHANGES
+# Ruben 8-nov-2013 
+#    + included layers for entities, properties, opinions
+#    + renamed all classes to Cnameoftheclass
+# Ruben 15-nov-2013
+#	+ included constituency layer
+#
+# Ruben 19-nov-2013
+#	+ included dependency layer
+# Ruben 17-dec-2013
+#	+ modified all to red/write NAF and KAF
+	
+
+__last_modified  = '17dec2013'
+
+from lxml import etree
+from header_data import *
+from text_data import *
+from term_data import *
+from entity_data import *
+from features_data import *
+from opinion_data import *
+from constituency_data import *
+from dependency_data import *
+
+import sys
+
+
+
+class KafNafParser:
+	def __init__(self,filename):
+		self.tree = None
+		self.tree = etree.parse(filename,etree.XMLParser(remove_blank_text=True))
+		self.root = self.tree.getroot()
+		self.type = self.root.tag # KAF NAF
+		
+		self.header = None
+		self.text_layer = None
+		self.term_layer = None
+		self.entity_layer = None
+		self.features_layer = None
+		self.opinion_layer = None
+		self.constituency_layer = None
+		self.dependency_layer = None
+		
+		self.lang = self.root.get('{http://www.w3.org/XML/1998/namespace}lang')
+		self.version = self.root.get('version')
+		
+		if self.type == 'NAF':
+			node_header = self.root.find('nafHeader')
+		elif self.type == 'KAF':
+			node_header = self.root.find('kafHeader')
+			
+		if node_header is not None:
+			self.header = CHeader(node_header,self.type)
+		
+		# Text layer adapted to naf/kaf
+		node_text = self.root.find('text')
+		if node_text is not None:
+			self.text_layer = Ctext(node=node_text,type=self.type)
+			
+		node_term = self.root.find('terms')
+		if node_term is not None:
+			self.term_layer = Cterms(node=node_term,type=self.type)
+			
+		node_entity = self.root.find('entities')
+		if node_entity is not None:
+			self.entity_layer = Centities(node_entity,type=self.type)
+			
+		node_features = self.root.find('features')
+		if node_features is not None:
+			self.features_layer = Cfeatures(node_features,type=self.type)
+
+		node_opinions = self.root.find('opinions')
+		if node_opinions is not None:
+			self.opinion_layer = Copinions(node_opinions,type=self.type)
+			
+		# Definition KAF/NAF is the same
+		node_constituency = self.root.find('constituency')
+		if node_constituency is not None:
+			self.constituency_layer = Cconstituency(node_constituency)
+
+		# Definition KAF/NAF is the same
+		node_dependency = self.root.find('deps')
+		if node_dependency is not None:
+			self.dependency_layer = Cdependencies(node_dependency)
+	
+	def get_type(self):
+		return self.type
+		
+	def to_kaf(self):
+		#Convert the root
+		if self.type == 'NAF':
+			self.root.tag = 'KAF'
+			self.type = 'KAF'
+		
+		## Convert the header	
+		if self.header is not None:
+			self.header.to_kaf()
+		
+		## Convert the token layer
+		if self.text_layer is not None:
+			self.text_layer.to_kaf()
+			
+		## Convert the term layer
+		if self.term_layer is not None:
+			self.term_layer.to_kaf()
+			
+		## Convert the entity layer
+		if self.entity_layer is not None:
+			self.entity_layer.to_kaf()
+			
+		## Convert the features layer
+		## There is no feature layer defined in NAF, but we assumed
+		## that is defined will be followin the same rules
+		if self.features_layer is not None:
+			self.features_layer.to_kaf()
+			
+		
+		##Convert the opinion layer
+		if self.opinion_layer is not None:
+			self.opinion_layer.to_kaf()
+			
+		## Convert the constituency layer
+		## This layer is exactly the same in KAF/NAF
+		if self.constituency_layer is not None:
+			self.constituency_layer.to_kaf()	#Does nothing...
+			
+			
+		## Convert the dedepency layer
+		## It is not defined on KAF so we assme both will be similar
+		if self.dependency_layer is not None:
+			self.dependency_layer.to_kaf()
+		
+	def to_naf(self):
+		#Convert the root
+		if self.type == 'KAF':
+			self.root.tag = self.type = 'NAF'
+		
+		## Convert the header	
+		if self.header is not None:
+			self.header.to_naf()
+		
+		## Convert the token layer
+		if self.text_layer is not None:
+			self.text_layer.to_naf()
+		
+			
+		## Convert the term layer
+		if self.term_layer is not None:
+			self.term_layer.to_naf()
+			
+		
+		## Convert the entity layer
+		if self.entity_layer is not None:
+			self.entity_layer.to_naf()
+		
+		## Convert the features layer
+		## There is no feature layer defined in NAF, but we assumed
+		## that is defined will be followin the same rules
+		if self.features_layer is not None:
+			self.features_layer.to_naf()
+			
+		
+		##Convert the opinion layer
+		if self.opinion_layer is not None:
+			self.opinion_layer.to_naf()
+		
+			
+		## Convert the constituency layer
+		## This layer is exactly the same in KAF/NAF
+		if self.constituency_layer is not None:
+			self.constituency_layer.to_naf()	#Does nothing...
+			
+			
+		## Convert the dedepency layer
+		## It is not defined on KAF so we assume both will be similar
+		if self.dependency_layer is not None:
+			self.dependency_layer.to_naf()	  #Does nothing...
+		
+
+			
+	def print_constituency(self):
+		print self.constituency_layer
+		
+	def get_trees(self):
+		for tree in self.constituency_layer.get_trees():
+			yield tree
+		
+		
+	def get_dependencies(self):
+		if self.dependency_layer is not None:
+			for dep in self.dependency_layer.get_dependencies():
+				yield dep
+				
+	def get_language(self):
+		return self.lang
+		
+	def get_tokens(self):
+		for token in self.text_layer:
+			yield token
+			
+	def get_terms(self):
+		for term in self.term_layer:
+			yield term
+			
+	def get_token(self,token_id):
+		if self.text_layer is not None:
+			return self.text_layer.get_wf(token_id)
+		else:
+			return None
+	
+	def get_term(self,term_id):
+		if self.term_layer is not None:
+			return self.term_layer.get_term(term_id)
+		else:
+			return None
+		
+	def get_properties(self):
+		if self.features_layer is not None:
+			for property in self.features_layer.get_properties():
+				yield property
+		
+	def get_entities(self):
+		if self.entity_layer is not None:
+			for entity in self.entity_layer:
+				yield entity
+				
+	def get_opinions(self):
+		if self.opinion_layer is not None:
+			for opinion in self.opinion_layer.get_opinions():
+				yield opinion
+		
+	def add_external_reference(self,lemma_id, external_ref):
+		self.term_layer.add_external_reference(lemma_id, external_ref)
+		
+
+	def add_linguistic_processor(self, layer ,my_lp):
+		self.header.add_linguistic_processor(layer,my_lp)
+
+	
+	def dump(self,filename=sys.stdout):
+		self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
+		
+	def add_opinion(self,opinion_obj):
+		if self.opinion_layer is None:
+			self.opinion_layer = Copinions()
+			self.root.append(self.opinion_layer.get_node())
+		self.opinion_layer.add_opinion(opinion_obj)
+		
+	def remove_opinion_layer(self):
+		if self.opinion_layer is not None:
+			this_node = self.opinion_layer.get_node()
+			del this_node
+			self.opinion_layer = None
+		
+		
+			
+		
