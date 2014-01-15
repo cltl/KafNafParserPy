@@ -35,7 +35,9 @@ class Ctext:
         else:
             self.node = node
             for wf_node in self.__get_wf_nodes():
-                self.idx[wf_node.get('id')] = wf_node
+                if self.type == 'NAF': label_id = 'id'
+                elif self.type == 'KAF': label_id = 'wid'
+                self.idx[wf_node.get(label_id)] = wf_node
                 
     def to_kaf(self):
         if self.type == 'NAF':

@@ -22,6 +22,7 @@ from features_data import *
 from opinion_data import *
 from constituency_data import *
 from dependency_data import *
+from feature_extractor import Cdependency_extractor, Cconstituency_extractor
 
 import sys
 
@@ -30,6 +31,7 @@ import sys
 class KafNafParser:
 	def __init__(self,filename):
 		self.tree = None
+		self.filename = filename
 		self.tree = etree.parse(filename,etree.XMLParser(remove_blank_text=True))
 		self.root = self.tree.getroot()
 		self.type = self.root.tag # KAF NAF
@@ -42,6 +44,11 @@ class KafNafParser:
 		self.opinion_layer = None
 		self.constituency_layer = None
 		self.dependency_layer = None
+		
+		## Specific feature extractor for complicated layers
+		self.my_dependency_extractor = None
+		self.my_constituency_extractor = None
+		##################################################
 		
 		self.lang = self.root.get('{http://www.w3.org/XML/1998/namespace}lang')
 		self.version = self.root.get('version')
@@ -87,6 +94,9 @@ class KafNafParser:
 	
 	def get_type(self):
 		return self.type
+	
+	def get_filename(self):
+		return self.filename
 		
 	def to_kaf(self):
 		#Convert the root
@@ -184,8 +194,9 @@ class KafNafParser:
 		print self.constituency_layer
 		
 	def get_trees(self):
-		for tree in self.constituency_layer.get_trees():
-			yield tree
+		if self.constituency_layer is not None:
+			for tree in self.constituency_layer.get_trees():
+				yield tree
 		
 		
 	def get_dependencies(self):
@@ -251,8 +262,24 @@ class KafNafParser:
 	def remove_opinion_layer(self):
 		if self.opinion_layer is not None:
 			this_node = self.opinion_layer.get_node()
-			del this_node
+			self.root.remove(this_node)
 			self.opinion_layer = None
+			
+	def get_constituency_extractor(self):
+		if self.constituency_layer is not None:	##Otherwise there are no constituens
+			if self.my_constituency_extractor is None:
+				self.my_constituency_extractor = Cconstituency_extractor(self)
+			return self.my_constituency_extractor
+		else:
+			return None
+	
+	def get_dependency_extractor(self):
+		if self.dependency_layer is not None:	#otherwise there are no dependencies
+			if self.my_dependency_extractor is None:
+				self.my_dependency_extractor = Cdependency_extractor(self)
+			return self.my_dependency_extractor
+		else:
+			return None
 		
 		
 			
