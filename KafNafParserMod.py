@@ -259,6 +259,12 @@ class KafNafParser:
 			self.root.append(self.opinion_layer.get_node())
 		self.opinion_layer.add_opinion(opinion_obj)
 		
+	def add_wf(self,wf_obj):
+		if self.text_layer is None:
+			self.text_layer = Ctext(type=self.type)
+			self.root.append(self.text_layer.get_node())
+		self.text_layer.add_wf(wf_obj)
+			
 	def remove_opinion_layer(self):
 		if self.opinion_layer is not None:
 			this_node = self.opinion_layer.get_node()

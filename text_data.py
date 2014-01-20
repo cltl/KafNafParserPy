@@ -12,16 +12,30 @@ class Cwf:
         else:
             self.node = node
 
-
+    def get_node(self):
+        return self.node
+    
+    def set_id(self,this_id):
+        if self.type == 'NAF':
+            return self.node.set('id',this_id)
+        elif self.type == 'KAF':
+            return self.node.set('wid',this_id)
+                
     def get_id(self):
         if self.type == 'NAF':
             return self.node.get('id')
         elif self.type == 'KAF':
             return self.node.get('wid')
     
+    def set_text(self,this_text):
+        self.node.text = this_text
+        
     def get_text(self):
         return self.node.text
     
+    def set_sent(self,this_sent):
+        self.node.set('sent',this_sent)
+        
     def get_sent(self):
         return self.node.get('sent')
     
@@ -39,6 +53,9 @@ class Ctext:
                 elif self.type == 'KAF': label_id = 'wid'
                 self.idx[wf_node.get(label_id)] = wf_node
                 
+    def get_node(self):
+        return self.node
+    
     def to_kaf(self):
         if self.type == 'NAF':
             self.type = 'KAF'
@@ -67,4 +84,7 @@ class Ctext:
             return Cwf(node=wf_node,type=self.type)
         else:
             return None
+    
+    def add_wf(self,wf_obj):
+        self.node.append(wf_obj.get_node())
         

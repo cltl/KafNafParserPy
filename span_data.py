@@ -29,12 +29,19 @@ class Cspan:
         else:
             self.node = node
              
+    def add_target_id(self,this_id):
+        new_target = Ctarget()
+        new_target.set_id(this_id)
+        self.node.append(new_target.get_node())
              
     def create_from_ids(self,list_ids):
         for this_id in list_ids:
             new_target = Ctarget()
             new_target.set_id(this_id)
             self.node.append(new_target.get_node())
+            
+    def add_target(self,target):
+        self.node.append(target.get_node())
                    
 
     def __get_target_nodes(self):
