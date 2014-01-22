@@ -56,6 +56,9 @@ class Cterm:
             ext_refs_obj = CexternalReferences(ext_refs_node)
             
         ext_refs_obj.add_external_reference(ext_ref)
+        
+    def add_term_sentiment(self,term_sentiment):
+        self.node.append(term_sentiment.get_node())
             
            
         

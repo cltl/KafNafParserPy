@@ -20,11 +20,23 @@ class Cterm_sentiment:
         #    self.marker = node.get('sentiment_marker','')
         #    self.product_feature = node.get('sentiment product feature','')
     
+    def set_resource(self,r):
+        self.node.set('resource',r)
+    
+    def get_node(self):
+        return self.node
+    
     def get_polarity(self):
         return self.node.get('polarity')
     
+    def set_polarity(self,p):
+        self.node.set('polarity',p)
+    
     def get_modifier(self):
         return self.node.get('sentiment_modifier')
+    
+    def set_modifier(self,sm):
+        self.node.set('sentiment_modifier',sm)
 
     def __str__(self):
         return dump(self.node)
