@@ -8,3 +8,6 @@ from text_data import *
 from entity_data import *
 from features_data import  *
 from opinion_data import *
+from dependency_data import *
+from constituency_data import *
+from references_data import *

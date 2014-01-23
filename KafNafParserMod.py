@@ -242,28 +242,10 @@ class KafNafParser:
 			for opinion in self.opinion_layer.get_opinions():
 				yield opinion
 		
-	def add_external_reference(self,lemma_id, external_ref):
-		self.term_layer.add_external_reference(lemma_id, external_ref)
-		
-
-	def add_linguistic_processor(self, layer ,my_lp):
-		self.header.add_linguistic_processor(layer,my_lp)
-
 	
 	def dump(self,filename=sys.stdout):
 		self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
 		
-	def add_opinion(self,opinion_obj):
-		if self.opinion_layer is None:
-			self.opinion_layer = Copinions()
-			self.root.append(self.opinion_layer.get_node())
-		self.opinion_layer.add_opinion(opinion_obj)
-		
-	def add_wf(self,wf_obj):
-		if self.text_layer is None:
-			self.text_layer = Ctext(type=self.type)
-			self.root.append(self.text_layer.get_node())
-		self.text_layer.add_wf(wf_obj)
 			
 	def remove_opinion_layer(self):
 		if self.opinion_layer is not None:
@@ -286,6 +268,29 @@ class KafNafParser:
 			return self.my_dependency_extractor
 		else:
 			return None
+		
+	## ADDING METHODS
+	def add_wf(self,wf_obj):
+		if self.text_layer is None:
+			self.text_layer = Ctext(type=self.type)
+			self.root.append(self.text_layer.get_node())
+		self.text_layer.add_wf(wf_obj)	
+	
+	def add_opinion(self,opinion_obj):
+		if self.opinion_layer is None:
+			self.opinion_layer = Copinions()
+			self.root.append(self.opinion_layer.get_node())
+		self.opinion_layer.add_opinion(opinion_obj)
+		
+	def add_linguistic_processor(self, layer ,my_lp):
+		self.header.add_linguistic_processor(layer,my_lp)
+		
+	
+	def add_dependency(self,my_dep):
+		if self.dependency_layer is None:
+			self.dependency_layer = Cdependencies()
+			self.root.append(self.dependency_layer.get_node())
+		self.dependency_layer.add_dependency(my_dep)
 		
 		
 			
