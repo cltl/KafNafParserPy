@@ -95,6 +95,13 @@ class CHeader:
     def add_linguistic_processors(self,linpro):
         self.node.append(linpro.get_node())
         
+    def remove_lp(self,layer):
+        for this_node in self.node.findall('linguisticProcessors'):
+            if this_node.get('layer') == layer:
+                self.node.remove(this_node)
+                break
+            
+        
     def add_linguistic_processor(self, layer ,my_lp):
         ## Locate the linguisticProcessor element for taht layer
         found_lp_obj = None

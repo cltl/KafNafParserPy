@@ -74,6 +74,8 @@ class Cterms:
             for node_term in self.__get_node_terms():
                 self.idx[node_term.get('id')] = node_term    
     
+    def get_node(self):
+        return self.node
     
     def to_kaf(self):
         if self.type == 'NAF':

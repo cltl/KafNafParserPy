@@ -253,6 +253,15 @@ class KafNafParser:
 			self.root.remove(this_node)
 			self.opinion_layer = None
 			
+	def remove_term_layer(self):
+		if self.term_layer is not None:
+			this_node = self.term_layer.get_node()
+			self.root.remove(this_node)
+			self.term_layer = None
+			
+			if self.header is not None:
+				self.header.remove_lp('terms')
+			
 	def get_constituency_extractor(self):
 		if self.constituency_layer is not None:	##Otherwise there are no constituens
 			if self.my_constituency_extractor is None:
