@@ -16,6 +16,10 @@ class Cholder:
     
     def set_span(self,my_span):
         self.node.append(my_span.get_node())
+
+    def set_comment(self,c):
+        c = c.replace('--','- -')
+        self.node.insert(0,etree.Comment(c) )
         
     def get_span(self):
         span_obj = self.node.find('span')
@@ -38,6 +42,13 @@ class Ctarget:
         else:
             self.node = node    
     
+    def set_comment(self,c):
+        c = c.replace('--','- -')
+        self.node.insert(0,etree.Comment(c) )
+        
+    def get_comment(self):
+        return self.node_comment
+        
     def set_span(self,my_span):
         self.node.append(my_span.get_node())  
     
@@ -60,7 +71,11 @@ class Cexpression:
         if node is None:
             self.node = etree.Element('opinion_expression')
         else:
-            self.node = node    
+            self.node = node   
+
+    def set_comment(self,c):
+        c = c.replace('--','- -')
+        self.node.insert(0,etree.Comment(c)) 
     
     def set_polarity(self,pol):
         self.node.set('polarity',pol)
