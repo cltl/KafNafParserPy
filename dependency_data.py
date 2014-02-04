@@ -35,7 +35,7 @@ class Cdependency:
         self.node.set('rfunc',f)
         
     def set_comment(self,str_comment):
-        self.node_comment = etree.Comment(str_comment)
+        self.node_comment = etree.Comment(str_comment.replace('--','- -'))
             
     
     def __str__(self):
