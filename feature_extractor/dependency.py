@@ -1,5 +1,6 @@
 from operator import itemgetter
 from VUA_pylib.common import get_max_distr_dict
+import sys
 
 class Cdependency_extractor:
     def __init__(self,knaf_obj):
@@ -9,11 +10,35 @@ class Cdependency_extractor:
         self.prefix_for_reverse = ''
         
        
+        already_linked = {}
         for dep in knaf_obj.get_dependencies():
             term_from = dep.get_from()
             term_to = dep.get_to()
             rfunc = dep.get_function()
             
+            # Dependencies reversed are skipped...
+            #if rfunc.startswith('rhd/') or rfunc.startswith('whd/'):
+            #    continue
+            
+            #  For detecting cycles like:
+            #       <!-- rhd/body(geef,wat) -->  
+            #       <dep from="t19" to="t15" rfunc="rhd/body"/>
+            #       <!-- hd/su(wat,geef) -->
+            #      <dep from="t15" to="t19" rfunc="hd/su"/>
+            
+            '''
+            if term_from in already_linked and term_to in already_linked[term_from]:
+                #There could be a cycle, skip this 
+                print>>sys.stderr,'Skipped from',term_from,'to',term_to,'func',rfunc,' cycle detected'
+                continue
+            else:
+                #Include term_from as linked with term_to for future...
+                if term_to not in already_linked:
+                    already_linked[term_to] = set()
+                already_linked[term_to].add(term_from)
+            ''' 
+                
+                        
 
             
             if term_from in self.relations_for_term:
@@ -21,8 +46,7 @@ class Cdependency_extractor:
             else:
                 self.relations_for_term[term_from] = [(rfunc,term_to)]
         
-            if term_to in self.reverse_relations_for_term:
-                
+            if term_to in self.reverse_relations_for_term:                
                 self.reverse_relations_for_term[term_to].append((self.prefix_for_reverse+rfunc,term_from))
             else:
                 self.reverse_relations_for_term[term_to] = [(self.prefix_for_reverse+rfunc,term_from)]
@@ -44,7 +68,7 @@ class Cdependency_extractor:
             self.sentence_for_termid[termid] = sentence
             ###########################################
             
-            paths = self.__propagate_node(termid)
+            paths = self.__propagate_node(termid,[])
             inversed = self.__reverse_propagate_node(termid)
             
             ##Calculate the top relation for the node, the relation with the main root of the tree
@@ -83,29 +107,35 @@ class Cdependency_extractor:
         
         
         
-    def __propagate_node(self,node):
+    def __propagate_node(self,node,already_propagated=[]):
         paths = []
+        
         relations = self.relations_for_term.get(node)
         if relations is None:   ##Case base
             paths = [[]] 
+        elif node in already_propagated:
+            paths = [[]]
 
         else:    
+            already_propagated.append(node)
             for func, target_node in relations:
-                new_paths = self.__propagate_node(target_node)
+                new_paths = self.__propagate_node(target_node, already_propagated)
                 for new_path in new_paths:
                     new_path.insert(0,(func,target_node))
                     paths.append(new_path)
         return paths
 
-    def __reverse_propagate_node(self,node):
+    def __reverse_propagate_node(self,node,already_propagated=[]):
         paths = []
         relations = self.reverse_relations_for_term.get(node)
         if relations is None:   ##Case base
             paths = [[]] 
-
+        elif node in already_propagated:
+            paths = [[]]
         else:    
+            already_propagated.append(node)
             for func, target_node in relations:
-                new_paths = self.__reverse_propagate_node(target_node)
+                new_paths = self.__reverse_propagate_node(target_node,already_propagated)
                 for new_path in new_paths:
                     new_path.insert(0,(func,target_node))
                     paths.append(new_path)
