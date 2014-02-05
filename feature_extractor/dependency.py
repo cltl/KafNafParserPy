@@ -68,9 +68,13 @@ class Cdependency_extractor:
             self.sentence_for_termid[termid] = sentence
             ###########################################
             
-            paths = self.__propagate_node(termid,[])
-            inversed = self.__reverse_propagate_node(termid)
+            #paths = self.__propagate_node(termid,[])
+            #inversed = self.__reverse_propagate_node(termid)
             
+            ## Due to the change on direction of dependencies...
+            inversed = self.__propagate_node(termid,[])
+            paths = self.__reverse_propagate_node(termid)
+
             ##Calculate the top relation for the node, the relation with the main root of the tree
             if len(inversed) != 0:
                 for ip in inversed:
@@ -158,19 +162,19 @@ class Cdependency_extractor:
                 if term2 in ids1:
                     idx1=ids1.index(term2)
                     hits.append((term2,idx1+0,idx1,0,num1,None))
-                    #print 'Term2',term2,'found in one of the paths1'
                     
             for num2,p2 in enumerate(paths2):
                 ids2 = [ my_id for my_func, my_id in p2]
                 if term1 in p2:
                     idx2=ids2.index(term1)
                     hits.append((term1,0+idx2,0,idx2,None,num2))
-                    #print 'Term1',term1,'found in one of the paths2'
             
             #Pair by pair
             for num1, p1 in enumerate(paths1):
+                #print 'Path1',term1, p1
                 ids1 = [ my_id for my_func, my_id in p1]
                 for num2, p2 in enumerate(paths2):
+                    #print '\t',term2,p2
                     ids2 = [ my_id for my_func, my_id in p2]
                     common_ids = set(ids1) & set(ids2)
                     for common_id in common_ids:
@@ -283,7 +287,6 @@ class Cdependency_extractor:
         shortest_path = None
         for termid in span:
             this_path = self.get_path_to_root(termid)
-           
             ## In case of , or . or whatever, the path to the root usually is None, there are no dependencies...
             if shortest_path is None or (this_path is not None and len(this_path) < len(shortest_path)):
                 shortest_path = this_path
