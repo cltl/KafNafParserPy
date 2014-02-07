@@ -50,6 +50,10 @@ class KafNafParser:
 		self.my_constituency_extractor = None
 		##################################################
 		
+		#######
+		self.dict_tokens_for_tid = None
+		##
+		
 		self.lang = self.root.get('{http://www.w3.org/XML/1998/namespace}lang')
 		self.version = self.root.get('version')
 		
@@ -300,6 +304,17 @@ class KafNafParser:
 			self.dependency_layer = Cdependencies()
 			self.root.append(self.dependency_layer.get_node())
 		self.dependency_layer.add_dependency(my_dep)
+		
+		
+	## EXTRA FUNCTIONS
+	## Gets the token identifiers in the span of a term id
+	def get_dict_tokens_for_termid(self, term_id):
+		if self.dict_tokens_for_tid is None:
+			self.dict_tokens_for_tid = {}
+			for term in self.get_terms():
+				self.dict_tokens_for_tid[term.get_id()] = term.get_span().get_span_ids()
+		
+		return self.dict_tokens_for_tid.get(term_id,[])
 		
 		
 			
