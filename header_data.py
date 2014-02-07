@@ -27,10 +27,13 @@ class Cpublic:
 
    
 class Clp:
-    def __init__(self,node=None):
+    def __init__(self,node=None,name="",version="",timestamp=None):
         self.type = 'KAF/NAF'
         if node is None:
             self.node = etree.Element('lp')
+            self.set_name(name)
+            self.set_version(name)
+            self.set_timestamp(timestamp)
         else:
             self.node = node
             
@@ -46,6 +49,7 @@ class Clp:
             timestamp = time.strftime('%Y-%m-%dT%H:%M:%S%Z')
         self.node.set('timestamp',timestamp)
         
+
     def get_node(self):
         return self.node
         
