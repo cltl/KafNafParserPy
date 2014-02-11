@@ -28,7 +28,8 @@ class Cproperty:
                         
                 
 class Cproperties:
-    def __init__(self,node=None):
+    def __init__(self,node=None,type='NAF'):
+        self.type=type
         if node is None:
             self.node = etree.Element('properties')
         else:
@@ -36,7 +37,7 @@ class Cproperties:
             
     def __iter__(self):
         for prop_node in self.node.findall('property'):
-            yield Cproperty(prop_node)
+            yield Cproperty(prop_node,self.type)
                 
 class Cfeatures:
     def __init__(self,node=None,type='NAF'):
