@@ -9,6 +9,9 @@
 #	+ included dependency layer
 # Ruben 17-dec-2013
 #	+ modified all to red/write NAF and KAF
+#
+# Ruben 21-Feb-2014
+#	+ Included coreference layer
 	
 
 __last_modified  = '17dec2013'
