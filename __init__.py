@@ -11,3 +11,4 @@ from opinion_data import *
 from dependency_data import *
 from constituency_data import *
 from references_data import *
+from coreference_data import *

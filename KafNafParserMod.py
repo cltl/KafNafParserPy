@@ -23,6 +23,7 @@ from opinion_data import *
 from constituency_data import *
 from dependency_data import *
 from feature_extractor import Cdependency_extractor, Cconstituency_extractor
+from coreference_data import *
 
 import sys
 
@@ -44,6 +45,7 @@ class KafNafParser:
 		self.opinion_layer = None
 		self.constituency_layer = None
 		self.dependency_layer = None
+		self.coreference_layer = None
 		
 		## Specific feature extractor for complicated layers
 		self.my_dependency_extractor = None
@@ -95,6 +97,10 @@ class KafNafParser:
 		node_dependency = self.root.find('deps')
 		if node_dependency is not None:
 			self.dependency_layer = Cdependencies(node_dependency)
+			
+		node_coreferences = self.root.find('coreferences')
+		if node_coreferences is not None:
+			self.coreference_layer = Ccoreferences(node_coreferences,type=self.type)
 	
 	def get_type(self):
 		return self.type
@@ -145,6 +151,10 @@ class KafNafParser:
 		## It is not defined on KAF so we assme both will be similar
 		if self.dependency_layer is not None:
 			self.dependency_layer.to_kaf()
+			
+		if self.coreference_layer is not None:
+			self.coreference_layer.to_kaf()
+			
 		
 	def to_naf(self):
 		#Convert the root
@@ -191,6 +201,9 @@ class KafNafParser:
 		## It is not defined on KAF so we assume both will be similar
 		if self.dependency_layer is not None:
 			self.dependency_layer.to_naf()	  #Does nothing...
+			
+		if self.coreference_layer is not None:
+			self.coreference_layer.to_naf()
 		
 
 			
