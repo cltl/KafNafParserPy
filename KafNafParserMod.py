@@ -57,6 +57,7 @@ class KafNafParser:
 		
 		#######
 		self.dict_tokens_for_tid = None
+		self.terms_for_token = None
 		##
 		
 		self.lang = self.root.get('{http://www.w3.org/XML/1998/namespace}lang')
@@ -331,6 +332,25 @@ class KafNafParser:
 				self.dict_tokens_for_tid[term.get_id()] = term.get_span().get_span_ids()
 		
 		return self.dict_tokens_for_tid.get(term_id,[])
+	
+	## Maps a list of token ids to term ids
+	def map_tokens_to_terms(self,list_tokens):
+		if self.terms_for_token is None:
+			self.terms_for_token = {}
+			for term in self.get_terms():
+				termid = term.get_id()
+				token_ids = term.get_span().get_span_ids()
+				for tokid in token_ids:
+					if tokid not in self.terms_for_token:
+						self.terms_for_token[tokid] = [termid]
+					else:
+						self.terms_for_token[tokid].append(termid)
+					
+		ret = set()
+		for my_id in list_tokens:
+			term_ids = self.terms_for_token.get(my_id,[])
+			ret |= set(term_ids)
+		return sorted(list(ret))
 		
 		
 			
