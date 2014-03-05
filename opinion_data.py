@@ -120,9 +120,9 @@ class Copinion:
             
     def get_id(self):
         if self.type == 'NAF':
-            self.node.het('id')
+            return self.node.get('id')
         elif self.type == 'KAF':
-            self.node.get('oid')        
+            return self.node.get('oid')        
         
     def set_holder(self,hol):
         self.node.append(hol.get_node())
