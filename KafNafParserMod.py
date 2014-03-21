@@ -233,8 +233,9 @@ class KafNafParser:
 			yield token
 			
 	def get_terms(self):
-		for term in self.term_layer:
-			yield term
+		if self.term_layer is not None:
+			for term in self.term_layer:
+				yield term
 			
 	def get_token(self,token_id):
 		if self.text_layer is not None:
