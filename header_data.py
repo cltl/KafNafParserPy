@@ -32,7 +32,7 @@ class Clp:
         if node is None:
             self.node = etree.Element('lp')
             self.set_name(name)
-            self.set_version(name)
+            self.set_version(version)
             self.set_timestamp(timestamp)
         else:
             self.node = node
