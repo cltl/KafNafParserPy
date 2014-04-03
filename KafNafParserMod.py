@@ -12,6 +12,7 @@
 #
 # Ruben 21-Feb-2014
 #	+ Included coreference layer
+from KafNafParserPy.features_data import Cfeatures
 	
 
 __last_modified  = '17dec2013'
@@ -274,6 +275,12 @@ class KafNafParser:
 			this_node = self.opinion_layer.get_node()
 			self.root.remove(this_node)
 			self.opinion_layer = None
+			self.header.remove_lp('opinions')
+			
+	def remove_properties(self):
+		if self.features_layer is not None:
+			self.features_layer.remove_properties()
+			
 			
 	def remove_term_layer(self):
 		if self.term_layer is not None:
@@ -323,7 +330,13 @@ class KafNafParser:
 			self.root.append(self.dependency_layer.get_node())
 		self.dependency_layer.add_dependency(my_dep)
 		
-		
+	## Adds a property to the feature layer
+	def add_property(self,label,term_span,pid=None):
+		if self.features_layer is None:
+			self.features_layer = Cfeatures(type=self.type)
+			self.root.append(self.features_layer.get_node())
+		self.features_layer.add_property(pid, label,term_span)
+	
 	## EXTRA FUNCTIONS
 	## Gets the token identifiers in the span of a term id
 	def get_dict_tokens_for_termid(self, term_id):
