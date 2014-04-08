@@ -1,10 +1,9 @@
 from lxml import etree
-from lxml.objectify import dump
+#from lxml.objectify import dump
 
 
 class Cdependency:
     def __init__(self,node=None):
-        self.node_comment = None
         if node is None:
             self.node = etree.Element('dep')
         else:
@@ -34,8 +33,10 @@ class Cdependency:
     def set_function(self,f):
         self.node.set('rfunc',f)
         
-    def set_comment(self,str_comment):
-        self.node_comment = etree.Comment(str_comment.replace('--','- -'))
+
+    def set_comment(self,c):
+        c = c.replace('--','- -')
+        self.node.insert(0,etree.Comment(c) )
             
     
     def __str__(self):
@@ -73,8 +74,5 @@ class Cdependencies:
             
             
     def add_dependency(self,my_dep):
-        node_comment = my_dep.get_node_comment()
-        if node_comment is not None:
-            self.node.append(node_comment)
         self.node.append(my_dep.get_node())
             

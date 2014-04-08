@@ -72,8 +72,8 @@ class Cdependency_extractor:
             #inversed = self.__reverse_propagate_node(termid)
             
             ## Due to the change on direction of dependencies...
-            inversed = self.__propagate_node(termid,[])
-            paths = self.__reverse_propagate_node(termid)
+            inversed = self.__propagate_node(termid,already_propagated=[])
+            paths = self.__reverse_propagate_node(termid,already_propagated=[])
 
             ##Calculate the top relation for the node, the relation with the main root of the tree
             if len(inversed) != 0:
@@ -91,6 +91,7 @@ class Cdependency_extractor:
                         break
                     
             self.paths_for_termid[termid] = paths + inversed
+            
             '''
             print termid
             print 'DIRECT RELS'
@@ -115,6 +116,7 @@ class Cdependency_extractor:
         paths = []
         
         relations = self.relations_for_term.get(node)
+        #print 'Propagate ',node,relations
         if relations is None:   ##Case base
             paths = [[]] 
         elif node in already_propagated:
@@ -132,6 +134,7 @@ class Cdependency_extractor:
     def __reverse_propagate_node(self,node,already_propagated=[]):
         paths = []
         relations = self.reverse_relations_for_term.get(node)
+        #print 'Propagate reverse',node,relations,already_propagated
         if relations is None:   ##Case base
             paths = [[]] 
         elif node in already_propagated:
@@ -153,30 +156,32 @@ class Cdependency_extractor:
         else:
             paths1 = self.paths_for_termid[term1]
             paths2 = self.paths_for_termid[term2]
-            
+
             ##Check if term2 is on paths1 
             hits = [] ## list of (common_id,idx1,idx2,numpath1,numpath2)
             for num1, p1 in enumerate(paths1):
-                
                 ids1 = [ my_id for my_func, my_id in p1]
                 if term2 in ids1:
-                    idx1=ids1.index(term2)
+                    idx1 = ids1.index(term2)
                     hits.append((term2,idx1+0,idx1,0,num1,None))
                     
             for num2,p2 in enumerate(paths2):
                 ids2 = [ my_id for my_func, my_id in p2]
-                if term1 in p2:
+                if term1 in ids2:
                     idx2=ids2.index(term1)
                     hits.append((term1,0+idx2,0,idx2,None,num2))
-            
+                    
             #Pair by pair
             for num1, p1 in enumerate(paths1):
                 #print 'Path1',term1, p1
                 ids1 = [ my_id for my_func, my_id in p1]
+                #print 'IDS1',ids1
                 for num2, p2 in enumerate(paths2):
                     #print '\t',term2,p2
                     ids2 = [ my_id for my_func, my_id in p2]
+                    #print '  IDS2',ids2
                     common_ids = set(ids1) & set(ids2)
+                    #print '  cmmon',common_ids
                     for common_id in common_ids:
                         idx1 = ids1.index(common_id)
                         idx2 = ids2.index(common_id)
@@ -255,6 +260,7 @@ class Cdependency_extractor:
         for term1 in span1:
             for term2 in span2:
                 this_path = self.get_shortest_path(term1, term2)
+                #print term1,term2, this_path
                 if shortest_path is None or (this_path is not None and len(this_path)<len(shortest_path)):
                     shortest_path = this_path
         return shortest_path

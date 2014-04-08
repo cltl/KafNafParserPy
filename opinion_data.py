@@ -111,6 +111,10 @@ class Copinion:
             self.node = etree.Element('opinion')
         else:
             self.node = node  
+            
+    def set_comment(self,c):
+        c = c.replace('--','- -')
+        self.node.insert(0,etree.Comment(c) )
     
     def set_id(self,my_id):
         if self.type == 'NAF':

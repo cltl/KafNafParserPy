@@ -270,6 +270,14 @@ class KafNafParser:
 		self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
 		
 			
+	def remove_dependency_layer(self):
+		if self.dependency_layer is not None:
+			this_node = self.dependency_layer.get_node()
+			self.root.remove(this_node)
+			self.dependency_layer = self.my_dependency_extractor = None
+			self.header.remove_lp('deps')
+			
+			
 	def remove_opinion_layer(self):
 		if self.opinion_layer is not None:
 			this_node = self.opinion_layer.get_node()
@@ -280,6 +288,7 @@ class KafNafParser:
 	def remove_properties(self):
 		if self.features_layer is not None:
 			self.features_layer.remove_properties()
+			self.header.remove_lp('features')
 			
 			
 	def remove_term_layer(self):
