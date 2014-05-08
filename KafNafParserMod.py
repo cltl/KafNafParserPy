@@ -374,6 +374,10 @@ class KafNafParser:
 			term_ids = self.terms_for_token.get(my_id,[])
 			ret |= set(term_ids)
 		return sorted(list(ret))
+	
+	def remove_tokens_of_sentence(self,sentence_id):
+		self.text_layer.remove_tokens_of_sentence(sentence_id)
+		
 		
 		
 			

@@ -88,3 +88,12 @@ class Ctext:
     def add_wf(self,wf_obj):
         self.node.append(wf_obj.get_node())
         
+    def remove_tokens_of_sentence(self,sentence_id):
+        nodes_to_remove = set()
+        for wf in self:
+            if wf.get_sent() == sentence_id:
+                nodes_to_remove.add(wf.get_node())
+        
+        for node in nodes_to_remove:
+            self.node.remove(node)    
+        
