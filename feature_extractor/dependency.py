@@ -63,6 +63,9 @@ class Cdependency_extractor:
             #Calculating the sentence id for the term id
             span_ids = term_obj.get_span().get_span_ids()
             token_obj = knaf_obj.get_token(span_ids[0])
+            if token_obj is None:
+                continue
+                
             sentence = token_obj.get_sent()
             
             self.sentence_for_termid[termid] = sentence

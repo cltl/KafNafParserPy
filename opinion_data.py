@@ -202,3 +202,10 @@ class Copinions:
                          
     def get_node(self):
         return self.node
+        
+    def remove_this_opinion(self,opinion_id):
+        for opi in self.get_opinions():
+            if opi.get_id() == opinion_id:
+                self.node.remove(opi.get_node())
+                break
+                

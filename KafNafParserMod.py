@@ -278,6 +278,10 @@ class KafNafParser:
 			self.header.remove_lp('deps')
 			
 			
+	def remove_this_opinion(self,opinion_id):
+		if self.opinion_layer is not None:
+			self.opinion_layer.remove_this_opinion(opinion_id)
+			
 	def remove_opinion_layer(self):
 		if self.opinion_layer is not None:
 			this_node = self.opinion_layer.get_node()
