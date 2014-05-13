@@ -275,6 +275,8 @@ class KafNafParser:
 			this_node = self.dependency_layer.get_node()
 			self.root.remove(this_node)
 			self.dependency_layer = self.my_dependency_extractor = None
+			
+		if self.header is not None:
 			self.header.remove_lp('deps')
 			
 			
@@ -287,11 +289,15 @@ class KafNafParser:
 			this_node = self.opinion_layer.get_node()
 			self.root.remove(this_node)
 			self.opinion_layer = None
+			
+		if self.header is not None:
 			self.header.remove_lp('opinions')
 			
 	def remove_properties(self):
 		if self.features_layer is not None:
 			self.features_layer.remove_properties()
+			
+		if self.header is not None:
 			self.header.remove_lp('features')
 			
 			
@@ -301,8 +307,8 @@ class KafNafParser:
 			self.root.remove(this_node)
 			self.term_layer = None
 			
-			if self.header is not None:
-				self.header.remove_lp('terms')
+		if self.header is not None:
+			self.header.remove_lp('terms')
 			
 	def get_constituency_extractor(self):
 		if self.constituency_layer is not None:	##Otherwise there are no constituens
