@@ -22,7 +22,15 @@ class CexternalReference:
     
     def set_reference(self,reference):
         self.node.set('reference',reference)
+
+    def get_resource(self):
+        return self.node.get('resource')
         
+    def get_confidence(self):
+        return self.node.get('confidence')
+        
+    def get_reference(self):
+        return self.node.get('reference')        
 
 class CexternalReferences:
     def __init__(self,node=None):
@@ -37,5 +45,8 @@ class CexternalReferences:
     def get_node(self):
         return self.node
         
+    def __iter__(self):
+        for node in self.node.findall('externalRef'):
+            yield CexternalReference(node)
  
     

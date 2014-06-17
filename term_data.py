@@ -61,6 +61,13 @@ class Cterm:
         
     def add_term_sentiment(self,term_sentiment):
         self.node.append(term_sentiment.get_node())
+        
+    def get_external_references(self):
+        ext_ref_node = self.node.find('externalReferences')
+        if ext_ref_node is not None:
+            ext_refs_obj = CexternalReferences(ext_ref_node)
+            for ref in ext_refs_obj:
+                yield ref
             
            
         
