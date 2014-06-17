@@ -1,7 +1,13 @@
 from operator import itemgetter
-from VUA_pylib.common import get_max_distr_dict
 import sys
 
+def get_max_distr_dict(my_dict):
+    vect = my_dict.items()
+    if len(vect) !=0:
+        vect.sort(key=itemgetter(1),reverse=True)
+        return vect[0]
+    return None
+    
 class Cdependency_extractor:
     def __init__(self,knaf_obj):
         self.naf = knaf_obj
