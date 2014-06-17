@@ -11,7 +11,10 @@ class Centity:
             self.node = etree.Element('entity')
         else:
             self.node = node
-            
+
+    def get_node(self):
+        return self.noce
+                    
     def get_id(self):
         if self.type == 'NAF':
             return self.node.get('id')
@@ -33,7 +36,10 @@ class Centities:
         else:
             self.node = node
         
-        
+
+    def get_node(self):
+        return self.node
+                
     def to_kaf(self):
         if self.type == 'NAF':
             for node in self.__get_entity_nodes():

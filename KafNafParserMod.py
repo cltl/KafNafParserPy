@@ -269,6 +269,13 @@ class KafNafParser:
 	def dump(self,filename=sys.stdout):
 		self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
 		
+		
+	def remove_entity_layer(self):
+		if self.entity_layer is not None:
+			this_node = self.entity_layer.get_node()
+			self.root.remove(this_node)
+		if self.header is not None:
+			self.header.remove_lp('entities')
 			
 	def remove_dependency_layer(self):
 		if self.dependency_layer is not None:
@@ -280,6 +287,12 @@ class KafNafParser:
 			self.header.remove_lp('deps')
 			
 			
+	def remove_constituency_layer(self):
+		if self.constituency_layer is not None:
+			this_node = self.constituency_layer.get_node()
+			self.root.remove(this_node)
+		if self.header is not None:
+			self.header.remove_lp('constituents')
 	def remove_this_opinion(self,opinion_id):
 		if self.opinion_layer is not None:
 			self.opinion_layer.remove_this_opinion(opinion_id)
@@ -388,6 +401,8 @@ class KafNafParser:
 	def remove_tokens_of_sentence(self,sentence_id):
 		self.text_layer.remove_tokens_of_sentence(sentence_id)
 		
+	def remove_terms(self,list_term_ids):
+			self.term_layer.remove_terms(list_term_ids)
 		
 		
 			

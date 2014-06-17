@@ -106,7 +106,10 @@ class Cconstituency:
             self.node = etree.Element('constituency')
         else:
             self.node = node
-            
+
+    def get_node(self):
+        return self.node
+                    
     def to_kaf(self):
         pass
     

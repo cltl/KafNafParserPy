@@ -15,6 +15,8 @@ class Cterm:
         else:
             self.node = node
 
+    def get_node(self):
+        return self.node
             
     def get_id(self):
         if self.type == 'NAF':
@@ -109,3 +111,17 @@ class Cterms:
         if term_id in self.idx:
             term_obj = Cterm(self.idx[term_id],self.type)
             term_obj.add_external_reference(external_ref)
+
+    def remove_terms(self,list_term_ids):
+        nodes_to_remove = set()
+        for term in self:
+            if term.get_id() in list_term_ids:
+                nodes_to_remove.add(term.get_node())
+                #For removing the previous comment
+                prv = term.get_node().getprevious()
+                if prv is not None:
+                    nodes_to_remove.add(prv)
+        
+        for node in nodes_to_remove:
+            self.node.remove(node)
+        
