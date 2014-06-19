@@ -50,6 +50,13 @@ class Cpredicate:
     
     def get_confidence(self):
         return self.node.get('confidence')
+        
+    def get_span(self):
+        node = self.node.find('span')
+        if node is not None:
+            return Cspan(node)
+        else:
+            return None
     
     def get_external_references(self):
         node = self.node.find('externalReferences')

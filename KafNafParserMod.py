@@ -343,7 +343,6 @@ class KafNafParser:
 	def get_dependency_extractor(self):
 		if self.dependency_layer is not None:	#otherwise there are no dependencies
 			if self.my_dependency_extractor is None:
-				print>>sys.stderr,'Created dependencies'
 				self.my_dependency_extractor = Cdependency_extractor(self)
 			return self.my_dependency_extractor
 		else:
