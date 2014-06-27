@@ -39,6 +39,9 @@ class Cwf:
     def get_sent(self):
         return self.node.get('sent')
     
+    def get_offset(self):
+        return self.node.get('offset')
+    
     
 class Ctext:
     def __init__(self,node=None,type='NAF'):
