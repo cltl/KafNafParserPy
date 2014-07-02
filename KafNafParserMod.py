@@ -362,6 +362,9 @@ class KafNafParser:
 		self.opinion_layer.add_opinion(opinion_obj)
 		
 	def add_linguistic_processor(self, layer ,my_lp):
+		if self.header is None:
+			self.header = CHeader(type=self.type)		
+			self.root.insert(0,self.header.get_node())
 		self.header.add_linguistic_processor(layer,my_lp)
 		
 	

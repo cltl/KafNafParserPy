@@ -85,7 +85,10 @@ class CHeader:
                 self.node = etree.Element('kafHeader')
         else:
             self.node = node
-    
+
+    def get_node(self):
+        return self.node
+            
     def to_kaf(self):
         if self.type == 'NAF':
             self.node.tag = 'kafHeader'
