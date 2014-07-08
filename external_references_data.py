@@ -30,7 +30,10 @@ class CexternalReference:
         return self.node.get('confidence')
         
     def get_reference(self):
-        return self.node.get('reference')        
+        return self.node.get('reference')       
+    
+    def set_reftype(self,r):
+        self.node.set('reftype',r) 
 
 class CexternalReferences:
     def __init__(self,node=None):

@@ -24,12 +24,29 @@ class Cterm:
         elif self.type == 'KAF':
             return self.node.get('tid')
     
+    def set_id(self,i):
+        if self.type == 'NAF':
+            self.node.set('id',i)
+        elif self.type == 'KAF':
+            self.node.set('tid',i)
+                    
     def get_lemma(self):
         return self.node.get('lemma')
     
+    def set_lemma(self,l):
+        self.node.set('lemma',l)
+    
     def get_pos(self):
         return self.node.get('pos')
-    
+ 
+    def set_pos(self,p):
+        self.node.set('pos',l)
+        
+           
+    def set_type(self,t):
+        self.node.set('type',t)
+        
+            
     def get_morphofeat(self):
         return self.node.get('morphofeat')
     
@@ -39,6 +56,9 @@ class Cterm:
             return Cspan(node_span)
         else:
             return None
+        
+    def set_span(self,this_span):
+        self.node.append(this_span.get_node())
         
     def get_sentiment(self):
         sent_node = self.node.find('sentiment')
@@ -113,6 +133,9 @@ class Cterms:
             return Cterm(self.idx[term_id],self.type)
         else:
             return None
+        
+    def add_term(self,term_obj):
+        self.node.append(term_obj.get_node())
            
     def add_external_reference(self,term_id, external_ref):
         if term_id in self.idx:

@@ -34,10 +34,13 @@ import sys
 
 
 class KafNafParser:
-	def __init__(self,filename):
+	def __init__(self,filename=None,type=None):
 		self.tree = None
-		self.filename = filename
-		self.tree = etree.parse(filename,etree.XMLParser(remove_blank_text=True))
+		if filename is not None:
+			self.filename = filename
+			self.tree = etree.parse(filename,etree.XMLParser(remove_blank_text=True))
+		else:
+			self.tree = etree.ElementTree(etree.Element(type))
 		self.root = self.tree.getroot()
 		self.type = self.root.tag # KAF NAF
 		
@@ -354,6 +357,12 @@ class KafNafParser:
 			self.text_layer = Ctext(type=self.type)
 			self.root.append(self.text_layer.get_node())
 		self.text_layer.add_wf(wf_obj)	
+		
+	def add_term(self,term_obj):
+		if self.term_layer is None:
+			self.term_layer = Cterms(type=self.type)
+			self.root.append(self.term_layer.get_node())
+		self.term_layer.add_term(term_obj)
 	
 	def add_opinion(self,opinion_obj):
 		if self.opinion_layer is None:

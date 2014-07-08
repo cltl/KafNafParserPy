@@ -42,6 +42,12 @@ class Cwf:
     def get_offset(self):
         return self.node.get('offset')
     
+    def set_offset(self,o):
+        self.node.set('offset',o)
+        
+    def set_para(self,p):
+        self.node.set('para',p)
+    
     
 class Ctext:
     def __init__(self,node=None,type='NAF'):
