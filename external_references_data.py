@@ -34,6 +34,9 @@ class CexternalReference:
     
     def set_reftype(self,r):
         self.node.set('reftype',r) 
+        
+    def get_reftype(self):
+        return self.node.get('reftype')
 
 class CexternalReferences:
     def __init__(self,node=None):
