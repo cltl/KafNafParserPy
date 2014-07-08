@@ -40,7 +40,7 @@ class Cterm:
         return self.node.get('pos')
  
     def set_pos(self,p):
-        self.node.set('pos',l)
+        self.node.set('pos',p)
         
            
     def set_type(self,t):
