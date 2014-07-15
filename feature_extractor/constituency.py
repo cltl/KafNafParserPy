@@ -1,13 +1,21 @@
 #!/usr/bin/env python
 
+"""
+This module provides methods for extracting elaborated information from the constituency layer in a KAF/NAF file
+"""
+
 from operator import itemgetter
 
-'''
-Extract information from the contituent layer from a NAF file
-'''
-
 class Cconstituency_extractor:
+    """
+    This is the main class that allows the extraction of information
+    """
     def __init__(self,knaf_obj):
+        """
+        Constructor from a KAfPArser object
+        @type knaf_obj: KAfParser
+        @param knaf_obj: the KAF/NAF object
+        """
         self.naf = knaf_obj
         #Extract terminals, non terminals and edges
         ## Extracted directly from 
@@ -72,6 +80,13 @@ class Cconstituency_extractor:
     
     ### Returns the label of the deepest phrase for the term id (termid as in the term layer)
     def get_deepest_phrase_for_termid(self,termid):
+        """
+        Returns the deepest phrase type for the term identifier and the list of subsumed by the same element
+        @type termid: string
+        @param termid: term identifier
+        @rtype: (string,list)
+        @return: the label and list of terms subsumed
+        """
         terminal_id = self.terminal_for_term.get(termid)
         label = None
         subsumed = []
@@ -84,6 +99,15 @@ class Cconstituency_extractor:
     
     
     def get_least_common_subsumer(self,from_tid,to_tid):
+        """
+        Returns the deepest common subsumer among two terms
+        @type from_tid: string
+        @param from_tid: one term id
+        @type to_tid: string
+        @param to_tid: another term id
+        @rtype: string
+        @return: the term identifier of the common subsumer
+        """
         termid_from = self.terminal_for_term.get(from_tid)
         termid_to = self.terminal_for_term.get(to_tid)
         
@@ -104,6 +128,15 @@ class Cconstituency_extractor:
         
     
     def get_path_from_to(self,from_tid, to_tid):
+        """
+        This function returns the path (in terms of phrase types) from one term to another
+        @type from_tid: string
+        @param from_tid: one term id
+        @type to_tid: string
+        @param to_tid: another term id
+        @rtype: list
+        @return: the path, list of phrase types     
+        """
         shortest_subsumer = self.get_least_common_subsumer(from_tid, to_tid)
         
         #print 'From:',self.naf.get_term(from_tid).get_lemma()
@@ -134,6 +167,13 @@ class Cconstituency_extractor:
                 
             
     def get_path_for_termid(self,termid):
+        """
+        This function returns the path (in terms of phrase types) from one term the root
+        @type termid: string
+        @param termid: one term id
+        @rtype: list
+        @return: the path, list of phrase types     
+        """
         terminal_id = self.terminal_for_term.get(termid)
         paths = self.paths_for_terminal[terminal_id]
         labels = [self.label_for_nonter[nonter] for nonter in paths[0]]
@@ -187,6 +227,13 @@ class Cconstituency_extractor:
             return paths
        
     def get_chunks(self,chunk_type):
+        """
+        Returns the chunks for a certain type
+        @type chunk_type: string
+        @param chunk_type: type of the chunk
+        @rtype: list
+        @return: the chunks for that type
+        """
         for nonter,this_type in self.label_for_nonter.items():
             if this_type == chunk_type:
                 subsumed = self.terms_subsumed_by_nonter.get(nonter)
@@ -194,6 +241,13 @@ class Cconstituency_extractor:
                     yield sorted(list(subsumed))
                     
     def get_all_chunks_for_term(self,termid):
+        """
+        Returns all the chunks in which the term is contained
+        @type termid: string
+        @param termid: the term identifier
+        @rtype: list
+        @return: list of chunks
+        """
         terminal_id = self.terminal_for_term.get(termid)
         paths = self.paths_for_terminal[terminal_id]
         for path in paths:

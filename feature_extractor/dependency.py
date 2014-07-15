@@ -1,3 +1,7 @@
+"""
+This module allows to extract elaborated information from the dependency layer of a KAF/NAF object
+"""
+
 from operator import itemgetter
 import sys
 
@@ -9,7 +13,15 @@ def get_max_distr_dict(my_dict):
     return None
     
 class Cdependency_extractor:
+    """
+    This is the main class for the information extraction
+    """
     def __init__(self,knaf_obj):
+        """
+        The constructor of this class take one kaf/naf object
+        @type knaf_obj: kaf/naf object
+        @param knaf_obj: the kaf/naf object
+        """
         self.naf = knaf_obj
         self.relations_for_term = {}
         self.reverse_relations_for_term = {}
@@ -160,6 +172,15 @@ class Cdependency_extractor:
 
     # Get the shortest path between 2 term ids
     def get_shortest_path(self,term1,term2):
+        """
+        Returns the list of dependency labels of the shortest path between two terms
+        @type term1: string
+        @param term1: the term identifier for one term  
+        @type term2: string
+        @param term2: the term identifier for the other term  
+        @rtype: list
+        @return: list of dependency relations
+        """
         dep_path = None
         if term1 == term2: dep_path = []
         else:
@@ -264,6 +285,15 @@ class Cdependency_extractor:
     
     ## Get the shortest dependency path between 2 sets of spans
     def get_shortest_path_spans(self,span1,span2):
+        """
+        Returns the list of dependency labels of the shortest path between two span of terms
+        @type span1: list
+        @param span1: list of term identifiers
+        @type span2: list
+        @param span2: list of term identifiers 
+        @rtype: list
+        @return: list of dependency relations
+        """
         shortest_path = None
         
         for term1 in span1:
@@ -276,6 +306,13 @@ class Cdependency_extractor:
     
     # Get the dependency path to the sentence root for a term id
     def get_path_to_root(self,termid):
+        """
+        Returns the dependency path from the term to the root
+        @type termid: string
+        @param termid: the term identifier
+        @rtype: list
+        @return: list of dependency relations
+        """        
         # Get the sentence for the term
         root = None
         sentence = self.sentence_for_termid.get(termid)
@@ -299,6 +336,13 @@ class Cdependency_extractor:
     # Get the shortest dependency path to the sentence root for a span of ids
     # extractor.get_shortest_path_to_root_span(['t444','t445','t446'])
     def get_shortest_path_to_root_span(self,span):
+        """
+        Returns the dependency path from a span of terms to the root
+        @type span: list
+        @param span: list of term identifiers
+        @rtype: list
+        @return: list of dependency relations
+        """  
         shortest_path = None
         for termid in span:
             this_path = self.get_path_to_root(termid)
