@@ -3,7 +3,7 @@ KafNafParserPy
 
 Description
 ----------
-Parser for KAF or  NAF files in python.
+Parser for KAF or  NAF files in python. The documentation for all methods and API of this parser can be found at http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy
 
 Installation
 -----------
@@ -114,6 +114,17 @@ python
 >>>        for span_obj in reference: ##Iterator over Creference object
 >>>            print 'span ids',span_obj.get_span_ids()
 ```
+
+
+Documentation
+-------------
+The documentation can be generated automatically by running:
+```shell
+epydoc --config documentation.cfg
+```
+
+This will call to the external program epydoc (http://epydoc.sourceforge.net/) with the provided configuration file, and will create the HTML documents
+for the API in the folder `apidocs`. As said before the already generated documentation can be seen at http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy
 
 Contact
 ------
