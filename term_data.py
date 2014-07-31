@@ -197,7 +197,8 @@ class Cterms:
         else:
             self.node = node
             for node_term in self.__get_node_terms():
-                self.idx[node_term.get('id')] = node_term    
+                term_obj = Cterm(node_term,self.type)
+                self.idx[term_obj.get_id()] = node_term    
     
     def get_node(self):
         """
@@ -270,6 +271,8 @@ class Cterms:
         if term_id in self.idx:
             term_obj = Cterm(self.idx[term_id],self.type)
             term_obj.add_external_reference(external_ref)
+        else:
+            print term_id,' not in self.idx'
 
     def remove_terms(self,list_term_ids):
         """

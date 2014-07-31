@@ -19,6 +19,8 @@ from dependency_data import *
 from feature_extractor import Cdependency_extractor, Cconstituency_extractor
 from coreference_data import *
 from srl_data import *
+from external_references_data import *
+
 import sys
 
 
@@ -610,5 +612,15 @@ class KafNafParser:
 		self.term_layer.remove_terms(list_term_ids)
 		
 		
+	def add_external_reference(self,term_id, external_ref):
+		"""
+		Adds an external reference to the given term identifier
+		@type term_id: string
+		@param term_id: the term identifier
+		@param external_ref: an external reference object
+		@type external_ref: L{CexternalReference}
+		"""
+		if self.term_layer is not None:
+			self.term_layer.add_external_reference(term_id, external_ref)	
 			
 		
