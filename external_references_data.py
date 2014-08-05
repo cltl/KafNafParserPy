@@ -31,6 +31,18 @@ class CexternalReference:
         """
         return self.node
         
+    def get_external_references(self):
+        """
+        Returns the external references of an external reference (can be nested)
+        @rtype: L{CexternalReference}
+        @return: iterator of external references
+        """
+        for node in self.node.findall('externalRef'):
+            yield CexternalReference(node)
+            
+    def add_external_reference(self,ext_ref):
+        self.node.append(ext_ref.get_node())
+                
     def set_resource(self,resource):
         """
         Sets the resource for the element

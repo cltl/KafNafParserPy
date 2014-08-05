@@ -57,6 +57,23 @@ class Crole:
             for ext_ref in ext_refs:
                 yield ext_ref
                 
+    def add_external_reference(self,ext_ref):
+        """
+        Adds an external reference to the role
+        @param ext_ref: the external reference object
+        @type ext_ref: L{CexternalReference}
+        """
+        #check if the externalreferences sublayer exist for the role, and create it in case
+        node_ext_refs = self.node.find('externalReferences')
+        ext_refs = None
+        if node_ext_refs == None:
+            ext_refs = CexternalReferences()
+            self.node.append(ext_refs.get_node())
+        else:
+            ext_refs = CexternalReferences(node_ext_refs)
+        
+        ext_refs.add_external_reference(ext_ref)
+        
     def get_span(self):
         """
         Returns the span of the role
@@ -80,6 +97,7 @@ class Cpredicate:
             self.node = etree.Element('predicate')
         else:
             self.node = node
+                       
             
     def get_node(self):
         """
@@ -145,6 +163,7 @@ class Cpredicate:
         """
         for node_role in self.node.findall('role'):
             yield Crole(node_role)
+            
 
 class Csrl:
     """
@@ -164,6 +183,13 @@ class Csrl:
         else:
             self.node = node
             
+        # Create a mapping role id --> node
+        self.map_roleid_node = {}
+        for predicate in self.get_predicates():
+            for role in predicate.get_roles():
+                self.map_roleid_node[role.get_id()] = role.get_node()
+                
+            
     def get_node(self):
         """
         Returns the node of the element
@@ -180,5 +206,17 @@ class Csrl:
         """
         for node_pre in self.node.findall('predicate'):
             yield Cpredicate(node_pre)
+            
+    def add_external_reference_to_role(self,role_id,ext_ref):
+        """
+        Adds an external reference to a role identifier
+        @param role_id: the role identifier
+        @type role_id: string
+        @param ext_ref: the external reference
+        @type ext_ref: L{CexternalReference}
+        """
+        node_role = self.map_roleid_node[role_id]
+        obj_role = Crole(node_role)
+        obj_role.add_external_reference(ext_ref)
             
             

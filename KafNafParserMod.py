@@ -612,7 +612,7 @@ class KafNafParser:
 		self.term_layer.remove_terms(list_term_ids)
 		
 		
-	def add_external_reference(self,term_id, external_ref):
+	def add_external_reference_to_term(self,term_id, external_ref):
 		"""
 		Adds an external reference to the given term identifier
 		@type term_id: string
@@ -622,5 +622,16 @@ class KafNafParser:
 		"""
 		if self.term_layer is not None:
 			self.term_layer.add_external_reference(term_id, external_ref)	
+			
+	def add_external_reference_to_role(self,role_id,external_ref):
+		"""
+		Adds an external reference to the given role identifier in the SRL layer
+		@type role_id: string
+		@param role_id: the role identifier
+		@param external_ref: an external reference object
+		@type external_ref: L{CexternalReference}
+		"""
+		if self.srl_layer is not None:
+			self.srl_layer.add_external_reference_to_role(role_id,external_ref)
 			
 		
