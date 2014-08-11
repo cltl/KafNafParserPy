@@ -14,13 +14,22 @@ git clone git@github.com:cltl/NafParserPy.git
 ````
 You will need to have installed the lxml library for python (http://lxml.de/)
 
+
+You can add the directory of the package KafNafParserMod in
+sys.path. or you can install the package with the setup.py script:
+
+```
+cd KafNafParserPy
+./setup.py install
+```
+
 Usage
 -----
 
 This library is a python module, that reads a KAF or NAF file and parses it. Basically:
 ```shell
 python
->>> from KafNafParserPy import KafNafParser
+>>> from KafNafParserMod import KafNafParser
 >>> kaf_parser = KafNafParser('my_file.kaf')
 ```
 
