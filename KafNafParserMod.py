@@ -612,6 +612,9 @@ class KafNafParser:
 		self.term_layer.remove_terms(list_term_ids)
 		
 		
+	def add_external_reference(self,term_id, external_ref):
+		self.add_external_reference_to_term(term_id, external_ref)
+
 	def add_external_reference_to_term(self,term_id, external_ref):
 		"""
 		Adds an external reference to the given term identifier
