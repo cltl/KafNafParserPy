@@ -22,6 +22,14 @@ class Cnonterminal:
         else:
             self.node = node
             
+    def get_node(self):
+        """
+        Returns the node of the element
+        @rtype: xml Element
+        @return: the node of the element
+        """
+        return self.node
+            
     def get_id(self):
         """
         Returns the identifier of the object
@@ -30,6 +38,14 @@ class Cnonterminal:
         """
         return self.node.get('id')
     
+    def set_id(self,this_id):
+        """
+        Sets the identifier for the element
+        @param this_id: identifier
+        @type this_id: string
+        """
+        self.node.set('id',this_id)
+    
     def get_label(self):
         """
         Returns the label of the object
@@ -37,6 +53,15 @@ class Cnonterminal:
         @return: the label of the object
         """
         return self.node.get('label')
+    
+    def set_label(self,label):
+        """
+        Sets the label of the non terminal
+        @param label: label
+        @type label: string
+        """
+        self.node.set('label',label)
+        
 
     def __str__(self):
         return dump(self.node)
@@ -58,6 +83,14 @@ class Cterminal:
         else:
             self.node = node
             
+    def get_node(self):
+        """
+        Returns the node of the element
+        @rtype: xml Element
+        @return: the node of the element
+        """
+        return self.node
+            
     def get_id(self):
         """
         Returns the identifier of the object
@@ -65,6 +98,14 @@ class Cterminal:
         @return: identifier of the terminal object
         """
         return self.node.get('id')
+    
+    def set_id(self,this_id):
+        """
+        Sets the identifier for the element
+        @param this_id: identifier
+        @type this_id: string
+        """
+        self.node.set('id',this_id)
     
     def get_span(self):
         """
@@ -74,6 +115,14 @@ class Cterminal:
         """
         span_node = self.node.find('span')
         return Cspan(span_node)
+    
+    def set_span(self,this_span):
+        """
+        Sets the span for the terminal
+        @type this_span: L{Cspan}
+        @param this_span: span
+        """
+        self.node.append(this_span.get_node())
     
     def __str__(self):
         return dump(self.node)
@@ -93,6 +142,30 @@ class Cedge:
         else:
             self.node = node
             
+    def get_node(self):
+        """
+        Returns the node of the element
+        @rtype: xml Element
+        @return: the node of the element
+        """
+        return self.node
+    
+    def get_id(self):
+        """
+        Returns the identifier of the object
+        @rtype: string
+        @return: identifier of the terminal object
+        """
+        return self.node.get('id')
+    
+    def set_id(self,this_id):
+        """
+        Sets the identifier for the element
+        @param this_id: identifier
+        @type this_id: string
+        """
+        self.node.set('id',this_id)
+        
     def __str__(self):
         return dump(self.node)
     
@@ -104,6 +177,14 @@ class Cedge:
         """
         return self.node.get('from')
     
+    def set_from(self,this_from):
+        """
+        Sets the identifier for the element
+        @param this_from: from label
+        @type this_from: string
+        """
+        self.node.set('from',this_from)
+    
     def get_to(self):
         """
         Returns the to label
@@ -111,6 +192,29 @@ class Cedge:
         @return:  the to label of the relation
         """
         return self.node.get('to')
+    
+    def set_to(self,this_to):
+        """
+        Sets the identifier for the element
+        @param this_to: to label
+        @type this_to: string
+        """
+        self.node.set('to',this_to)
+        
+    def set_as_head(self):
+        """
+        Sets the edge as a head element
+        """
+        self.node.set('head','yes')
+        
+    def set_comment(self,c):
+        """
+        Sets the comment for the element
+        @type c: string
+        @param c: comment for the element
+        """
+        c = c.replace('--','- -')
+        self.node.insert(0,etree.Comment(c) )
             
 
 
@@ -129,6 +233,13 @@ class Ctree:
         else:
             self.node = node
             
+    def get_node(self):
+        """
+        Returns the node of the element
+        @rtype: xml Element
+        @return: the node of the element
+        """
+        return self.node
 
     def __str__(self):
         return dump(self.node)
@@ -176,7 +287,15 @@ class Ctree:
         """
         for edge_node in self.__get_edge_nodes():
             yield Cedge(edge_node)
-    ##################################          
+    ##################################  
+    
+    def append_element(self,this_element):
+        """
+        Appends a node to the tree, could be a terminal or non terminal or edge
+        @param this_element: the element to be appended
+        @type this_element: object
+        """
+        self.node.append(this_element.get_node())        
             
     
 
@@ -225,3 +344,11 @@ class Cconstituency:
             
     def __str__(self):
         return dump(self.node)
+    
+    def add_tree(self,this_tree):
+        """
+        Adds a tree to the constituency layer
+        @param this_tree: the constituency tree
+        @type this_tree: L{Ctree}
+        """
+        self.node.append(this_tree.get_node())

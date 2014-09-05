@@ -536,6 +536,18 @@ class KafNafParser:
 			self.root.append(self.dependency_layer.get_node())
 		self.dependency_layer.add_dependency(my_dep)
 		
+		
+	def add_constituency_tree(self,my_tree):
+		"""
+		Adds a constituency tree to the constituency layer
+		@type my_tree: L{Ctree}
+		@param my_tree: the constituency tree object
+		"""
+		if self.constituency_layer is None:
+			self.constituency_layer = Cconstituency()
+			self.root.append(self.constituency_layer.get_node())
+		self.constituency_layer.add_tree(my_tree)
+		
 	## Adds a property to the feature layer
 	def add_property(self,label,term_span,pid=None):
 		"""
