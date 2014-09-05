@@ -106,6 +106,14 @@ class Cterm:
         """
         return self.node.get('morphofeat')
     
+    def set_morphofeat(self,m):
+        """
+        Sets the morphofeat attribute
+        @type m: string
+        @param m: the morphofeat value
+        """
+        self.node.set('morphofeat',m)
+        
     def get_span(self):
         """
         Returns the span object of the term
