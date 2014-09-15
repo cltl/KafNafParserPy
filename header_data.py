@@ -48,10 +48,10 @@ class Clp:
     """
     This class encapsulates the linguistic processor element in the header
     """
-    def __init__(self,node=None,name="",version="",timestamp=None):
+    def __init__(self,node=None,name="",version="",timestamp=None,btimestamp=None,etimestamp=None):
         """
         Constructor of the object
-        @type node: xml Element or None (to create and empty one)
+        @type node: xml Element or None (to create an empty one)
         @param node:  this is the node of the element. If it is None it will create a new object
         @type name: string
         @param name: the name of the linguistic processor
@@ -59,6 +59,8 @@ class Clp:
         @param version: the version of the linguistic processor
         @type timestamp: string
         @param timestamp: the timestamp, or None to set it to the current time
+        @param btimestamp: the begin timestamp, or None to set it to the current time (NOTE: only use None if header created at begining of process!)
+        @param etimestamp: the end timestamp, or None to set it (NOTE: only use None if header created at the end of the process!)
         """
         self.type = 'KAF/NAF'
         if node is None:
@@ -66,6 +68,8 @@ class Clp:
             self.set_name(name)
             self.set_version(version)
             self.set_timestamp(timestamp)
+            self.set_beginTimestamp(btimestamp)
+            self.set_endTimestamp(etimestamp)
         else:
             self.node = node
             
@@ -95,7 +99,32 @@ class Clp:
             import time
             timestamp = time.strftime('%Y-%m-%dT%H:%M:%S%Z')
         self.node.set('timestamp',timestamp)
-        
+
+    def set_beginTimestamp(self,btimestamp=None):
+        """
+        Set the begin timestamp of the linguistic processor, set to None for the current time
+        @type timestamp:string
+        @param timestamp: version of the linguistic processor
+        """
+        if btimestamp is None:
+            import time
+            btimestamp = time.strftime('%Y-%m-%dT%H:%M:%S%Z')
+        self.node.set('beginTimestamp',btimestamp)
+
+    def set_endTimestamp(self,etimestamp=None):
+        """
+        Set the end timestamp of the linguistic processor, set to None for the current time
+        @type timestamp:string
+        @param timestamp: version of the linguistic processor
+        """
+        if etimestamp is None:
+            import time
+            etimestamp = time.strftime('%Y-%m-%dT%H:%M:%S%Z')
+        self.node.set('endTimestamp',etimestamp)
+
+
+
+
 
     def get_node(self):
         """
