@@ -38,7 +38,13 @@ class Ctarget:
         @param this_id: the id for the element
         """
         self.node.set('id',this_id)
-        
+    
+    def set_head(self,head):
+        """
+        Sets value of head
+        """
+        self.node.set('head',head)
+    
     def get_node(self):
         """
         Returns the node of the element
@@ -84,7 +90,17 @@ class Cspan:
             new_target = Ctarget()
             new_target.set_id(this_id)
             self.node.append(new_target.get_node())
-            
+
+    def create_from_targets(self,list_targs):
+        """
+        Adds new targets to the span that are defined in a list
+        @type list_ids: list
+        @param list_ids: list of Ctargets
+        """
+        for this_target in list_targs:
+            self.node.append(this_target.get_node())
+    
+
     def add_target(self,target):
         """
         Adds a target object to the span
@@ -93,6 +109,7 @@ class Cspan:
         """
         self.node.append(target.get_node())
                    
+
 
     def __get_target_nodes(self):
         for target_node in self.node.findall('target'):

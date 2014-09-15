@@ -101,6 +101,23 @@ class Cwf:
         @param offset: the offset
         """
         self.node.set('offset',o)
+
+    def get_length(self):
+        """
+        Returns the offset of the token
+        @rtype: string
+        @return: the offset
+        """
+        return self.node.get('length')
+    
+
+    def set_length(self,length):
+        """
+        Set the offset for the token
+        @type offset: string
+        @param offset: the offset
+        """
+        self.node.set('length',o)
         
     def set_para(self,p):
         """

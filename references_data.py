@@ -47,3 +47,14 @@ class Creferences:
         new_span.create_from_ids(term_span)
         self.node.append(new_span.get_node())
 
+    def get_span(self):
+        """
+        Returns the span object of the reference
+        @rtype: L{Cspan}
+        @return: the term span
+        """
+        node_span = self.node.find('span')
+        if node_span is not None:
+            return Cspan(node_span)
+        else:
+            return None

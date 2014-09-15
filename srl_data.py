@@ -10,7 +10,7 @@ class Crole:
     """
     This class encapsulates a single role in the layer
     """
-    def __init__(self,node):
+    def __init__(self,node=None):
         """
         Constructor of the object
         @type node: xml Element or None (to create and empty one)
@@ -37,6 +37,13 @@ class Crole:
         """
         return self.node.get('id')
     
+    
+    def set_id(self, i):
+        """
+        Sets the identifier of the role
+        """
+        self.node.set('id',i)
+    
     def get_sem_role(self):
         """
         Returns the semRole attribute of the element
@@ -44,6 +51,13 @@ class Crole:
         @return: the semRole of the element
         """
         return self.node.get('semRole')
+    
+    
+    def set_sem_role(self, sRole):
+        """
+        Sets the semantic role
+        """
+        self.node.set('semRole',sRole)
     
     def get_external_references(self):
         """
@@ -85,9 +99,20 @@ class Crole:
             return Cspan(node)
         else:
             return None
-    
+                
+                
+    def set_span(self, this_span):
+        """
+        Sets the span for the role
+        """
+        self.node.append(this_span.get_node())
+                         
 class Cpredicate:
-    def __init__(self,node):
+    """
+    Class defining predicates
+    """
+                         
+    def __init__(self,node=None):
         """
         Constructor of the object
         @type node: xml Element or None (to create and empty one)
@@ -114,6 +139,12 @@ class Cpredicate:
         @return: the identifier of the element
         """
         return self.node.get('id')
+    
+    def set_id(self, i):
+        """
+        Assigns the identifier to the element
+        """
+        self.node.set('id',i)
     
     def get_uri(self):
         """
@@ -142,7 +173,13 @@ class Cpredicate:
             return Cspan(node)
         else:
             return None
-    
+
+    def set_span(self, this_span):
+        """
+        Sets the span for the predicate
+        """
+        self.node.append(this_span.get_node())
+
     def get_external_references(self):
         """
         Iterator to get the external references
@@ -164,6 +201,20 @@ class Cpredicate:
         for node_role in self.node.findall('role'):
             yield Crole(node_role)
             
+    def add_roles(self, list_of_roles):
+        """
+            Adds a list of roles to the predicate
+        """
+        for role in list_of_roles:
+            role_node = role.get_node()
+            self.node.append(role_node)
+
+    def add_role(self, role_obj):
+        """
+            Add a role to the predicate
+        """
+        role_node = role_obj.get_node()
+        self.node.append(role_node)
 
 class Csrl:
     """
@@ -178,10 +229,14 @@ class Csrl:
         @param type: the type of the object (KAF or NAF)
         """
         self.type = type
+        self.idx = {}
         if node is None:
             self.node = etree.Element('srl')
         else:
             self.node = node
+            for node_pred in self.__get_node_preds():
+                pred_obj = Cpredicate(node_pred)
+                self.idx[pred_obj.get_id()] = node_pred
             
         # Create a mapping role id --> node
         self.map_roleid_node = {}
@@ -197,6 +252,10 @@ class Csrl:
         @return: the node of the element
         """
         return self.node
+                         
+    def __get_node_preds(self):
+        for node_p in self.node.findall('predicate'):
+            yield node_p
     
     def get_predicates(self):
         """
@@ -220,3 +279,15 @@ class Csrl:
         obj_role.add_external_reference(ext_ref)
             
             
+    def add_predicate(self, pred_obj):
+        """
+        Adds a predicate object to the layer
+        """
+        pred_id = pred_obj.get_id()
+        if not pred_id in self.idx:
+            pred_node = pred_obj.get_node()
+            self.node.append(pred_node)
+            self.idx[pred_id] = pred_node
+        else:
+            #FIXME we want new id rather than ignoring the element
+            print 'Error: trying to add new element, but id has already been given'

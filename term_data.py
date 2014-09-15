@@ -105,6 +105,14 @@ class Cterm:
         @return: the term morphofeat feature
         """
         return self.node.get('morphofeat')
+
+    def set_morphofeat(self,mf):
+        """
+        Sets the type for the lemma
+        @type t: string
+        @param t: type for the term
+        """
+        self.node.set('morphofeat',mf)
     
     def get_span(self):
         """

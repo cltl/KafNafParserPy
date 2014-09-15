@@ -111,6 +111,15 @@ class Cedge:
         @return:  the to label of the relation
         """
         return self.node.get('to')
+
+    def get_head(self):
+        """
+        Returns whether the from is head of the constituent (None if not)
+        @rtype: string
+        @return:  the to label of the relation
+        """
+        
+        return self.node.get('head')
             
 
 
@@ -163,6 +172,18 @@ class Ctree:
             yield Cterminal(t_node)
     ##################################            
             
+
+    def get_terminals_as_list(self):
+        """
+        Iterator that returns all the terminal objects
+        @rtype: L{Cterminal}
+        @return: terminal objects as list
+        """
+        terminalList = []
+        for t_node in self.__get_t_nodes():
+            terminalList.append(Cterminal(t_node))
+        return terminalList
+
      ## Fore getting  edges
     def __get_edge_nodes(self):
         for t_node in self.node.findall('edge'):
@@ -176,6 +197,17 @@ class Ctree:
         """
         for edge_node in self.__get_edge_nodes():
             yield Cedge(edge_node)
+
+    def get_edges_as_list(self):
+        """
+        Iterator that returns all the edge objects
+        @rtype: L{Cedge}
+        @return: terminal objects (iterator)
+        """
+        my_edges = []
+        for edge_node in self.__get_edge_nodes():
+            my_edges.append(Cedge(edge_node))
+        return my_edges
     ##################################          
             
     
