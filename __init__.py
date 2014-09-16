@@ -12,3 +12,4 @@ from dependency_data import *
 from constituency_data import *
 from references_data import *
 from coreference_data import *
+from time_data import *

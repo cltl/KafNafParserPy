@@ -104,18 +104,18 @@ class Cwf:
 
     def get_length(self):
         """
-        Returns the offset of the token
+        Returns the length of the token
         @rtype: string
-        @return: the offset
+        @return: the length
         """
         return self.node.get('length')
     
 
     def set_length(self,length):
         """
-        Set the offset for the token
-        @type offset: string
-        @param offset: the offset
+        Set the length for the token
+        @type length: string
+        @param length: the length
         """
         self.node.set('length',o)
         

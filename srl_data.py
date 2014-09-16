@@ -41,6 +41,8 @@ class Crole:
     def set_id(self, i):
         """
         Sets the identifier of the role
+        @param i: the identififier of the role
+        @type i: string
         """
         self.node.set('id',i)
     
@@ -56,6 +58,8 @@ class Crole:
     def set_sem_role(self, sRole):
         """
         Sets the semantic role
+        @param sRole: the semantic role
+        @type sRole: string
         """
         self.node.set('semRole',sRole)
     
@@ -104,6 +108,8 @@ class Crole:
     def set_span(self, this_span):
         """
         Sets the span for the role
+        @type this_span: L{Cspan}
+        @param this_span: the span object
         """
         self.node.append(this_span.get_node())
                          
@@ -143,6 +149,8 @@ class Cpredicate:
     def set_id(self, i):
         """
         Assigns the identifier to the element
+        @param i: the identififier of the predicate
+        @type i: string
         """
         self.node.set('id',i)
     
@@ -154,6 +162,14 @@ class Cpredicate:
         """
         return self.node.get('uri')
     
+    def set_uri(self, uri):
+        """
+        Assigns the URI to the element
+        @param uri: the uri of the predicate
+        @type uri: string
+        """
+        self.node.set('uri',uri)
+    
     def get_confidence(self):
         """
         Returns the confidence of the element
@@ -161,6 +177,14 @@ class Cpredicate:
         @return: the confidence of the element
         """
         return self.node.get('confidence')
+
+    def set_confidence(self, conf):
+        """
+        Assigns the confidence to the element
+        @param conf: the confidence of the predicate
+        @type conf: string
+        """
+        self.node.set('uri',uri)
         
     def get_span(self):
         """
@@ -177,6 +201,8 @@ class Cpredicate:
     def set_span(self, this_span):
         """
         Sets the span for the predicate
+        @type this_span: L{Cspan}
+        @param this_span: the span object
         """
         self.node.append(this_span.get_node())
 
@@ -203,7 +229,9 @@ class Cpredicate:
             
     def add_roles(self, list_of_roles):
         """
-            Adds a list of roles to the predicate
+        Adds a list of roles to the predicate
+        @type list_of_roles: list
+        @param list_of_roles: list of roles
         """
         for role in list_of_roles:
             role_node = role.get_node()
@@ -211,7 +239,9 @@ class Cpredicate:
 
     def add_role(self, role_obj):
         """
-            Add a role to the predicate
+        Add a role to the predicate
+        @type role_obj: L{Crole}
+        @param role_obj: the role object
         """
         role_node = role_obj.get_node()
         self.node.append(role_node)
@@ -282,6 +312,8 @@ class Csrl:
     def add_predicate(self, pred_obj):
         """
         Adds a predicate object to the layer
+        @type pred_obj: L{Cpredicate}
+        @param pred_obj: the predicate object
         """
         pred_id = pred_obj.get_id()
         if not pred_id in self.idx:

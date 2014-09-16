@@ -106,14 +106,7 @@ class Cterm:
         """
         return self.node.get('morphofeat')
 
-    def set_morphofeat(self,mf):
-        """
-        Sets the type for the lemma
-        @type t: string
-        @param t: type for the term
-        """
-        self.node.set('morphofeat',mf)
-    
+   
     def set_morphofeat(self,m):
         """
         Sets the morphofeat attribute

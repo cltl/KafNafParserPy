@@ -94,8 +94,8 @@ class Cspan:
     def create_from_targets(self,list_targs):
         """
         Adds new targets to the span that are defined in a list
-        @type list_ids: list
-        @param list_ids: list of Ctargets
+        @type list_targs: list
+        @param list_targs: list of Ctargets
         """
         for this_target in list_targs:
             self.node.append(this_target.get_node())

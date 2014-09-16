@@ -103,8 +103,8 @@ class Clp:
     def set_beginTimestamp(self,btimestamp=None):
         """
         Set the begin timestamp of the linguistic processor, set to None for the current time
-        @type timestamp:string
-        @param timestamp: version of the linguistic processor
+        @type btimestamp: string
+        @param btimestamp: version of the linguistic processor
         """
         if btimestamp is None:
             import time
@@ -114,8 +114,8 @@ class Clp:
     def set_endTimestamp(self,etimestamp=None):
         """
         Set the end timestamp of the linguistic processor, set to None for the current time
-        @type timestamp:string
-        @param timestamp: version of the linguistic processor
+        @type etimestamp: string
+        @param etimestamp: version of the linguistic processor
         """
         if etimestamp is None:
             import time
