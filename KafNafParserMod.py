@@ -5,7 +5,8 @@ different layers as python objects. It also allows to create a new KAF/NAF file 
 """
 	
 
-__last_modified  = '17dec2013'
+__last_modified  = '16sep2014'
+__version = '1.0'
 
 from lxml import etree
 from header_data import *
