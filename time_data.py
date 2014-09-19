@@ -62,8 +62,8 @@ class Ctime:
     def set_type(self, t):
         """
         Sets the type for the timex
-        @type type: string
-        @param type: timex type
+        @type t: string
+        @param t: timex type
         """
         self.node.set('type',t)
 
@@ -81,8 +81,8 @@ class Ctime:
     def set_value(self, v):
         """
         Sets the value for the timex
-        @type value: string
-        @param type: timex value
+        @type v: string
+        @param v: timex value
         """
         self.node.set('value',v)
 
