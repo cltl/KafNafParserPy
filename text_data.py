@@ -100,7 +100,7 @@ class Cwf:
         @type offset: string
         @param offset: the offset
         """
-        self.node.set('offset',o)
+        self.node.set('offset',offset)
 
     def get_length(self):
         """

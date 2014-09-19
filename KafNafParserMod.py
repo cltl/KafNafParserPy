@@ -128,6 +128,22 @@ class KafNafParser:
 		if node_raw is not None:
 			self.raw = node_raw.text
 	
+	def set_language(self,l):
+		"""
+		Sets the language to the KAF root element
+		@param l: the language code
+		@type l: string
+		"""
+		self.root.set('{http://www.w3.org/XML/1998/namespace}lang',l)
+		                
+	def set_version(self,v):
+                """
+                Sets the language to the KAF root element
+		@param v: the language code
+		@type v: string
+		"""
+		self.root.set('version',v) 
+		
 	def get_type(self):
 		"""
 		Returns the type (NAF/KAF) of the object
