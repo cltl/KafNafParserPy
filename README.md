@@ -131,6 +131,7 @@ Contact
 
 * Ruben Izquierdo Bevia
 * ruben.izquierdobevia@vu.nl
+* http://rubenizquierdobevia.com/
 * Vrije University of Amsterdam
 
 License
