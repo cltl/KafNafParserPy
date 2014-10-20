@@ -4,6 +4,7 @@ This is a parser for the header section of KAF/NAF
 
 from lxml import etree
 import time
+import platform 
 
 class CfileDesc:
     """
@@ -70,6 +71,10 @@ class Clp:
             self.set_timestamp(timestamp)
             self.set_beginTimestamp(btimestamp)
             self.set_endTimestamp(etimestamp)
+            
+            #For the hostnameimport platform
+            self.node.set('hostname',platform.node())
+            
         else:
             self.node = node
             
