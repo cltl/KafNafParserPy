@@ -5,6 +5,7 @@ This module provides methods for extracting elaborated information from the cons
 """
 
 from operator import itemgetter
+from collections import defaultdict
 
 class Cconstituency_extractor:
     """
@@ -208,6 +209,40 @@ class Cconstituency_extractor:
         
      
         
+    def get_deepest_subsumer(self,list_terms):
+        '''
+        Returns the labels of the deepest node that subsumes all the terms in the list of terms id's provided
+        '''
+        
+        #To store with how many terms every nonterminal appears
+        count_per_no_terminal = defaultdict(int)
+        
+        #To store the total deep of each noter for all the term ides (as we want the deepest)
+        total_deep_per_no_terminal = defaultdict(int)
+        for term_id in list_terms:
+            terminal_id = self.terminal_for_term.get(term_id)
+            path = self.paths_for_terminal[terminal_id][0]
+            print term_id, path
+            for c,noter in enumerate(path):
+                count_per_no_terminal[noter] += 1
+                total_deep_per_no_terminal[noter] += c
+                
+                
+        deepest_and_common = None
+        deepest = 10000
+        for noterid, this_total in total_deep_per_no_terminal.items():
+            if count_per_no_terminal.get(noterid,-1) == len(list_terms):    ##Only the nontarms that ocurr with all the term ids in the input
+                if this_total < deepest:
+                    deepest = this_total
+                    deepest_and_common = noterid
+                    
+        label = None
+        if deepest_and_common is not None:
+            label = self.label_for_nonter[deepest_and_common]
+        return deepest_and_common, label 
+        #return label 
+    
+    
     ##Recursive function
     ## Propagates the node through all the relations extracte from the edges information
     ## It returns a list of lists, one for each path
