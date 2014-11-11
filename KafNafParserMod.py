@@ -742,9 +742,9 @@ class KafNafParser:
 			
 	def add_external_reference_to_entity(self,entity_id, external_ref):
 		"""
-		Adds an external reference to the given role identifier in the SRL layer
-		@type role_id: string
-		@param role_id: the role identifier
+		Adds an external reference to the given entity identifier in the entity layer
+		@type entity_id: string
+		@param entity_id: the entity identifier
 		@param external_ref: an external reference object
 		@type external_ref: L{CexternalReference}
 		"""

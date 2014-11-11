@@ -111,13 +111,13 @@ class Cwf:
         return self.node.get('length')
     
 
-    def set_length(self,l):
+    def set_length(self,length):
         """
         Set the length for the token
         @type length: string
         @param length: the length
         """
-        self.node.set('length',l)
+        self.node.set('length',length)
         
     def set_para(self,p):
         """
