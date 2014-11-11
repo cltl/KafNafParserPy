@@ -6,6 +6,7 @@ Parser for the entity layer in KAF/NAF
 from lxml import etree
 from lxml.objectify import dump
 from references_data import *
+from external_references_data import *
     
     
 class Centity:
@@ -32,7 +33,7 @@ class Centity:
         @rtype: xml Element
         @return: the node of the element
         """
-        return self.noce
+        return self.node
                     
     def get_id(self):
         """
@@ -61,6 +62,36 @@ class Centity:
         """
         for ref_node in self.node.findall('references'):
             yield Creferences(ref_node)
+            
+    def add_external_reference(self,ext_ref):
+        """
+        Adds an external reference to the entity
+        @param ext_ref: the external reference object
+        @type ext_ref: L{CexternalReference}
+        """
+        #check if the externalreferences sublayer exist for the role, and create it in case
+        node_ext_refs = self.node.find('externalReferences')
+        ext_refs = None
+        if node_ext_refs == None:
+            ext_refs = CexternalReferences()
+            self.node.append(ext_refs.get_node())
+        else:
+            ext_refs = CexternalReferences(node_ext_refs)
+        
+        ext_refs.add_external_reference(ext_ref)  
+        
+        
+    def get_external_references(self):
+        """
+        Returns the external references of the element
+        @rtype: L{CexternalReference}
+        @return: the external references (iterator)
+        """
+        node = self.node.find('externalReferences')
+        if node is not None:
+            ext_refs = CexternalReferences(node)
+            for ext_ref in ext_refs:
+                yield ext_ref    
     
     
     
@@ -77,10 +108,30 @@ class Centities:
         @param type: the type of the object (KAF or NAF)
         """
         self.type = type
+        self.map_entity_id_to_node = {}
         if node is None:
             self.node = etree.Element('entities')
         else:
             self.node = node
+            for entity_obj in self:
+                self.map_entity_id_to_node[entity_obj.get_id()] = entity_obj.get_node()
+                                
+            
+        
+    def add_external_reference_to_entity(self,entity_id,ext_ref):
+        """
+        Adds an external reference to a entity specified by the entity identifier
+        @param entity_id: the entity identifier
+        @type entity_id: string
+        @param ext_ref: the external reference
+        @type ext_ref: L{CexternalReference}
+        """
+        node_entity = self.map_entity_id_to_node.get(entity_id)
+        if node_entity is not None:
+            entity = Centity(node_entity,self.type)
+            entity.add_external_reference(ext_ref)
+        else:
+            print>>sys.stderr,'Trying to add a reference to the entity',entity_id,'but can not be found in this file'
         
 
     def get_node(self):

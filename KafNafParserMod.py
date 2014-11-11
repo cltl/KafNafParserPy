@@ -4,9 +4,14 @@ This module implements a parser for KAF or NAF files. It allows to parse an inpu
 different layers as python objects. It also allows to create a new KAF/NAF file or add new information to an existing one
 """
 	
+############### Changes   #####################
+# v1.1 --> added functions to add external refs to entities and to read them
+#
+################################################
 
-__last_modified  = '16sep2014'
-__version = '1.0'
+
+__last_modified  = '11nov2014'
+__version = '1.1'
 
 from lxml import etree
 from header_data import *
@@ -734,5 +739,16 @@ class KafNafParser:
 		"""
 		if self.srl_layer is not None:
 			self.srl_layer.add_external_reference_to_role(role_id,external_ref)
+			
+	def add_external_reference_to_entity(self,entity_id, external_ref):
+		"""
+		Adds an external reference to the given role identifier in the SRL layer
+		@type role_id: string
+		@param role_id: the role identifier
+		@param external_ref: an external reference object
+		@type external_ref: L{CexternalReference}
+		"""
+		if self.entity_layer is not None:
+			self.entity_layer.add_external_reference_to_entity(entity_id,external_ref)
 			
 		
