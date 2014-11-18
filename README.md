@@ -3,7 +3,10 @@ KafNafParserPy
 
 Description
 ----------
-Parser for KAF or  NAF files in python. The documentation for all methods and API of this parser can be found at http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy
+Parser for KAF or  NAF files in python. The documentation for all methods and API of this parser can be found at:
+
+1. HTML: [http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy](http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy)
+2. PDF: [http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy/api.pdf](http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy/api.pdf)
 
 Installation
 -----------

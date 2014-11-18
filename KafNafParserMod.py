@@ -1,7 +1,13 @@
-
 """
 This module implements a parser for KAF or NAF files. It allows to parse an input KAF/NAF file and extract information from the
 different layers as python objects. It also allows to create a new KAF/NAF file or add new information to an existing one
+
+@author: U{Ruben Izquierdo Bevia<rubenizquierdobevia.com>}
+@version: 0.1
+@contact: U{ruben.izquierdobevia@vu.nl<mailto:ruben.izquierdobevia@vu.nl>} 
+@contact: U{rubensanvi@gmail.com<mailto:rubensanvi@gmail.com>}
+@contact: U{rubenizquierdobevia.com}
+@since: 11-Nov-2014
 """
 	
 ############### Changes   #####################
@@ -10,8 +16,9 @@ different layers as python objects. It also allows to create a new KAF/NAF file 
 ################################################
 
 
-__last_modified  = '11nov2014'
-__version = '1.1'
+__last_modified__  = '11nov2014'
+__version__ = '1.1'
+__author__ = 'Ruben Izquierdo Bevia'
 
 from lxml import etree
 from header_data import *
