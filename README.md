@@ -8,6 +8,9 @@ Parser for KAF or  NAF files in python. The documentation for all methods and AP
 1. HTML: [http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy](http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy)
 2. PDF: [http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy/api.pdf](http://kyoto.let.vu.nl/~izquierdo/api/KafNafParserPy/api.pdf)
 
+You can also take a look at this presentation on [slideshare](http://www.slideshare.net/rubenizquierdobevia/kafnafparserpy-a-python-library-for-parsingcreating-kaf-and-naf-files)
+ about this library ([see the presentation](http://www.slideshare.net/rubenizquierdobevia/kafnafparserpy-a-python-library-for-parsingcreating-kaf-and-naf-files)).
+
 Installation
 -----------
 Clone the repository from github
