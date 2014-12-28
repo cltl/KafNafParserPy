@@ -58,3 +58,13 @@ class Creferences:
             return Cspan(node_span)
         else:
             return None
+    
+    def set_span(self,this_span):
+        """
+        Sets the span for the lemma
+        @type this_span: L{Cspan}
+        @param this_span: lemma identifier
+        """
+        self.node.append(this_span.get_node())
+        
+        

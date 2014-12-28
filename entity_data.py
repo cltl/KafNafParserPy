@@ -27,6 +27,15 @@ class Centity:
         else:
             self.node = node
 
+    def set_comment(self,c):
+        """
+        Sets the comment for the element
+        @type c: string
+        @param c: comment for the element
+        """
+        c = c.replace('--','- -')
+        self.node.insert(0,etree.Comment(c))
+        
     def get_node(self):
         """
         Returns the node of the element
@@ -45,7 +54,18 @@ class Centity:
             return self.node.get('id')
         elif self.type == 'KAF':
             return self.node.get('eid')
-    
+
+    def set_id(self,i):
+        """
+        Sets the identifier for the entity
+        @type i: string
+        @param i: entity identifier
+        """
+        if self.type == 'NAF':
+            self.node.set('id',i)
+        elif self.type == 'KAF':
+            self.node.set('eid',i)
+                
     def get_type(self):
         """
         Returns the type of the entity
@@ -54,6 +74,9 @@ class Centity:
         """
         return self.node.get('type')
     
+    def set_type(self,t):
+        self.node.set('type',t)
+        
     def get_references(self):
         """
         Returns the references of the entity
@@ -62,7 +85,15 @@ class Centity:
         """
         for ref_node in self.node.findall('references'):
             yield Creferences(ref_node)
-            
+
+    def add_reference(self,ref):
+        """
+        Adds a reference to the layer
+        @type ref: L{Creferences}
+        @param ref: a reference object  
+        """
+        self.node.append(ref.get_node())
+                    
     def add_external_reference(self,ext_ref):
         """
         Adds an external reference to the entity
@@ -115,7 +146,10 @@ class Centities:
             self.node = node
             for entity_obj in self:
                 self.map_entity_id_to_node[entity_obj.get_id()] = entity_obj.get_node()
-                                
+    
+    def add_entity(self,ent):
+        self.node.append(ent.get_node())
+                                        
             
         
     def add_external_reference_to_entity(self,entity_id,ext_ref):

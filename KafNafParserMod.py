@@ -632,7 +632,17 @@ class KafNafParser:
 			self.root.append(self.dependency_layer.get_node())
 		self.dependency_layer.add_dependency(my_dep)
 
-		
+	def add_entity(self,entity):
+		"""
+		Adds an entity to the entity layer
+		@type entity: L{Centity}
+		@param entity: the entity object
+		"""
+		if self.entity_layer is None:
+			self.entity_layer = Centities(type=self.type)
+			self.root.append(self.entity_layer.get_node())
+		self.entity_layer.add_entity(entity)
+				
 	def add_constituency_tree(self,my_tree):
 		"""
 		Adds a constituency tree to the constituency layer
