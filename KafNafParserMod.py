@@ -3,21 +3,21 @@ This module implements a parser for KAF or NAF files. It allows to parse an inpu
 different layers as python objects. It also allows to create a new KAF/NAF file or add new information to an existing one
 
 @author: U{Ruben Izquierdo Bevia<rubenizquierdobevia.com>}
-@version: 0.1
+@version: 1.2
 @contact: U{ruben.izquierdobevia@vu.nl<mailto:ruben.izquierdobevia@vu.nl>} 
 @contact: U{rubensanvi@gmail.com<mailto:rubensanvi@gmail.com>}
 @contact: U{rubenizquierdobevia.com}
-@since: 11-Nov-2014
+@since: 28-Dec-2014
 """
 	
 ############### Changes   #####################
 # v1.1 --> added functions to add external refs to entities and to read them
-#
+# v1.2 --> added functions to add new entities to the NAF/KAF file
 ################################################
 
 
-__last_modified__  = '11nov2014'
-__version__ = '1.1'
+__last_modified__  = '28dec2014'
+__version__ = '1.2'
 __author__ = 'Ruben Izquierdo Bevia'
 
 from lxml import etree
