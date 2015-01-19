@@ -44,6 +44,15 @@ class Ctarget:
         Sets value of head
         """
         self.node.set('head',head)
+        
+    def is_head(self):
+        """
+        Returns whether this target is set as head or not
+        @rtype: boolean
+        @return: whether this target is set as head or not
+        """
+        head = self.node.get('head')
+        return (head is not None)
     
     def get_node(self):
         """
@@ -69,6 +78,19 @@ class Cspan:
             self.node = etree.Element('span')
         else:
             self.node = node
+            
+    def get_id_head(self):
+        '''
+        Returns the id  of the target that is set as "head"
+        @rtype: string
+        @return: the target id (or None) of the head target
+        '''
+        id_head = None
+        for target_node in self.__get_target_nodes():
+            if target_node.is_head():
+                id_head = target_node.get_id()
+                break
+        return id_head
              
     def add_target_id(self,this_id):
         """

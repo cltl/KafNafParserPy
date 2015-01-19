@@ -204,6 +204,11 @@ class Ctext:
         if wf_node is not None:
             return Cwf(node=wf_node,type=self.type)
         else:
+            for wf_node in self.__get_wf_nodes():
+                if self.type == 'NAF': label_id = 'id'
+                elif self.type == 'KAF': label_id = 'wid'
+                if wf_node.get(label_id) == token_id:
+                    return Cwf(node=wf_node, type=self.type)                                                                
             return None
     
     def add_wf(self,wf_obj):
