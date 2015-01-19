@@ -86,7 +86,7 @@ class Cspan:
         @return: the target id (or None) of the head target
         '''
         id_head = None
-        for target_node in self.__get_target_nodes():
+        for target_node in self:
             if target_node.is_head():
                 id_head = target_node.get_id()
                 break
