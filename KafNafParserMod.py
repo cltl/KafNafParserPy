@@ -640,7 +640,6 @@ class KafNafParser:
 		@param entity: the entity object
 		"""
 		if self.entity_layer is None:
-			print>>sys.stderr,'Creating a new entity layer'
 			self.entity_layer = Centities(type=self.type)
 			self.root.append(self.entity_layer.get_node())
 		self.entity_layer.add_entity(entity)
