@@ -3,21 +3,22 @@ This module implements a parser for KAF or NAF files. It allows to parse an inpu
 different layers as python objects. It also allows to create a new KAF/NAF file or add new information to an existing one
 
 @author: U{Ruben Izquierdo Bevia<rubenizquierdobevia.com>}
-@version: 1.2
+@version: 1.3
 @contact: U{ruben.izquierdobevia@vu.nl<mailto:ruben.izquierdobevia@vu.nl>} 
 @contact: U{rubensanvi@gmail.com<mailto:rubensanvi@gmail.com>}
 @contact: U{rubenizquierdobevia.com}
-@since: 28-Dec-2014
+@since: 28-Jan-2015
 """
 	
 ############### Changes   #####################
 # v1.1 --> added functions to add external refs to entities and to read them
 # v1.2 --> added functions to add new entities to the NAF/KAF file
+# v1.3 --> added set_raw(text)
 ################################################
 
 
-__last_modified__  = '28dec2014'
-__version__ = '1.2'
+__last_modified__  = '28jan2015'
+__version__ = '1.3'
 __author__ = 'Ruben Izquierdo Bevia'
 
 from lxml import etree
@@ -420,7 +421,18 @@ class KafNafParser:
 		if self.raw is not None:
 			return self.raw
 				
-
+	def set_raw(self,text):
+		"""
+		Sets the text of the raw element (or creates the layer if does not exist)
+		@param text: text of the raw layer
+		@type text: string
+		"""
+		node_raw = self.root.find('raw')
+		if node_raw is None:
+			node_raw = etree.Element('raw')
+			self.root.insert(0,node_raw)
+		node_raw.text = text
+		
 	def get_timeExpressions(self):
 		"""
 		Returns a list of all the timeexpressions in the text
