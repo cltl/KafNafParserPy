@@ -431,7 +431,7 @@ class KafNafParser:
 		if node_raw is None:
 			node_raw = etree.Element('raw')
 			self.root.insert(0,node_raw)
-		node_raw.text = text
+		node_raw.text = etree.CDATA(text)
 		
 	def get_timeExpressions(self):
 		"""
