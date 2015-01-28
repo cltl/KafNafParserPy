@@ -241,7 +241,10 @@ class CHeader:
         @return: the document creation time defined in fileDesc of header
         """
         fileDescObj = self.node.find('fileDesc')
-        return fileDescObj.get('creationtime')
+        if fileDescObj is not None:
+            return fileDescObj.get('creationtime')
+        else:
+            return None
 
     def add_linguistic_processors(self,linpro):
         """Adds a linguistic processors element
