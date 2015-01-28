@@ -234,6 +234,15 @@ class CHeader:
             self.node.tag = 'nafHeader'
             self.type = 'NAF'
       
+    def get_dct(self):
+        """
+        Returns the document creation time defined in the header
+        @rtype: String
+        @return: the document creation time defined in fileDesc of header
+        """
+        fileDescObj = self.node.find('fileDesc')
+        return fileDescObj.get('creationtime')
+
     def add_linguistic_processors(self,linpro):
         """Adds a linguistic processors element
         @type linpro: ClinguisticProcessors
