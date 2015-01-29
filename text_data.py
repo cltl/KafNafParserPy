@@ -59,7 +59,7 @@ class Cwf:
         @type this_text: string
         @param this_text: the text
         """
-        self.node.text = this_text
+        self.node.text = etree.CDATA(this_text)
         
     def get_text(self):
         """
