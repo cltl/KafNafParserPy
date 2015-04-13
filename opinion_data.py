@@ -38,7 +38,7 @@ class Cholder:
         @type c: string
         @param c: comment for the element
         """
-        c = c.replace('--','- -')
+        c = ' '+c.replace('-','').strip()+' '
         self.node.insert(0,etree.Comment(c) )
         
     def get_span(self):
@@ -83,7 +83,7 @@ class Ctarget:
         @type c: string
         @param c: comment for the element
         """
-        c = c.replace('--','- -')
+        c = ' '+c.replace('-','').strip()+' ' 
         self.node.insert(0,etree.Comment(c) )
         
     def get_comment(self):
@@ -144,7 +144,7 @@ class Cexpression:
         @type c: string
         @param c: comment for the element
         """
-        c = c.replace('--','- -')
+        c = ' '+c.replace('-','').strip()+' ' 
         self.node.insert(0,etree.Comment(c)) 
     
     def set_polarity(self,pol):
