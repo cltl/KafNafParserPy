@@ -233,7 +233,7 @@ class Copinion:
         @type c: string
         @param c: comment for the element
         """
-        c = c.replace('--','- -')
+        c = ' '+c.replace('-','').strip()+' '
         self.node.insert(0,etree.Comment(c) )
     
     def set_id(self,my_id):
