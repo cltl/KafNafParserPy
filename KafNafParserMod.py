@@ -35,6 +35,9 @@ from coreference_data import *
 from srl_data import *
 from external_references_data import *
 from time_data import *
+from causal_data import *
+from temporal_data import *
+from factuality_data import *
 
 import sys
 
@@ -71,6 +74,9 @@ class KafNafParser:
 		self.srl_layer = None
 		self.raw = None
 		self.timex_layer = None
+		self.causalRelations_layer = None
+		self.temporalRelations_layer = None
+		self.factuality_layer = None
 	
 		
 		## Specific feature extractor for complicated layers
@@ -136,6 +142,18 @@ class KafNafParser:
 		node_timex = self.root.find('timeExpressions')
 		if node_timex is not None:
 			self.timex_layer = CtimeExpressions(node_timex)
+
+		node_temporalRelations = self.root.find('temporalRelations')
+		if node_temporalRelations is not None:
+			self.temporalRelations_layer = CtemporalRelations(node_temporalRelations)
+
+		node_causalRelations = self.root.find('causalRelations')
+		if node_causalRelations is not None:
+			self.causalRelations_layer = CcausalRelations(node_causalRelations)
+
+		node_factuality = self.root.find('factualitylayer')
+		if node_factuality is not None:
+			self.factuality_layer = Cfactualitylayer(node_factuality)
 
 		node_raw = self.root.find('raw')
 		if node_raw is not None:
@@ -225,6 +243,21 @@ class KafNafParser:
 			self.coreference_layer.to_kaf()
 			
 		
+		## Convert the temporalRelations layer
+		## It is not defined on KAF so we assme both will be similar
+		if self.temporalRelations_layer is not None:
+			self.temporalRelations_layer.to_kaf()
+
+		## Convert the causalRelations layer
+		## It is not defined on KAF so we assme both will be similar
+		if self.causalRelations_layer is not None:
+			self.causalRelations_layer.to_kaf()
+
+		## Convert the factualitylayer
+		## It is not defined on KAF so we assme both will be similar
+		if self.factuality_layer is not None:
+			self.factuality_layer.to_kaf()
+
 	def to_naf(self):
 		"""
 		Converts a KAF object to NAF (in memory). You will have to use the method dump later to save it as a new NAF file
@@ -278,6 +311,22 @@ class KafNafParser:
 		
 
 			
+		## Convert the temporalRelations layer
+		## It is not defined on KAF so we assume both will be similar
+		if self.temporalRelations_layer is not None:
+			self.temporalRelations_layer.to_naf()	#Does nothing...
+
+		## Convert the causalRelations layer
+		## It is not defined on KAF so we assume both will be similar
+		if self.causalRelations_layer is not None:
+			self.causalRelations_layer.to_naf()	#Does nothing...
+
+		## Convert the factuality layer
+		## It is not defined on KAF so we assume both will be similar
+		if self.factuality_layer is not None:
+			self.factuality_layer.to_naf()		#Does nothing...
+
+				
 	def print_constituency(self):
 		"""
 		Prints the constituency layer
@@ -318,6 +367,49 @@ class KafNafParser:
 			for dep in self.dependency_layer.get_dependencies():
 				yield dep
 				
+	def get_tlinks(self):
+		"""
+		Iterator that returns the tlinks from the temporalRelations layer. Use it as:
+		for my_tlink in my_obj.get_tlinks():
+		@rtype: L{Ctlink}
+		@returns: iterator to get all the tlinks
+		"""
+		if self.temporalRelations_layer is not None:
+			for tlink in self.temporalRelations_layer.get_tlinks():
+				yield tlink
+
+	def get_clinks(self):
+		"""
+		Iterator that returns the clinks from the causalRelations layer. Use it as:
+		for my_clink in my_obj.get_clinks():
+		@rtype: L{Cclink}
+		@returns: iterator to get all the clinks
+		"""
+		if self.causalRelations_layer is not None:
+			for clink in self.causalRelations_layer.get_clinks():
+				yield clink
+
+	def get_factvalues(self):
+		"""
+		Iterator that returns the factvalues from the factuality layer. Use it as:
+		for my_fact in my_obj.get_factvalues():
+		@rtype: L{Cfactvalue}
+		@returns: iterator to get all the factvalues
+		"""
+		if self.factuality_layer is not None:
+			for fact in self.factuality_layer.get_factvalues():
+				yield fact 
+
+	def get_corefs(self):
+		"""
+		Iterator that returns the corefs from the coreferences layer.
+		@rtype: L{Ccoreference}
+		@returns: iterator to get all the coreferences
+		"""
+		if self.coreference_layer is not None:
+			for coref in self.coreference_layer.get_corefs():
+				yield coref 
+
 	def get_language(self):
 		"""
 		Returns the code language of the file
@@ -478,6 +570,42 @@ class KafNafParser:
 			self.header.remove_lp('deps')
 			
 			
+	def remove_temporalRelations_layer(self):
+		"""
+		Removes the temporalRelations layer (if exists) of the object (in memory)
+		"""
+		if self.temporalRelations_layer is not None:
+			this_node = self.temporalRelations_layer.get_node()
+			self.root.remove(this_node)
+			self.temporalRelations_layer = None
+
+		if self.header is not None:
+			self.header.remove_lp('temporalRelations')
+
+	def remove_causalRelations_layer(self):
+		"""
+		Removes the causalRelations layer (if exists) of the object (in memory)
+		"""
+		if self.causalRelations_layer is not None:
+			this_node = self.causalRelations_layer.get_node()
+			self.root.remove(this_node)
+			self.causalRelations_layer = None
+
+		if self.header is not None:
+			self.header.remove_lp('causalRelations')
+
+	def remove_factuality_layer(self):
+		"""
+		Removes the factuality layer (if exists) of the object (in memory)
+		"""
+		if self.factuality_layer is not None:
+			this_node = self.factuality_layer.get_node()
+			self.root.remove(this_node)
+			self.factuality_layer = None
+
+		if self.header is not None:
+			self.header.remove_lp('factualitylayer')
+
 	def remove_constituency_layer(self):
 		"""
 		Removes the constituency layer (if exists) of the object (in memory)
@@ -644,6 +772,39 @@ class KafNafParser:
 			self.dependency_layer = Cdependencies()
 			self.root.append(self.dependency_layer.get_node())
 		self.dependency_layer.add_dependency(my_dep)
+
+	def add_tlink(self,my_tlink):
+		"""
+		Adds a tlink to the temporalRelations layer
+		@type my_tlink: L{Ctlink}
+		@param my_tlink: tlink object
+		"""
+		if self.temporalRelations_layer is None:
+			self.temporalRelations_layer = CtemporalRelations()
+			self.root.append(self.temporalRelations_layer.get_node())
+		self.temporalRelations_layer.add_tlink(my_tlink)
+
+	def add_clink(self,my_clink):
+		"""
+		Adds a clink to the causalRelations layer
+		@type my_clink: L{Cclink}
+		@param my_clink: clink object
+		"""
+		if self.causalRelations_layer is None:
+			self.causalRelations_layer = CcausalRelations()
+			self.root.append(self.causalRelations_layer.get_node())
+		self.causalRelations_layer.add_clink(my_clink)
+
+	def add_factuality(self,my_fact):
+		"""
+		Adds a factvalue to the factuality layer
+		@type my_fact: L{Cfactvalue}
+		@param my_fact: factvalue object
+		"""
+		if self.factuality_layer is None:
+			self.factuality_layer = Cfactualitylayer()
+			self.root.append(self.factuality_layer.get_node())
+		self.factuality_layer.add_factvalue(my_fact)
 
 	def add_entity(self,entity):
 		"""
