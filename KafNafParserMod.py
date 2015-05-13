@@ -159,6 +159,14 @@ class KafNafParser:
 		if node_raw is not None:
 			self.raw = node_raw.text
 	
+	def get_header(self):
+		'''
+		Returns the header object
+		@return: the header object 
+		@rtype: L{CHeader}
+		'''
+		return self.header
+	
 	def set_language(self,l):
 		"""
 		Sets the language to the KAF root element

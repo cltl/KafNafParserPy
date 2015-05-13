@@ -9,6 +9,26 @@ import platform
 class CfileDesc:
     """
     This class encapsulates the file description element in the header
+    
+    Example of usage:
+    
+    ######################################################
+    obj = KafNafParser('examples/entity_example.naf')
+
+    header = obj.get_header()
+    
+    my_file_desc = header.get_fileDesc()
+    if my_file_desc is None:
+        #Create a new one
+        my_file_desc =  CfileDesc()
+        header.set_fileDesc(my_file_desc)
+        
+    #Modify the attributes
+    my_file_desc.set_title('my new title')
+    
+    #Dump the object to a new file (or the changes will not be changed)
+    obj.dump()
+    ######################################################  
     """
     def __init__(self,node=None):
         """
@@ -22,8 +42,108 @@ class CfileDesc:
         else:
             self.node = node
     
-    #self.title=''    #self.author=''    #self.creationtime=''    #self.filename=''    #self.filetype=''    #self.pages=''
     
+    def get_node(self):
+        return self.node
+    
+    
+    #self.title=''    #self.author=''    #self.creationtime=''    #self.filename=''    #self.filetype=''    #self.pages=''
+    def set_title(self,t):
+        '''
+        Sets the title
+        @param t: title
+        @type t: string
+        '''
+        self.node.set('title',t)
+
+    def get_title(self):
+        '''
+        Returns the title
+        @return: title
+        @rtype: string
+        '''
+        return self.node.get('title')
+    
+    def set_author(self,a):
+        '''
+        Sets the author
+        @param a: title
+        @type a: string
+        '''
+        self.node.set('author',a)
+        
+    def get_author(self):
+        '''
+        Returne the author
+        @return: title
+        @rtype: string
+        '''
+        return self.node.get('author')
+        
+    def set_creationtime(self,t):
+        '''
+        Sets the creation time
+        @param t: creation time
+        @type t: string
+        '''
+        self.node.set('creationtime',t)
+
+    def get_creationtime(self):
+        '''
+        Returns the creation time
+        @return: creation time
+        @rtype: string
+        '''
+        return self.node.get('creationtime')
+        
+    def set_filename(self,f):
+        '''
+        Sets the filename
+        @param f: title
+        @type f: string
+        '''
+        self.node.set('filename',f)
+        
+    def get_filename(self):
+        '''
+        Returns the filename
+        @return: title
+        @rtype: string
+        '''
+        return self.node.get('filename')
+        
+    def set_filetype(self,f):
+        '''
+        Sets the filetype
+        @param f: title
+        @type f: string
+        '''
+        self.node.set('filetype',f)
+        
+    def get_filetype(self):
+        '''
+        Returns the filetype
+        @return: title
+        @rtype: string
+        '''
+        return self.node.get('filetype')
+        
+    def set_pages(self,p):
+        '''
+        Sets the pages
+        @param p: title
+        @type p: string
+        '''
+        self.node.set('pages',p)
+
+    def get_pages(self,p):
+        '''
+        Returns the pages
+        @return: title
+        @rtype: string
+        '''
+        return self.node.get('pages')        
+
  
 class Cpublic:
     """
@@ -287,6 +407,26 @@ class CHeader:
             self.add_linguistic_processors(found_lp_obj)
             
         found_lp_obj.add_linguistic_processor(my_lp)
+        
+    def get_fileDesc(self):
+        '''
+        Returns the fileDesc object or None if there is no such element
+        @return: the fileDesc object
+        @rtype: L{CfileDesc}
+        '''
+        node = self.node.find('fileDesc')
+        if node is not None:
+            return CfileDesc(node=node)
+        else:
+            return None
+        
+    def set_fileDesc(self,fileDesc):
+        '''
+        Sets the fileDesc object
+        @param fileDesc: a fileDesc object
+        @type fileDesc: L{CfileDesc}
+        '''
+        self.node.insert(0,fileDesc.get_node())
         
         
             
