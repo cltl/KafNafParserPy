@@ -14,11 +14,12 @@ different layers as python objects. It also allows to create a new KAF/NAF file 
 # v1.1 --> added functions to add external refs to entities and to read them
 # v1.2 --> added functions to add new entities to the NAF/KAF file
 # v1.3 --> added set_raw(text)
+# v1.3.1 --> added functions to set and get fileDesc attributes
 ################################################
 
 
-__last_modified__  = '28jan2015'
-__version__ = '1.3'
+__last_modified__  = '13May2015'
+__version__ = '1.3.1'
 __author__ = 'Ruben Izquierdo Bevia'
 
 from lxml import etree
