@@ -756,7 +756,15 @@ class KafNafParser:
 			self.root.append(self.timex_layer.get_node())
 		self.timex_layer.add_timex(time_obj)
 	
-	
+
+	def set_header(self,header):
+		"""
+		Sets the header of the object
+		@type header: L{CHeader}
+		@param header: the header object
+		"""	
+		self.root.insert(0,self.header.get_node())
+		
 	def add_linguistic_processor(self, layer ,my_lp):
 		"""
 		Adds a linguistic processor to the header
