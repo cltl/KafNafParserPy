@@ -763,7 +763,7 @@ class KafNafParser:
 		@type header: L{CHeader}
 		@param header: the header object
 		"""	
-		self.root.insert(0,self.header.get_node())
+		self.root.insert(0,header.get_node())
 		
 	def add_linguistic_processor(self, layer ,my_lp):
 		"""
