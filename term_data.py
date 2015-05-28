@@ -178,8 +178,7 @@ class Cterm:
         @rtype: L{CexternalReference}
         @return: the external references
         """
-        ext_ref_node = self.node.find('externalReferences')
-        if ext_ref_node is not None:
+        for ext_ref_node in self.node.findall('externalReferences'):
             ext_refs_obj = CexternalReferences(ext_ref_node)
             for ref in ext_refs_obj:
                 yield ref
