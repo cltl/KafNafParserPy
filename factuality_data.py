@@ -4,9 +4,192 @@ Parser for the factvalue layer in KAF/NAF
 
 from lxml import etree
 
+
+
+class Cfactval:
+	
+    def __init__(self,node=None):
+        """
+        Constructor of the object
+        @type node: xml Element or None (to create and empty one)
+        @param node:  this is the node of the element. If it is None it will create a new object
+        """
+        self.type = 'NAF/KAF'
+        if node is None:
+            self.node = etree.Element('factVal')
+        else:
+            self.node = node 
+
+    def get_node(self):
+        """
+        Returns the node
+        """
+        return self.node
+
+    def get_resource(self):
+        """
+        Returns the resource that defines the factuality value
+        """
+        return self.node.get('resource')
+	
+    def set_resource(self,r):
+        """
+        Sets the resource that defines the factuality value
+        @type r: string
+        @param r: the resource defining factuality
+        """
+        self.node.set('resource',r)
+    
+    
+    def get_value(self):
+        """
+        Returns the value of the factVal element
+        """
+        return self.node.get('value')
+        
+	
+    def set_value(self,v):
+        """
+        Sets the value for the factVal element
+        @type v: string
+        @param v: the value for the element
+        """
+        self.node.set('value',v)
+        
+    def get_confidence(self):
+        """
+        Returns the confidence of the factVal element
+        """
+        return self.node.get('confidence')
+        
+	
+    def set_confidence(self,c):
+        """
+        Sets confidence for the factVal element
+        @type c: string
+        @param c: the value for the element
+        """
+        self.node.set('confidence',c)
+
+
+class Cfactuality:
+	
+    def __init__(self,node=None,type='NAF'):
+        """
+        Constructor of the object
+        @type node: xml Element or None (to create and empty one)
+        @param node:  this is the node of the element. If it is None it will create a new object
+        @type type: string
+        @param type: the type of the object (KAF or NAF)
+        """
+        self.type = type
+        if node is None:
+            self.node = etree.Element('factuality')
+        else:
+            self.node = node  
+
+    def get_node(self):
+        """
+        Returns the node
+        """
+        return self.node
+
+
+    def get_id(self):
+        """
+        Returns the identifier of the factuality element
+        """
+        return self.node.get('id')
+	
+    def set_id(self,this_id):
+        """
+        Sets the id of the element
+        @type this_id: string
+        @param this_id: the resource defining factuality
+        """
+        self.node.set('id',this_id)
+  
+	
+    def get_span(self):
+        """
+        Returns the span of the factuality element
+        @type my_span: L{Cspan}
+        @param my_span: span object
+        """
+        span_obj = self.node.find('span')
+        if span_obj is not None:
+        	return Cspan(span_obj)
+        return None
+	
+    def set_span(self,my_span):
+        """
+        Sets the id of the element
+        @type this_id: L{Cspan}
+        @param this_id: the resource defining factuality
+        """
+        self.node.append(my_span.get_node())
+  
+    def add_factval(self,fval):
+        """
+        Sets the id of the element
+        @type this_id: L{Cspan}
+        @param this_id: the resource defining factuality
+        """
+        self.node.append(fval.get_node())
+	
+
+
+
+class Cfactualities:
+	"""
+	This class represents the new factuality layer
+	"""
+	def __init__(self,node=None,type='NAF'):
+		"""
+		Constructor of the object 
+		@type node: xml ELement or None (to create an empty one)
+		@param node: this is the node of the element. If it is None it will create a new object
+		@type type: string
+		@param type: the type of the object (KAF or NAF), NAF is default
+		"""
+		self.type = type
+		if node is None:
+			self.node = etree.Element('factualities')
+		else:
+			self.node = node
+
+	def get_node(self):
+		"""
+		Returns the node of the element
+		@rtype: xml Element
+		@return: the node of the element
+		"""
+		return self.node
+
+
+	def add_factuality(self, factval):
+		"""
+		Adds a factuality element to the layer
+		"""
+		self.node.append(factval.get_node())
+
+
+	def to_kaf(self):
+		pass
+
+	def to_naf(self):
+		pass
+
+	def __str__(self):
+		return dump(self.node)
+
+
+
+
+
 class Cfactvalue:
 	"""
-	This class encapsulates a factvalue object in KAF/NAF
+	This class encapsulates a factvalue object in KAF/NAF (old version)
 	"""
 	def __init__(self,node=None):
 		"""
@@ -81,7 +264,7 @@ class Cfactvalue:
 
 class Cfactualitylayer:
 	"""
-	This class encapsulates the factvalue layer in KAF/NAF
+	This class encapsulates the factvalue layer in KAF/NAF (old version)
 	"""
 	def __init__(self,node=None):
 		"""

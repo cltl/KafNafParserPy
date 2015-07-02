@@ -603,9 +603,9 @@ class KafNafParser:
 		if self.header is not None:
 			self.header.remove_lp('causalRelations')
 
-	def remove_factuality_layer(self):
+	def remove_factualitylayer_layer(self):
 		"""
-		Removes the factuality layer (if exists) of the object (in memory)
+		Removes the factualitylayer layer (the old version) (if exists) of the object (in memory)
 		"""
 		if self.factuality_layer is not None:
 			this_node = self.factuality_layer.get_node()
@@ -670,6 +670,46 @@ class KafNafParser:
 		if self.header is not None:
 			self.header.remove_lp('terms')
 			
+	
+	def convert_factualitylayer_to_factualities(self):
+		"""
+		Takes information from factuality layer in old representation
+		Creates new factuality representation and removes the old layer
+		"""
+		if self.factuality_layer is not None:
+			this_node = self.factuality_layer.get_node()
+			if this_node.tag == 'factualitylayer':
+				new_node = Cfactualities()
+				#create dictionary from token ids to the term ids 
+				token2term = {}
+				for t in self.get_terms():
+					s = t.get_span()
+					for w in s.get_span_ids():
+						token2term[w] = t.get_id()
+				fnr = 0
+				for fv in self.get_factvalues():
+					fnr += 1
+					conf = fv.get_confidence()
+					wid = fv.get_id()
+					tid = token2term.get(wid)
+					fnode = Cfactuality()
+					#set span with tid as element
+					fspan = Cspan()
+					fspan.add_target_id(tid)
+					fnode.set_span(fspan)
+					#add factVal element with val, resource = factbank, + confidence if present
+					fVal = Cfactval()
+					fVal.set_resource('factbank')
+					fVal.set_value(fv.get_prediction())
+					if conf:
+						fVal.set_confidence(conf)
+					fnode.set_id('f' + str(fnr))
+					fnode.add_factval(fVal)
+					new_node.add_factuality(fnode)
+				self.root.remove(this_node)
+				self.root.append(new_node.get_node())
+				self.factuality_layer = new_node
+					
 	
 	def get_constituency_extractor(self):
 		"""
