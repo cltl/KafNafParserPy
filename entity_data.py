@@ -124,7 +124,7 @@ class Centity:
             for ext_ref in ext_refs:
                 yield ext_ref    
     
-        def get_source(self):
+    def get_source(self):
         """
         Returns the source of the entity
         @rtype: string
