@@ -33,6 +33,16 @@ class Ccoreference:
             return self.node.get('id')
         elif self.type == 'KAF':
             return self.node.get('coid')
+        
+    
+    def get_type(self):
+        """
+        Returns the type of the coreference object
+        @rtype: string
+        @return: type of the corefence object
+        """
+        if self.type == 'NAF':
+            return self.node.get('type')
     
     def get_spans(self):
         """
