@@ -354,6 +354,7 @@ class CHeader:
             self.node.tag = 'nafHeader'
             self.type = 'NAF'
       
+      
     def get_dct(self):
         """
         Returns the document creation time defined in the header
@@ -363,6 +364,19 @@ class CHeader:
         fileDescObj = self.node.find('fileDesc')
         if fileDescObj is not None:
             return fileDescObj.get('creationtime')
+        else:
+            return None
+        
+           
+    def get_publicId(self):
+        """
+        Returns the public Id defined in the header
+        @rtype: String
+        @return: the publicId defined in public of header
+        """
+        publicObj = self.node.find('public')
+        if publicObj is not None:
+            return publicObj.get('publicId')
         else:
             return None
 
