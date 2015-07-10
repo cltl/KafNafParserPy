@@ -52,7 +52,18 @@ class Ccoreference:
         """
         for node_span in self.node.findall('span'):
             yield Cspan(node_span)
-    
+            
+    def get_external_references(self):
+        """
+        Iterator to get the external references
+        @rtype: L{CexternalReference}
+        @return: iterator for external references
+        """
+        node = self.node.find('externalReferences')
+        if node is not None:
+            ext_refs = CexternalReferences(node)
+            for ext_ref in ext_refs:
+                yield ext_ref
             
 
 class Ccoreferences:
