@@ -107,6 +107,23 @@ class CexternalReference:
         """
         return self.node.get('reftype')
 
+    def set_source(self,r):
+        """
+        Sets the source for the element
+        @type r: string
+        @param r: the source of the element
+        """
+        self.node.set('source',r) 
+        
+    def get_source(self):
+        """
+        Returns the source attribute of the element
+        @rtype: string
+        @return: the source attribute of the element
+        """
+        return self.node.get('source')
+
+
 class CexternalReferences:
     """
     This class encapsulates the external references object, which is a set of external reference objects
