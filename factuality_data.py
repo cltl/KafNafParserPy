@@ -145,7 +145,7 @@ class Cfactuality:
         @return: iterator for getting the factuality's value objects
         """
         for node_pre in self.node.findall('factVal'):
-            yield CfactVal(node_pre)	
+            yield Cfactval(node_pre)	
 
 
 class Cfactualities:
