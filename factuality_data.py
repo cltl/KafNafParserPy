@@ -3,7 +3,6 @@ Parser for the factvalue layer in KAF/NAF
 """
 
 from lxml import etree
-from KafNafParserPy.factuality_data import Cfactuality
 
 
 
