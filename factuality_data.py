@@ -188,7 +188,7 @@ class Cfactualities:
 		@rtype: L{Cfactuality}
 		@return: iterator for getting the factuality objects
 		"""
-		for node_pre in self.node.findall('factualities'):
+		for node_pre in self.node.findall('factuality'):
 			yield Cfactuality(node_pre)
 
 	def to_kaf(self):
