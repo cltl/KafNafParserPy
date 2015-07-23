@@ -182,15 +182,15 @@ class Cfactualities:
 		"""
 		self.node.append(factval.get_node())
 	
-	
-    def get_factualities(self):
-        """
-        Iterator to get the factualities
-        @rtype: L{Cfactuality}
-        @return: iterator for getting the factuality objects
-        """
-        for node_pre in self.node.findall('factuality'):
-            yield Cfactuality(node_pre)	
+
+	def get_factualities(self, factval):
+		"""
+		Iterator to get the factualities
+		@rtype: L{Cfactuality}
+		@return: iterator for getting the factuality objects
+		"""
+		for node_pre in self.node.findall('factualities'):
+			yield Cfactuality(node_pre)
 
 	def to_kaf(self):
 		pass
