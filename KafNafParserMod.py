@@ -152,9 +152,14 @@ class KafNafParser:
 		if node_causalRelations is not None:
 			self.causalRelations_layer = CcausalRelations(node_causalRelations)
 
-		node_factuality = self.root.find('factualitylayer')
-		if node_factuality is not None:
-			self.factuality_layer = Cfactualitylayer(node_factuality)
+		node_factualitylayer = self.root.find('factualitylayer')
+		if node_factualitylayer is not None:
+			self.factuality_layer = Cfactualitylayer(node_factualitylayer)
+			
+		node_factualities = self.root.find('factualities')
+		if node_factualities is not None:
+			self.factuality_layer = Cfactualities(node_factualities)
+
 
 		node_raw = self.root.find('raw')
 		if node_raw is not None:
