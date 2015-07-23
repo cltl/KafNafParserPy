@@ -3,6 +3,7 @@ Parser for the factvalue layer in KAF/NAF
 """
 
 from lxml import etree
+from KafNafParserPy.factuality_data import Cfactuality
 
 
 
@@ -172,7 +173,15 @@ class Cfactualities:
 		Adds a factuality element to the layer
 		"""
 		self.node.append(factval.get_node())
-
+	
+    def get_factualities(self):
+        """
+        Iterator to get the roles
+        @rtype: L{Cfactuality}
+        @return: iterator for getting the factuality objects
+        """
+        for node_pre in self.node.findall('factuality'):
+            yield Cfactuality(node_pre)	
 
 	def to_kaf(self):
 		pass
