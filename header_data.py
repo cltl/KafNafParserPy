@@ -163,6 +163,40 @@ class Cpublic:
             
         #self.publicId = ''
         #slf.uri = ''
+    def get_node(self):
+        return self.node
+    
+    def set_uri(self,t):
+        '''
+        Sets the uri
+        @param t: uri
+        @type t: string
+        '''
+        self.node.set('uri',t)
+
+    def get_uri(self):
+        '''
+        Returns the uri
+        @return: uri
+        @rtype: string
+        '''
+        return self.node.get('uri')
+    
+    def set_publicid(self,a):
+        '''
+        Sets the publicId
+        @param a: title
+        @type a: string
+        '''
+        self.node.set('publicId',a)
+        
+    def get_publicid(self):
+        '''
+        Returne the publicId
+        @return: title
+        @rtype: string
+        '''
+        return self.node.get('publicId')
 
    
 class Clp:
@@ -379,6 +413,14 @@ class CHeader:
             return publicObj.get('publicId')
         else:
             return None
+    
+    def set_publicId(self,publicId):
+        '''
+        Sets the publicId object
+        @param publicId: a publicId object
+        @type publicId: L{CpublicId}
+        '''
+        self.node.insert(0,publicId.get_node())
 
     def add_linguistic_processors(self,linpro):
         """Adds a linguistic processors element
