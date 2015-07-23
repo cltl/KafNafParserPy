@@ -139,6 +139,14 @@ class Cfactuality:
         self.node.append(fval.get_node())
 	
 
+    def get_factVals(self):
+        """
+        Iterator to get the factuality values
+        @rtype: L{Cfactuality}
+        @return: iterator for getting the factuality's value objects
+        """
+        for node_pre in self.node.findall('factVal'):
+            yield CfactVal(node_pre)	
 
 
 class Cfactualities:
@@ -176,7 +184,7 @@ class Cfactualities:
 	
     def get_factualities(self):
         """
-        Iterator to get the roles
+        Iterator to get the factualities
         @rtype: L{Cfactuality}
         @return: iterator for getting the factuality objects
         """
