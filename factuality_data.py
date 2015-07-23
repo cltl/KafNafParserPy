@@ -182,6 +182,7 @@ class Cfactualities:
 		"""
 		self.node.append(factval.get_node())
 	
+	
     def get_factualities(self):
         """
         Iterator to get the factualities
