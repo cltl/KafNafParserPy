@@ -119,6 +119,14 @@ class Cwf:
         """
         self.node.set('length',length)
         
+    def get_para(self):
+        """
+        Returns the paragraph for the token
+        @rtype p: string
+        @return p: the paragraph identifier
+        """
+        self.node.get('para')
+        
     def set_para(self,p):
         """
         Set the paragraph for the token
