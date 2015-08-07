@@ -125,7 +125,7 @@ class Cwf:
         @rtype p: string
         @return p: the paragraph identifier
         """
-        self.node.get('para')
+        return self.node.get('para')
         
     def set_para(self,p):
         """
