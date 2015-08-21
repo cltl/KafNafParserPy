@@ -80,6 +80,70 @@ class CfileDesc:
         '''
         return self.node.get('author')
         
+    def set_publisher(self,p):
+        '''
+        Sets the publisher
+        @param p: title
+        @type p: string
+        '''
+        self.node.set('publisher',p)
+        
+    def get_publisher(self):
+        '''
+        Returns the publisher
+        @return: title
+        @rtype: string
+        '''
+        return self.node.get('publisher')
+        
+    def set_section(self,s):
+        '''
+        Sets the section
+        @param s: title
+        @type s: string
+        '''
+        self.node.set('section',s)
+        
+    def get_section(self):
+        '''
+        Returns the section
+        @return: title
+        @rtype: string
+        '''
+        return self.node.get('section')
+        
+    def set_location(self,l):
+        '''
+        Sets the location
+        @param l: title
+        @type l: string
+        '''
+        self.node.set('location',l)
+        
+    def get_location(self):
+        '''
+        Returns the location
+        @return: title
+        @rtype: string
+        '''
+        return self.node.get('location')
+        
+    def set_magazine(self,m):
+        '''
+        Sets the magazine
+        @param m: title
+        @type m: string
+        '''
+        self.node.set('magazine',m)
+        
+    def get_magazine(self):
+        '''
+        Returns the magazine
+        @return: title
+        @rtype: string
+        '''
+        return self.node.get('magazine')
+        
     def set_creationtime(self,t):
         '''
         Sets the creation time
