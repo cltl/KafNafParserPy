@@ -15,10 +15,11 @@ different layers as python objects. It also allows to create a new KAF/NAF file 
 # v1.2 --> added functions to add new entities to the NAF/KAF file
 # v1.3 --> added set_raw(text)
 # v1.3.1 --> added functions to set and get fileDesc attributes
+# v1.3.2 --> added markable layer and main accompanying functions
 ################################################
 
 
-__last_modified__  = '13May2015'
+__last_modified__  = '2September2015'
 __version__ = '1.3.1'
 __author__ = 'Ruben Izquierdo Bevia'
 
@@ -39,6 +40,7 @@ from time_data import *
 from causal_data import *
 from temporal_data import *
 from factuality_data import *
+from markable_data import *
 
 import sys
 
@@ -78,6 +80,7 @@ class KafNafParser:
 		self.causalRelations_layer = None
 		self.temporalRelations_layer = None
 		self.factuality_layer = None
+		self.markable_layer = None
 	
 		
 		## Specific feature extractor for complicated layers
@@ -339,6 +342,12 @@ class KafNafParser:
 		## It is not defined on KAF so we assume both will be similar
 		if self.factuality_layer is not None:
 			self.factuality_layer.to_naf()		#Does nothing...
+			
+		
+		## Convert the markable layer
+		## It is not defined on KAF so we assume both will be similar
+		if self.markable_layer is not None:
+			self.markable_layer.to_naf()		#Changes identifier attribute nothing else...
 
 				
 	def print_constituency(self):
@@ -449,6 +458,15 @@ class KafNafParser:
 		if self.term_layer is not None:
 			for term in self.term_layer:
 				yield term
+			
+	def get_markables(self):
+		"""Iterator that returns all the markables from the markable layer
+		@rtype: L{Cmarkable}
+		@return: list of markable objects
+		"""
+		if self.markable_layer is not None:
+			for markable in self.markable_layer:
+				yield markable
 			
 	def get_token(self,token_id):
 		"""
@@ -765,6 +783,17 @@ class KafNafParser:
 			self.term_layer = Cterms(type=self.type)
 			self.root.append(self.term_layer.get_node())
 		self.term_layer.add_term(term_obj)
+		
+	def add_markable(self,markable_obj):
+		"""
+		Adds a markable to the markable layer
+		@type markable_obj: L{Cmarkable}
+		@param markable_obj: the markable object
+		"""
+		if self.markable_layer is None:
+			self.markable_layer = Cmarkables(type=self.type)
+			self.root.append(self.markable_layer.get_node())
+		self.markable_layer.add_markable(markable_obj)
 	
 	
 	def add_opinion(self,opinion_obj):
