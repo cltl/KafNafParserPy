@@ -9,6 +9,7 @@ different layers as python objects. It also allows to create a new KAF/NAF file 
 @contact: U{rubenizquierdobevia.com}
 @since: 28-Jan-2015
 """
+from KafNafParserPy.markable_data import Cmarkables
 	
 ############### Changes   #####################
 # v1.1 --> added functions to add external refs to entities and to read them
@@ -41,6 +42,7 @@ from causal_data import *
 from temporal_data import *
 from factuality_data import *
 from markable_data import *
+
 
 import sys
 
@@ -163,10 +165,13 @@ class KafNafParser:
 		if node_factualities is not None:
 			self.factuality_layer = Cfactualities(node_factualities)
 
-
 		node_raw = self.root.find('raw')
 		if node_raw is not None:
 			self.raw = node_raw.text
+			
+		node_markables = self.root.find('markables')
+		if node_markables is not None:
+			self.markable_layer = Cmarkables(node_markables)
 	
 	def get_header(self):
 		'''
