@@ -159,7 +159,7 @@ class Centities:
     def add_entity(self,ent):
         self.node.append(ent.get_node())
                                         
-     def get_entity(self,entity_id):
+    def get_entity(self,entity_id):
         """
         Returns the entity object for the given entity identifier
         @type entity_id: string
