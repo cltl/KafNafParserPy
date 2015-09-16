@@ -519,6 +519,21 @@ class KafNafParser:
 		if self.entity_layer is not None:
 			for entity in self.entity_layer:
 				yield entity
+	
+	
+	def get_entity(self,entity_id):
+		"""
+		Returns an entity object for the specified term_id
+		@type entity_id:string
+		@param entity_id: entity identifier
+		@rtype: L{Centity}
+		@return: entity object
+		"""
+		if self.entity_layer is not None:
+			return self.entity_layer.get_entity(entity_id)
+		else:
+			return None
+	
 				
 	def get_opinions(self):
 		"""

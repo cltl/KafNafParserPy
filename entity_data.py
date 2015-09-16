@@ -159,7 +159,24 @@ class Centities:
     def add_entity(self,ent):
         self.node.append(ent.get_node())
                                         
-            
+     def get_entity(self,entity_id):
+        """
+        Returns the entity object for the given entity identifier
+        @type entity_id: string
+        @param entity_id: the token identifier
+        @rtype: L{Centity}
+        @return: the entity object
+        """  
+        entity_node = self.idx.get(entity_id)
+        if entity_node is not None:
+            return Centity(node=entity_node,type=self.type)
+        else:
+            for entity_node in self.__get_entity_nodes():
+                if self.type == 'NAF': label_id = 'id'
+                elif self.type == 'KAF': label_id = 'eid'
+                if entity_node.get(label_id) == entity_id:
+                    return Centity(node=entity_node, type=self.type)                                                                
+            return None       
         
     def add_external_reference_to_entity(self,entity_id,ext_ref):
         """
