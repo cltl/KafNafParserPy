@@ -155,6 +155,7 @@ class Centities:
             self.node = node
             for entity_obj in self:
                 self.map_entity_id_to_node[entity_obj.get_id()] = entity_obj.get_node()
+                
     
     def add_entity(self,ent):
         self.node.append(ent.get_node())
@@ -167,7 +168,7 @@ class Centities:
         @rtype: L{Centity}
         @return: the entity object
         """  
-        entity_node = self.idx.get(entity_id)
+        entity_node = self.map_entity_id_to_node.get(entity_id)
         if entity_node is not None:
             return Centity(node=entity_node,type=self.type)
         else:
