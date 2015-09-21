@@ -203,13 +203,13 @@ class Cmarkables:
         for node_markable in self.__get_node_markables():
             yield Cmarkable(node_markable,self.type)
             
-    def get_markable(self,mark_id):
+    def get_markable(self,markable_id):
         """
         Returns the markable object for the supplied identifier
-        @type mark_id: string
-        @param mark_id: term identifier
+        @type markable_id: string
+        @param markable_id: term identifier
         """
-        if mark_id in self.idx:
+        if markable_id in self.idx:
             return Cmarkable(self.idx[markable_id],self.type)
         else:
             return None
