@@ -472,6 +472,19 @@ class KafNafParser:
 		if self.markable_layer is not None:
 			for markable in self.markable_layer:
 				yield markable
+				
+	def get_markable(self,markable_id):
+		"""
+		Returns a markable object for the specified markable_id
+		@type markable_id:string
+		@param markable_id: entity identifier
+		@rtype: L{Cmarkable}
+		@return: markable object
+		"""
+		if self.markable_layer is not None:
+			return self.markable_layer.get_markable(markable_id)
+		else:
+			return None
 			
 	def get_token(self,token_id):
 		"""
@@ -523,7 +536,7 @@ class KafNafParser:
 	
 	def get_entity(self,entity_id):
 		"""
-		Returns an entity object for the specified term_id
+		Returns an entity object for the specified entity_id
 		@type entity_id:string
 		@param entity_id: entity identifier
 		@rtype: L{Centity}
