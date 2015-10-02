@@ -18,7 +18,27 @@ Clone the repository from github
 ````shell
 git clone https://github.com/cltl/KafNafParserPy.git
 ````
-You will need to have installed the lxml library for python (http://lxml.de/)
+You will need to have installed the lxml library for python (http://lxml.de/). Usually just by runnin `pip install --user lxml` should be enough for
+getting lxml installed. In some cases there can be problems with the libraris libxml and libxslt. In this case (considering you have no root access
+for the machine), you can try to do the following:
+```shell
+wget http://xmlsoft.org/sources/libxml2-sources-2.7.7.tar.gz
+gzip -dc libxml2-sources-2.7.7.tar.gz | tar xvf -
+cd libxml2-2.7.7
+./configure --prefix=/home/ruben/lib
+make
+make install
+wget http://xmlsoft.org/sources/libxslt-1.1.26.tar.gz
+gzip -dc libxslt-1.1.26.tar.gz | tar xvf -
+cd libxslt-1.1.26
+./configure --prefix=/home/ruben/lib --with-libxml-prefix=/home/ruben/lib
+make
+make install
+PATH=$PATH:/home/ruben/lib/bin/
+pip install --user lxml
+```
+
+Of course replace `/home/ruben/lib` by the folder where you want to install the libraries
 
 Usage
 -----
