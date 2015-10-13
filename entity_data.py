@@ -173,8 +173,10 @@ class Centities:
             return Centity(node=entity_node,type=self.type)
         else:
             for entity_node in self.__get_entity_nodes():
-                if self.type == 'NAF': label_id = 'id'
-                elif self.type == 'KAF': label_id = 'eid'
+                if self.type == 'NAF': 
+                    label_id = 'id'
+                elif self.type == 'KAF': 
+                    label_id = 'eid'
                 if entity_node.get(label_id) == entity_id:
                     return Centity(node=entity_node, type=self.type)                                                                
             return None       
