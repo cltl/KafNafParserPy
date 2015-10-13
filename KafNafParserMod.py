@@ -727,6 +727,20 @@ class KafNafParser:
 			self.header.remove_lp('terms')
 			
 	
+	
+	def remove_text_layer(self):
+		"""
+		Removes the text layer (if exists) of the object (in memory)
+		"""
+		if self.text_layer is not None:
+			this_node = self.text_layer.get_node()
+			self.root.remove(this_node)
+			self.text_layer = None
+			
+		if self.header is not None:
+			self.header.remove_lp('text')
+	
+	
 	def convert_factualitylayer_to_factualities(self):
 		"""
 		Takes information from factuality layer in old representation
