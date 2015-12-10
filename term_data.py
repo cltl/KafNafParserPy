@@ -183,7 +183,12 @@ class Cterm:
             for ref in ext_refs_obj:
                 yield ref
             
-           
+    def remove_external_references(self):
+        """
+        Removes any external reference from the term
+        """
+        for ex_ref_node in self.node.findall('externalReferences'):
+            self.node.remove(ex_ref_node)
         
     
 class Cterms:
@@ -281,6 +286,9 @@ class Cterms:
             term_obj.add_external_reference(external_ref)
         else:
             print term_id,' not in self.idx'
+            
+            
+            
 
     def remove_terms(self,list_term_ids):
         """

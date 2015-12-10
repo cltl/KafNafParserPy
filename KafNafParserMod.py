@@ -1039,8 +1039,7 @@ class KafNafParser:
 		@type list_term_ids: list
 		@param list_term_ids: list of term identifiers
 		"""
-		self.term_layer.remove_terms(list_term_ids)
-		
+		self.term_layer.remove_terms(list_term_ids)		
 		
 	def add_external_reference(self,term_id, external_ref):
 		self.add_external_reference_to_term(term_id, external_ref)
@@ -1057,6 +1056,15 @@ class KafNafParser:
 		"""
 		if self.term_layer is not None:
 			self.term_layer.add_external_reference(term_id, external_ref)	
+			
+	
+	def remove_external_references_from_terms(self):
+		"""
+		Removes all external references present in the term layer
+		"""
+		if self.term_layer is not None:
+			for term in self.term_layer:
+				term.remove_external_references()
 			
 	def add_external_reference_to_role(self,role_id,external_ref):
 		"""
