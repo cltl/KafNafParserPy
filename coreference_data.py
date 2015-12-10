@@ -86,6 +86,16 @@ class Ccoreferences:
         else:
             self.node = node
             
+            
+    
+    def get_node(self):
+        """
+        Returns the node of the element
+        @rtype: xml Element
+        @return: the node of the element
+        """
+        return self.node
+            
     def __get_corefs_nodes(self):
         for coref_node in self.node.findall('coref'):
             yield coref_node
