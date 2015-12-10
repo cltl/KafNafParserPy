@@ -741,6 +741,17 @@ class KafNafParser:
 			self.header.remove_lp('text')
 	
 	
+	def remove_coreference_layer(self):
+		"""
+		Removes the constituency layer (if exists) of the object (in memory)
+		"""
+		if self.coreference_layer is not None:
+			this_node = self.coreference_layer.get_node()
+			self.root.remove(this_node)
+		if self.header is not None:
+			self.header.remove_lp('coreferences')
+	
+	
 	def convert_factualitylayer_to_factualities(self):
 		"""
 		Takes information from factuality layer in old representation
