@@ -92,6 +92,14 @@ class Crole:
         
         ext_refs.add_external_reference(ext_ref)
         
+    
+    def remove_external_references(self):
+        """
+        Removes any external reference from the role
+        """
+        for ex_ref_node in self.node.findall('externalReferences'):
+            self.node.remove(ex_ref_node)
+        
     def get_span(self):
         """
         Returns the span of the role
@@ -217,7 +225,24 @@ class Cpredicate:
             ext_refs = CexternalReferences(node)
             for ext_ref in ext_refs:
                 yield ext_ref
-                
+    
+    def remove_external_references(self):
+        """
+        Removes any external reference from the predicate
+        """
+        for ex_ref_node in self.node.findall('externalReferences'):
+            self.node.remove(ex_ref_node)
+            
+            
+    def remove_external_references_from_roles(self):
+        """
+        Removes any external references on any of the roles from the predicate
+        """
+        
+        for node_role in self.node.findall('role'):
+            role = Crole(node_role)
+            role.remove_external_references()
+            
     def get_roles(self):
         """
         Iterator to get the roles

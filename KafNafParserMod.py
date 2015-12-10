@@ -567,7 +567,6 @@ class KafNafParser:
 		if self.srl_layer is not None:
 			for pred in self.srl_layer.get_predicates():
 				yield pred
-
 		
 	def get_raw(self):
 		"""
@@ -1087,6 +1086,17 @@ class KafNafParser:
 		"""
 		if self.srl_layer is not None:
 			self.srl_layer.add_external_reference_to_role(role_id,external_ref)
+			
+			
+	
+	def remove_external_references_from_srl_layer(self):
+		"""
+		Removes all external references present in the term layer
+		"""
+		if self.srl_layer is not None:
+			for pred in self.srl_layer.get_predicates():
+				pred.remove_external_references()
+				pred.remove_external_references_from_roles()
 			
 	def add_external_reference_to_entity(self,entity_id, external_ref):
 		"""
