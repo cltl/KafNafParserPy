@@ -357,7 +357,6 @@ class Cdependency_extractor:
         Returns the complete list of dependents and embedded dependents of a certain term.
         """
         relations = []
-        counter += 1
         deps = self.relations_for_term
         if term_id in deps and len(deps.get(term_id)) > 0:
             for dep in deps.get(term_id):
