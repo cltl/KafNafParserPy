@@ -352,19 +352,22 @@ class Cdependency_extractor:
         return shortest_path
         
     # Get all terms that are embedded under a given head (its dependents and dependents of its dependents
-    def get_full_dependents(self, term_id, relations):
+    def get_full_dependents(self, term_id, relations, counter = 0):
         """
         Returns the complete list of dependents and embedded dependents of a certain term.
         """
-        relations = []
+        counter += 1
         deps = self.relations_for_term
         if term_id in deps and len(deps.get(term_id)) > 0:
             for dep in deps.get(term_id):
                 if not dep[1] in relations:
                     relations.append(dep[1])
                     if dep[1] in deps:
-                        dep_relations = self.get_full_dependents(dep[1], relations)
-                        relations += dep_relations
+                        deprelations = self.get_full_dependents(dep[1], relations, counter)
+                        for deprel in deprelations:
+                            if not deprel in relations:
+                                relations.append(deprel)
+
         return relations
 
 
