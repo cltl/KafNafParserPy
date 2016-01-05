@@ -67,6 +67,14 @@ class Ctime:
         """
         self.node.set('type',t)
 
+    
+    def set_timex_type(self, t):
+        """
+        Sets the type for the timex
+        @type t: string
+        @param t: timex type
+        """
+        self.node.set('type',t)
 
 
     def get_value(self):
@@ -105,6 +113,24 @@ class Ctime:
         @param this_span: timex identifier
         """
         self.node.append(this_span.get_node())
+
+
+    def get_functionInDocument(self):
+        """
+        Returns the timex functionnInDocument
+        @rtype: string
+        @return: the timex functionnInDocument
+        """
+        return self.node.get('functionnInDocument')
+
+
+    def set_functionInDocument(self, f):
+        """
+        Sets the functionInDocument for the timex
+        @type f: string
+        @param f: timex functionInDocument
+        """
+        self.node.set('functionInDocument',f)
 
 
 class CtimeExpressions:
