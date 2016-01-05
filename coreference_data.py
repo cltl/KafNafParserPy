@@ -35,6 +35,18 @@ class Ccoreference:
         elif self.type == 'KAF':
             return self.node.get('coid')
         
+        
+    def set_id(self, this_id):
+        """
+        Sets the identifier of the object
+        @type: string
+        @param: identifier of the corefence object
+        """
+        if self.type == 'NAF':
+            return self.node.set('id', this_id)
+        elif self.type == 'KAF':
+            return self.node.set('coid', this_id)
+
     
     def get_type(self):
         """
@@ -44,6 +56,27 @@ class Ccoreference:
         """
         if self.type == 'NAF':
             return self.node.get('type')
+        
+        
+        
+    def set_type(self, this_type):
+        """
+        Sets the type of the coreference object
+        @type: string
+        @param: type of the corefence object
+        """
+        if self.type == 'NAF':
+            return self.node.set('type', this_type) 
+    
+    def add_span(self,term_span):
+        """
+        Adds a list of term ids a new span in the references
+        @type term_span: list
+        @param term_span: list of term ids
+        """
+        new_span = Cspan()
+        new_span.create_from_ids(term_span)
+        self.node.append(new_span.get_node())
     
     def get_spans(self):
         """
@@ -85,7 +118,9 @@ class Ccoreferences:
             self.node = etree.Element('coreferences')
         else:
             self.node = node
-            
+    
+    def add_coreference(self,coreference):
+        self.node.append(coreference.get_node())        
             
     
     def get_node(self):
