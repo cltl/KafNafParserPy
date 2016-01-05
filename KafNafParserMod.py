@@ -969,11 +969,11 @@ class KafNafParser:
 	def add_coreference(self, coreference):
 		"""
 		Adds an coreference to the coreference layer
-		@type entity: L{Ccoreference}
-		@param entity: the coreference object
+		@type coreference: L{Ccoreference}
+		@param coreference: the coreference object
 		"""
 		if self.coreference_layer is None:
-			self.coreference_layer = Ccorefernces(type=self.type)
+			self.coreference_layer = Ccoreferences(type=self.type)
 			self.root.append(self.coreference_layer.get_node())
 		self.coreference_layer.add_coreference(coreference)
 			
