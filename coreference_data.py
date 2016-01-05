@@ -23,6 +23,14 @@ class Ccoreference:
             self.node = etree.Element('coref')
         else:
             self.node = node
+     
+    def get_node(self):
+        """
+        Returns the node of the element
+        @rtype: xml Element
+        @return: the node of the element
+        """
+        return self.node
             
     def get_id(self):
         """
