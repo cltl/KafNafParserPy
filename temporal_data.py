@@ -238,11 +238,12 @@ class CpredicateAnchor:
         @rtype: L{Cspan}
         @return: the span object of the element
         """
+        
         node = self.node.find('span')
         if node is not None:
-            return Cspan(node)
-        else:
-            return None
+           	return Cspan(node)
+       	else:
+           	return None
 
 
 
