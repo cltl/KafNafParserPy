@@ -337,7 +337,7 @@ class CtemporalRelations:
 				self.node.remove(tlink.get_node())
 				break
 			
-	def add_predicatAnchor(self,my_predAnch):
+	def add_predicateAnchor(self,my_predAnch):
 		"""
 		Adds a predAnch object to the layer
 		@type my_predAnch: L{CpredAnch}
