@@ -931,6 +931,17 @@ class KafNafParser:
 			self.temporalRelations_layer = CtemporalRelations()
 			self.root.append(self.temporalRelations_layer.get_node())
 		self.temporalRelations_layer.add_tlink(my_tlink)
+		
+	def add_predAnch(self,my_predAnch):
+		"""
+		Adds a predAnch to the temporalRelations layer
+		@type my_predAnch: L{CpredicateAnchor}
+		@param my_predAnch: predicateAnchor object
+		"""
+		if self.temporalRelations_layer is None:
+			self.temporalRelations_layer = CtemporalRelations()
+			self.root.append(self.temporalRelations_layer.get_node())
+		self.temporalRelations_layer.add_predicateAnchor(my_predAnch)
 
 	def add_clink(self,my_clink):
 		"""

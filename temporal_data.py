@@ -143,6 +143,82 @@ class Ctlink:
 	def __str__(self):
 		return dump(self.node)
 
+class CpredicateAnchor:
+	"""
+	This class encapsulates the predicateAnchor object in KAF/NAF
+	"""
+	
+	def __init__(self,node=None):
+		"""
+		Constructor of the object
+		@type node: xml Element or None (to create and empty one)
+		@param node: this is the node of the element.
+			If it is None it will create a new object
+		"""
+		if node is None:
+			self.node = etree.Element('predicateAnchor')
+		else:
+			self.node = node
+
+
+	def set_id(self,this_id):
+		"""
+		Set the identifier for the token
+		@type this_id: string
+		@param this_id: the identifier
+		"""
+		return self.node.set('id',this_id)
+
+
+	def get_id(self):
+		"""
+		Returns the token identifier
+		@rtype: string
+		@return: the token identifier
+		"""
+		return self.node.get('id')
+	
+	
+	def get_anchorTime(self):
+		"""
+		Returns the anchorTime
+		@rtype: string
+		@return: the anchorTime 
+		"""
+		return self.node.get('anchorTime')
+	
+	
+	def set_anchorTime(self,anchorTime):
+		"""
+		Set the identifier for the token
+		@type anchorTime: string
+		@param anchorTime: the anchorTime
+		"""
+		return self.node.set('anchorTime',anchorTime)
+
+
+	def get_span(self):
+        """
+        Returns the span object of the element
+        @rtype: L{Cspan}
+        @return: the span object of the element
+        """
+        node = self.node.find('span')
+        if node is not None:
+            return Cspan(node)
+        else:
+            return None
+
+    def set_span(self, this_span):
+        """
+        Sets the span for the predicate
+        @type this_span: L{Cspan}
+        @param this_span: the span object
+        """
+        self.node.append(this_span.get_node())
+
+
+
 class CtemporalRelations:
 	"""
 	This class encapsulates the tlink layer in KAF/NAF
@@ -180,6 +256,11 @@ class CtemporalRelations:
 	def __get_node_temporalRelations(self):
 		for node_tlink in self.node.findall('tlink'):
 			yield node_tlink
+			
+			
+	def __get_node_predicateAnchors(self):
+		for node_predAnch in self.node.findall('predicateAnchor'):
+			yield node_predAnch
 		
 	def get_tlinks(self):
 		"""
@@ -189,6 +270,16 @@ class CtemporalRelations:
 		"""
 		for node in self.__get_node_temporalRelations():
 			yield Ctlink(node)
+			
+	
+	def get_predicateAnchors(self):
+		"""
+		Iterator that returns all the temporalRelation anchors in the layer
+		@rtype: L{CpredicateAnchor}
+		@return: list of temporalRelations (iterator)
+		"""
+		for node in self.__get_node_predicateAnchors():
+			yield CpredicateAnchor(node)
 			
 	def add_tlink(self,my_tlink):
 		"""
@@ -207,4 +298,23 @@ class CtemporalRelations:
 		for tlink in self.get_tlinks():
 			if tlink.get_id() == tlink_id:
 				self.node.remove(tlink.get_node())
+				break
+			
+	def add_predicatAnchor(self,my_predAnch):
+		"""
+		Adds a predAnch object to the layer
+		@type my_predAnch: L{CpredAnch}
+		@param my_predAnch: the predAnc object to be added
+		"""
+		self.node.append(my_predAnch.get_node())
+			
+	def remove_this_predicateAnchor(self,predAnch_id):
+		"""
+		Removes the predicate anchor for the given predicate anchor identifier
+		@type predAnch_id: string
+		@param predAnch_id: the predicate anchor identifier to be removed
+		"""
+		for predAnch in self.get_predicateAnchors():
+			if predAnch.get_id() == predAnch_id:
+				self.node.remove(predAnch.get_node())
 				break
