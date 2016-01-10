@@ -932,7 +932,7 @@ class KafNafParser:
 			self.root.append(self.temporalRelations_layer.get_node())
 		self.temporalRelations_layer.add_tlink(my_tlink)
 		
-	def add_predAnch(self,my_predAnch):
+	def add_predicateAnchor(self,my_predAnch):
 		"""
 		Adds a predAnch to the temporalRelations layer
 		@type my_predAnch: L{CpredicateAnchor}
