@@ -232,20 +232,6 @@ class CpredicateAnchor:
 		return self.node.set('beginPoint',beginPoint)
 
 
-	def get_span(self):
-        """
-        Returns the span object of the element
-        @rtype: L{Cspan}
-        @return: the span object of the element
-        """
-        
-        node = self.node.find('span')
-        if node is not None:
-           	return Cspan(node)
-       	else:
-           	return None
-
-
 
     def set_span(self, this_span):
         """
