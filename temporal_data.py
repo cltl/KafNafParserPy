@@ -161,6 +161,16 @@ class CpredicateAnchor:
 			self.node = node
 
 
+	
+	def get_node(self):
+		"""
+		Returns the node of the element
+		@rtype: xml Element
+		@return: the node of the element
+		"""
+		return self.node
+
+
 	def set_id(self,this_id):
 		"""
 		Set the identifier for the token
