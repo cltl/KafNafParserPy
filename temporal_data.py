@@ -190,12 +190,46 @@ class CpredicateAnchor:
 	
 	def set_anchorTime(self,anchorTime):
 		"""
-		Set the identifier for the token
+		Set the anchor time for the event
 		@type anchorTime: string
-		@param anchorTime: the anchorTime
+		@param anchorTime: the anchorTime id
 		"""
 		return self.node.set('anchorTime',anchorTime)
-
+	
+	def get_endPoint(self):
+		"""
+		Returns the endPoint
+		@rtype: string
+		@return: the endPoint 
+		"""
+		return self.node.get('endPoint')
+	
+	
+	def set_endPoint(self,endPoint):
+		"""
+		Set the endPoint for the event
+		@type endPoint: string
+		@param endPoint: the endPoint id
+		"""
+		return self.node.set('endPoint',endPoint)
+	
+	
+	def get_beginPoint(self):
+		"""
+		Returns the beginPoint
+		@rtype: string
+		@return: the beginPoint 
+		"""
+		return self.node.get('beginPoint')
+	
+	
+	def set_beginPoint(self,beginPoint):
+		"""
+		Set the beginPoint for the event
+		@type beginPoint: string
+		@param beginPoint: the beginPoint id
+		"""
+		return self.node.set('beginPoint',beginPoint)
 
 	def get_span(self):
         """
