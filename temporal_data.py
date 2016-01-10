@@ -231,15 +231,28 @@ class CpredicateAnchor:
 		"""
 		return self.node.set('beginPoint',beginPoint)
 
+	   
+	def get_span(self):
+		"""
+		Returns the span object of the term
+		@rtype: L{Cspan}
+		@return: the term span
+		"""
+		node_span = self.node.find('span')
+		if node_span is not None:
+			return Cspan(node_span)
+		else:
+			return None
+		
+	def set_span(self,this_span):
+		"""
+		Sets the span for the lemma
+		@type this_span: L{Cspan}
+		@param this_span: lemma identifier
+		"""
+		self.node.append(this_span.get_node())
+		
 
-
-    def set_span(self, this_span):
-        """
-        Sets the span for the predicate
-        @type this_span: L{Cspan}
-        @param this_span: the span object
-        """
-        self.node.append(this_span.get_node())
 
 
 
