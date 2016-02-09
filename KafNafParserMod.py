@@ -9,7 +9,7 @@ different layers as python objects. It also allows to create a new KAF/NAF file 
 @contact: U{rubenizquierdobevia.com}
 @since: 28-Jan-2015
 """
-from KafNafParserPy.markable_data import Cmarkables
+from markable_data import Cmarkables
 	
 ############### Changes   #####################
 # v1.1 --> added functions to add external refs to entities and to read them
