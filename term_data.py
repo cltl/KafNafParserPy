@@ -2,9 +2,9 @@
 This module parses the term layer of a KAF/NAF object
 """
 
-from span_data import *
-from external_references_data import *
-from term_sentiment_data import *
+from .span_data import *
+from .external_references_data import *
+from .term_sentiment_data import *
 from lxml import etree
 
 
@@ -285,7 +285,7 @@ class Cterms:
             term_obj = Cterm(self.idx[term_id],self.type)
             term_obj.add_external_reference(external_ref)
         else:
-            print term_id,' not in self.idx'
+            print('{} not in self.idx'.format(term_id))
             
             
             
@@ -307,4 +307,3 @@ class Cterms:
         
         for node in nodes_to_remove:
             self.node.remove(node)
-        

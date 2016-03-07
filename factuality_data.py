@@ -2,8 +2,7 @@
 Parser for the factvalue layer in KAF/NAF
 """
 
-from lxml import etree
-from span_data import *
+from .span_data import *
 
 
 class Cfactval:

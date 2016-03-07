@@ -2,9 +2,7 @@
 This is a parser for opinions in KAF/NAF files
 """
 
-from lxml import etree
-from lxml.objectify import dump
-from span_data import *
+from .span_data import *
 
 
 

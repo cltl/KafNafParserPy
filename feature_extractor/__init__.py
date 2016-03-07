@@ -1,2 +1,2 @@
-from dependency import *
-from constituency import *
+from .dependency import *
+from .constituency import *
