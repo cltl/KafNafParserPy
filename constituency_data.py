@@ -4,7 +4,7 @@ This module parses the constituency tree layer in KAF/NAF
 
 from lxml import etree
 from lxml.objectify import dump
-from span_data import Cspan
+from .span_data import Cspan
 
 
 class Cnonterminal:

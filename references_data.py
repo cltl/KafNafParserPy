@@ -2,7 +2,7 @@
 Parser for the references objects in KAF/NAF
 """
 # Modified for NAF/KAf
-from span_data import *
+from .span_data import *
 
 class Creferences:
     """
