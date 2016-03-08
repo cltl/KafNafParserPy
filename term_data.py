@@ -285,7 +285,7 @@ class Cterms:
             term_obj = Cterm(self.idx[term_id],self.type)
             term_obj.add_external_reference(external_ref)
         else:
-            print term_id,' not in self.idx'
+            print('{} not in self.idx'.format(term_id))
             
             
             

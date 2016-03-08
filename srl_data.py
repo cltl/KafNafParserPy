@@ -364,4 +364,4 @@ class Csrl:
             self.idx[pred_id] = pred_node
         else:
             #FIXME we want new id rather than ignoring the element
-            print 'Error: trying to add new element, but id has already been given'
+            print('Error: trying to add new element, but id has already been given')
