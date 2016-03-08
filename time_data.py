@@ -216,8 +216,7 @@ class CtimeExpressions:
         else:
             #FIXME: what we want is that the element receives a new identifier that
             #is not present in current element yet
-            print 'Error: trying to add new element with existing identifier'
-
+            print('Error: trying to add new element with existing identifier')
 
     def remove_timex3s(self, list_timex_ids):
         """
