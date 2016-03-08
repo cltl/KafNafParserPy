@@ -3,9 +3,10 @@ Parser for the semantic role labelling layer in KAF/NAF
 """
 from __future__ import print_function
 
-from span_data import *
-from external_references_data import *
 from lxml import etree
+
+from .span_data import *
+from .external_references_data import *
 
 class Crole:
     """

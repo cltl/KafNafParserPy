@@ -3,8 +3,9 @@ This module implements a parser for the coreference layer in KAF/NAF
 """
 
 from lxml import etree
-from external_references_data import *
-from span_data import Cspan
+
+from .external_references_data import *
+from .span_data import Cspan
 
 class Ccoreference:
     """

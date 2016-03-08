@@ -5,8 +5,9 @@ Parser for the entity layer in KAF/NAF
 ## Modified for KAF NAF adaptation
 from lxml import etree
 from lxml.objectify import dump
-from references_data import *
-from external_references_data import *
+
+from .references_data import *
+from .external_references_data import *
     
     
 class Centity:

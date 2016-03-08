@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from KafNafParserMod import *
+from KafNafParserPy.KafNafParserMod import *
 import sys
 
 obj = KafNafParser('kaf_example.xml')

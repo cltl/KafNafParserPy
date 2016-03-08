@@ -3,10 +3,11 @@ This module parses the term layer of a KAF/NAF object
 """
 from __future__ import print_function
 
-from span_data import *
-from external_references_data import *
-from term_sentiment_data import *
 from lxml import etree
+
+from .span_data import *
+from .external_references_data import *
+from .term_sentiment_data import *
 
 
 class Cterm:

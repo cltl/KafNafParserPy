@@ -4,8 +4,9 @@ Parser for time expressions (following timex) in KAF/NAF
 
 from __future__ import print_function
 
-from span_data import *
 from lxml import etree
+
+from .span_data import *
 
 
 class Ctime:
