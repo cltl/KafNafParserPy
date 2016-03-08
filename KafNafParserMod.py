@@ -828,6 +828,35 @@ class KafNafParser:
             self.root.append(self.text_layer.get_node())
         self.text_layer.add_wf(wf_obj)
 
+    def create_wf(self, text, sent, offset, id=None, length=None):
+        """
+        Create a new wordform (text token) and add it to the text layer
+        @type text: string
+        @param text: The text of the token
+        @type sent:  int
+        @param pos: The sentence of this token
+        @type offset: int
+        @param morphofeat: The offset of this token
+        @type id: string
+        @param id: the id of the token, if not given an id wXXX will be created
+        @type length: int
+        @param length: the length (#characters) of the token,
+                       if not given len(text) will be used
+        """
+        if id is None:
+            n = 1 if self.text_layer is None else len(self.text_layer.idx) + 1
+            id = "w{n}".format(**locals())
+        if length is None:
+            length = len(text)
+        new_token = Cwf(type=self.type)
+        new_token.set_id(id)
+        new_token.set_length(str(length))
+        new_token.set_offset(str(offset))
+        new_token.set_sent(str(sent))
+        new_token.set_text(text)
+        self.add_wf(new_token)
+        return new_token
+
     def add_term(self,term_obj):
         """
         Adds a term to the term layer
@@ -838,6 +867,35 @@ class KafNafParser:
             self.term_layer = Cterms(type=self.type)
             self.root.append(self.term_layer.get_node())
         self.term_layer.add_term(term_obj)
+
+    def create_term(self, lemma, pos, morphofeat, tokens, id=None):
+        """
+        Create a new term and add it to the term layer
+        @type lemma: string
+        @param lemma: The lemma of the term
+        @type pos: string
+        @param pos: The postrag(rst letter) of the POS attribute
+        @type morphofeat: string
+        @param morphofeat: The morphofeat (full morphological features) of the term
+        @type tokens: sequence of L{Cwf}
+        @param tokens: the token(s) that this term describes
+        @type id: string
+        @param id: the id of the term, if not given an id tXXX will be created
+        """
+        if id is None:
+            n = 1 if self.term_layer is None else len(self.term_layer.idx) + 1
+            id = "t{n}".format(**locals())
+        new_term = Cterm(type=self.type)
+        new_term.set_id(id)
+        new_term.set_lemma(lemma)
+        new_term.set_pos(pos)
+        new_term.set_morphofeat(morphofeat)
+        new_span = Cspan()
+        for token in tokens:
+            new_span.add_target_id(token.get_id())
+        new_term.set_span(new_span)
+        self.add_term(new_term)
+        return new_term
 
     def add_markable(self,markable_obj):
         """
@@ -907,6 +965,20 @@ class KafNafParser:
             self.root.insert(0,self.header.get_node())
         self.header.add_linguistic_processor(layer,my_lp)
 
+    def create_linguistic_processor(self, layer, name, version, **kwargs):
+        """
+        Create a new linguistic processor element and add it to the header
+        @type layer: string
+        @param layer: the layer to which the processor is related to
+        @type name: string
+        @param name: the name of the linguistic processor
+        @type version: string
+        @param version: the version of the linguistic processor
+        @param kwargs: arguments passed to processor constructor, e.g. timestamp
+        """
+        lp = Clp(name=name, version=version, **kwargs)
+        self.add_linguistic_processor(layer, lp)
+        return lp
 
     def add_dependency(self,my_dep):
         """

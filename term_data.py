@@ -271,7 +271,11 @@ class Cterms:
         @type term_obj: L{Cterm}
         @param term_obj: the term object
         """
+        if term_obj.get_id() in self.idx:
+            raise ValueError("Term with id {} already exists!"
+                             .format(term_obj.get_id()))
         self.node.append(term_obj.get_node())
+        self.idx[term_obj.get_id()] = term_obj
            
     def add_external_reference(self,term_id, external_ref):
         """
