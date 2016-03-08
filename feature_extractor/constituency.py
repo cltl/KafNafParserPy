@@ -3,6 +3,7 @@
 """
 This module provides methods for extracting elaborated information from the constituency layer in a KAF/NAF file
 """
+from __future__ import print_function
 
 from operator import itemgetter
 from collections import defaultdict
@@ -64,7 +65,7 @@ class Cconstituency_extractor:
                 first_non_ter_phrase = path[1]
                 subsumed = self.terms_subsumed_by_nonter[first_non_ter_phrase]
                 this_type = self.label_for_nonter[first_non_ter_phrase]
-                print terminal, this_type, subsumed
+                print(terminal, this_type, subsumed)
         return None
         
         ter_for_nonter = {}
@@ -80,7 +81,7 @@ class Cconstituency_extractor:
         visited = set()
         for nonter, list_term in ter_for_nonter.items():
             for ter in list_term:
-                print ter
+                print(ter)
                 visited.add(ter)
     
     
@@ -227,7 +228,7 @@ class Cconstituency_extractor:
         for term_id in list_terms:
             terminal_id = self.terminal_for_term.get(term_id)
             path = self.paths_for_terminal[terminal_id][0]
-            print term_id, path
+            print(term_id, path)
             for c,noter in enumerate(path):
                 count_per_no_terminal[noter] += 1
                 total_deep_per_no_terminal[noter] += c
@@ -288,7 +289,7 @@ class Cconstituency_extractor:
         n=0
         for nonter,this_type in self.label_for_nonter.items():
             subsumed = self.terms_subsumed_by_nonter.get(nonter)
-            print nonter, this_type, subsumed
+            print(nonter, this_type, subsumed)
             continue
             if subsumed is not None:
                 if len(subsumed) > 1:

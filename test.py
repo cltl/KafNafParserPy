@@ -5,22 +5,22 @@ import sys
 
 obj = KafNafParser('kaf_example.xml')
 
-print 'I) The object type is: ',obj.get_type()
+print('I) The object type is: ',obj.get_type())
 obj.to_naf()
-print 'II) The object type is: ',obj.get_type()
+print('II) The object type is: ',obj.get_type())
 obj.to_kaf()
-print 'III) The object type is: ',obj.get_type()
+print('III) The object type is: ',obj.get_type())
 obj.dump('my_file.kaf')
-print 'object saved in my_file.kaf as ',obj.get_type()
+print('object saved in my_file.kaf as ',obj.get_type())
 
 sys.exit(0)
 
 
-print>>sys.stderr,'ERA:',obj.type
+print('ERA:', obj.type, file=sys.stderr)
 obj.to_naf()
-print>>sys.stderr,'ahora es',obj.type
+print('ahora es', obj.type, file=sys.stderr)
 obj.to_kaf()
-print>>sys.stderr,'finalmente es',obj.type
+print('finalmente es', obj.type, file=sys.stderr)
 obj.dump()
 sys.exit(0)
 
@@ -32,7 +32,7 @@ sys.exit(0)
  
    
 for term in naf_obj.get_terms():
-    print term.get_id(),term.get_lemma()
+    print(term.get_id(),term.get_lemma())
     
 #print naf_obj.get_token('w17').get_id()
 #print naf_obj.get_term('t17').get_id()

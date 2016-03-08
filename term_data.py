@@ -1,6 +1,7 @@
 """
 This module parses the term layer of a KAF/NAF object
 """
+from __future__ import print_function
 
 from span_data import *
 from external_references_data import *
@@ -289,7 +290,7 @@ class Cterms:
             term_obj = Cterm(self.idx[term_id],self.type)
             term_obj.add_external_reference(external_ref)
         else:
-            print term_id,' not in self.idx'
+            print('{term_id} not in self.idx'.format(**locals()))
             
             
             

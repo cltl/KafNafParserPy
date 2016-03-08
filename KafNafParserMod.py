@@ -18,12 +18,13 @@ different layers as python objects. It also allows to create a new KAF/NAF file 
 # v1.3.2 --> added markable layer and main accompanying functions
 ################################################
 
+from __future__ import print_function
 
 __last_modified__  = '2September2015'
 __version__ = '1.3.1'
 __author__ = 'Ruben Izquierdo Bevia'
 
-import sys
+import io
 
 from markable_data import Cmarkables
 from lxml import etree
@@ -357,7 +358,7 @@ class KafNafParser:
         """
         Prints the constituency layer
         """
-        print self.constituency_layer
+        print(self.constituency_layer)
 
     def get_trees(self):
         """
@@ -597,7 +598,7 @@ class KafNafParser:
             for time in self.timex_layer.get_timeExpressions():
                 yield time
 
-    def dump(self,filename=sys.stdout):
+    def dump(self,filename=None):
         """
         Dumps the object to an output filename (or open file descriptor). The filename
         parameter is optional, and if it is not provided, the standard output will be used
@@ -605,8 +606,12 @@ class KafNafParser:
         @param filename: file where to dump the object (default standard output)
         """
 
-        self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
-
+        if filename is None:
+            with io.BytesIO() as buffer:
+                self.dump(filename=buffer)
+                print(buffer.getvalue().decode("UTF-8"))
+        else:
+            self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
 
     def remove_entity_layer(self):
         """

@@ -36,5 +36,3 @@ def test_create_terms():
     result = [result[tid] for tid in sorted(result.keys())]
     assert_equal(input, result)
 
-
-test_create_terms()

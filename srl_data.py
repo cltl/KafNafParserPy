@@ -1,6 +1,7 @@
 """
 Parser for the semantic role labelling layer in KAF/NAF
 """
+from __future__ import print_function
 
 from span_data import *
 from external_references_data import *
@@ -364,4 +365,4 @@ class Csrl:
             self.idx[pred_id] = pred_node
         else:
             #FIXME we want new id rather than ignoring the element
-            print 'Error: trying to add new element, but id has already been given'
+            print('Error: trying to add new element, but id has already been given')
