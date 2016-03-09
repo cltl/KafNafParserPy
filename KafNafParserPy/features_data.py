@@ -4,8 +4,8 @@ Parser for the feature layer in KAF/NAF
 
 from lxml import etree
 from lxml.objectify import dump
-from references_data import *
 
+from .references_data import *
 
 
 class Cproperty:

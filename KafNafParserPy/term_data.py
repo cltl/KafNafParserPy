@@ -1,11 +1,13 @@
 """
 This module parses the term layer of a KAF/NAF object
 """
+from __future__ import print_function
 
-from span_data import *
-from external_references_data import *
-from term_sentiment_data import *
 from lxml import etree
+
+from .span_data import *
+from .external_references_data import *
+from .term_sentiment_data import *
 
 
 class Cterm:
@@ -271,7 +273,11 @@ class Cterms:
         @type term_obj: L{Cterm}
         @param term_obj: the term object
         """
+        if term_obj.get_id() in self.idx:
+            raise ValueError("Term with id {} already exists!"
+                             .format(term_obj.get_id()))
         self.node.append(term_obj.get_node())
+        self.idx[term_obj.get_id()] = term_obj
            
     def add_external_reference(self,term_id, external_ref):
         """
@@ -285,7 +291,7 @@ class Cterms:
             term_obj = Cterm(self.idx[term_id],self.type)
             term_obj.add_external_reference(external_ref)
         else:
-            print term_id,' not in self.idx'
+            print('{term_id} not in self.idx'.format(**locals()))
             
             
             

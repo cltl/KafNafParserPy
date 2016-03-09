@@ -17,6 +17,5 @@ setup(name='KafNafParserPy',
       author_email='rubensanvi@gmail.com',
       url='https://github.com/cltl/KafNafParserPy',
       packages = ['KafNafParserPy','KafNafParserPy.feature_extractor'],
-      package_dir = {'KafNafParserPy':'.'},
       install_requires = ['lxml']
       )

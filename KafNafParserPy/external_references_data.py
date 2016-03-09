@@ -3,8 +3,10 @@ Parser for the external references object in KAF/NAF
 """
 
 # included modification for KAF/NAF
-from term_sentiment_data import Cterm_sentiment
+
 from lxml import etree
+
+from .term_sentiment_data import Cterm_sentiment
 
 class CexternalReference:
     """

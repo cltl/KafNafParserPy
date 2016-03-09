@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 
 from KafNafParserPy import *
 
@@ -10,9 +11,9 @@ if __name__ == '__main__':
     
     # Iterate over the entities and print some information
     for entity_obj in my_parser.get_entities():
-        print entity_obj.get_id(), entity_obj.get_type()
+        print(entity_obj.get_id(), entity_obj.get_type())
         for ext_ref in entity_obj.get_external_references():
-            print '\t',ext_ref.get_reference(), ext_ref.get_resource(), ext_ref.get_confidence()
+            print('\t',ext_ref.get_reference(), ext_ref.get_resource(), ext_ref.get_confidence())
             
             
         
@@ -28,9 +29,9 @@ if __name__ == '__main__':
             
     # We print the entities again
     for entity_obj in my_parser.get_entities():
-        print entity_obj.get_id(), entity_obj.get_type()
+        print(entity_obj.get_id(), entity_obj.get_type())s
         for ext_ref in entity_obj.get_external_references():
-            print '\t',ext_ref.get_reference(), ext_ref.get_resource(), ext_ref.get_confidence()
+            print('\t',ext_ref.get_reference(), ext_ref.get_resource(), ext_ref.get_confidence())
             
             
     #We can also add it directly to the parser object if we know the entity identifier
