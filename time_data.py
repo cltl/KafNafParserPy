@@ -49,7 +49,6 @@ class Ctime:
         self.node.set('id',i)
 
 
-
     def get_type(self):
         """
         Returns the timex type
