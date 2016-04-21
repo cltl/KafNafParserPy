@@ -1,10 +1,12 @@
 """
 This module parses the markable layer of a KAF/NAF object
 """
+from __future__ import print_function
 
-from span_data import *
-from external_references_data import *
 from lxml import etree
+
+from .span_data import *
+from .external_references_data import *
 
 
 class Cmarkable:
@@ -234,7 +236,7 @@ class Cmarkables:
             markable_obj = Cterm(self.idx[markable_id],self.type)
             markable_obj.add_external_reference(external_ref)
         else:
-            print markable_id,' not in self.idx'
+            print('{markable_id} not in self.idx'.format(**locals()))
 
     def remove_markables(self,list_mark_ids):
         """

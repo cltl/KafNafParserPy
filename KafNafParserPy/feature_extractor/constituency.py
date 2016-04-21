@@ -3,9 +3,12 @@
 """
 This module provides methods for extracting elaborated information from the constituency layer in a KAF/NAF file
 """
+from __future__ import print_function
 
 from operator import itemgetter
 from collections import defaultdict
+
+import copy
 
 class Cconstituency_extractor:
     """
@@ -60,7 +63,10 @@ class Cconstituency_extractor:
         for terminal in self.terminals.keys():
             for path in self.paths_for_terminal[terminal]:
                 first_non_ter_phrase = path[1]
-                all_nonter.add(first_non_ter_phrase)
+                subsumed = self.terms_subsumed_by_nonter[first_non_ter_phrase]
+                this_type = self.label_for_nonter[first_non_ter_phrase]
+                print(terminal, this_type, subsumed)
+        return None
         
         ter_for_nonter = {}
         for nonter in all_nonter:
@@ -75,7 +81,7 @@ class Cconstituency_extractor:
         visited = set()
         for nonter, list_term in ter_for_nonter.items():
             for ter in list_term:
-
+                print(ter)
                 visited.add(ter)
     
     
@@ -222,7 +228,7 @@ class Cconstituency_extractor:
         for term_id in list_terms:
             terminal_id = self.terminal_for_term.get(term_id)
             path = self.paths_for_terminal[terminal_id][0]
-            print term_id, path
+            print(term_id, path)
             for c,noter in enumerate(path):
                 count_per_no_terminal[noter] += 1
                 total_deep_per_no_terminal[noter] += c
@@ -274,6 +280,53 @@ class Cconstituency_extractor:
                 subsumed = self.terms_subsumed_by_nonter.get(nonter)
                 if subsumed is not None:
                     yield sorted(list(subsumed))
+    
+          
+    
+    
+    def get_all_deepest_chunks(self):
+        all_chunks = []
+        n=0
+        for nonter,this_type in self.label_for_nonter.items():
+            subsumed = self.terms_subsumed_by_nonter.get(nonter)
+            print(nonter, this_type, subsumed)
+            continue
+            if subsumed is not None:
+                if len(subsumed) > 1:
+                    all_chunks.append(('chunk_%d' % n, this_type,subsumed))
+                else:
+                    tid = self.terminal_for_term.get(list(subsumed)[0])
+                    reachable = self.reachable_from[tid]
+                    if reachable[0] != nonter:
+                        all_chunks.append(('chunk_%d' % n, this_type,subsumed))
+ 
+ 
+ 
+        while True:
+            ids_to_be_removed = set()
+            for id1, type1, span1 in all_chunks:
+                #We fixed id1
+                for id2, type2, span2 in all_chunks:
+                    if id1 != id2:
+                        #If id2 subsumes id1 is a candidate to be removed
+                        if len(span2) > len(span1):
+                            common = span1 & span2
+                            if len(common) == len(span1):
+                                ids_to_be_removed.add(id2)
+            
+            filtered_chunks = []
+            for this_id, this_type, this_span in all_chunks:
+                if this_id not in ids_to_be_removed:
+                    filtered_chunks.append((this_id, this_type, this_span))
+        
+            del all_chunks
+            all_chunks = copy.copy(filtered_chunks)
+            if len(ids_to_be_removed) == 0:
+                break
+            
+        for this_id, this_type, this_span in all_chunks:
+            yield this_type, this_span
+                            
                     
     def get_all_chunks_for_term(self,termid):
         """

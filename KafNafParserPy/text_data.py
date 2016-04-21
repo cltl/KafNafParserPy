@@ -225,7 +225,11 @@ class Ctext:
         @type wf_obj: L{Cwf}
         @param wf_obj: token object
         """
+        if wf_obj.get_id() in self.idx:
+            raise ValueError("Text node (wf) with id {} already exists!"
+                             .format(wf_obj.get_id()))
         self.node.append(wf_obj.get_node())
+        self.idx[wf_obj.get_id()] = wf_obj
         
     
     def remove_tokens_of_sentence(self,sentence_id):

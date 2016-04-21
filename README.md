@@ -11,6 +11,15 @@ Parser for KAF or  NAF files in python. The documentation for all methods and AP
 You can also take a look at this [presentation](http://www.slideshare.net/rubenizquierdobevia/kafnafparserpy-a-python-library-for-parsingcreating-kaf-and-naf-files) on slideshare
  about this library.
 
+Quick Installation
+-----------------
+
+The KafNafParserPy is from Feb 10th available in the [Python Package Index](https://pypi.python.org/pypi/KafNafParserPy), so you can easily install it (and its dependencies), by running:
+````shell
+pip install KafNafParserPy
+````
+
+
 Installation
 -----------
 Clone the repository from github
