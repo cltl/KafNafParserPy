@@ -82,6 +82,7 @@ class KafNafParser:
         self.causalRelations_layer = None
         self.temporalRelations_layer = None
         self.factuality_layer = None
+        self.factualities = None
         self.markable_layer = None
 
 
@@ -426,6 +427,17 @@ class KafNafParser:
         """
         if self.factuality_layer is not None:
             for fact in self.factuality_layer.get_factvalues():
+                yield fact
+                
+    def get_factualities(self):
+        """
+        Iterator that returns the factualities form the factualities layer. Us it as:
+        for my_fact in my_obj.get_factualities():
+        @rtype: L{Cfactuality}
+        @returns: iterator to get all the factualities
+        """
+        if self.factualities is not None:
+            for fact in self.factualities.get_factualities():
                 yield fact
 
     def get_corefs(self):
