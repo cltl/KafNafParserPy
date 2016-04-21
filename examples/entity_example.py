@@ -29,7 +29,7 @@ if __name__ == '__main__':
             
     # We print the entities again
     for entity_obj in my_parser.get_entities():
-        print(entity_obj.get_id(), entity_obj.get_type())s
+        print(entity_obj.get_id(), entity_obj.get_type())
         for ext_ref in entity_obj.get_external_references():
             print('\t',ext_ref.get_reference(), ext_ref.get_resource(), ext_ref.get_confidence())
             
