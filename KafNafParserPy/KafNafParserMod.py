@@ -25,6 +25,7 @@ __version__ = '1.3.1'
 __author__ = 'Ruben Izquierdo Bevia'
 
 import io
+import sys
 
 from lxml import etree
 
@@ -621,7 +622,8 @@ class KafNafParser:
         if filename is None:
             with io.BytesIO() as buffer:
                 self.dump(filename=buffer)
-                print(buffer.getvalue().decode("UTF-8"))
+                bytes = buffer.getvalue()
+                getattr(sys.stdout, 'buffer', sys.stdout).write(bytes)
         else:
             self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
 
