@@ -71,7 +71,21 @@ class Cfactval:
         @param c: the value for the element
         """
         self.node.set('confidence',c)
+    
+    def get_source(self):
+        """
+        Returns the sourcee of the factVal element
+        """
+        return self.node.get('source')
 
+
+    def set_source(self,c):
+        """
+        Sets confidence for the factVal element
+        @type c: string
+        @param c: the value for the element
+        """
+        self.node.set('source',c)
 
 class Cfactuality:
 
