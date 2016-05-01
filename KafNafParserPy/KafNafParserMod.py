@@ -25,6 +25,7 @@ __version__ = '1.3.1'
 __author__ = 'Ruben Izquierdo Bevia'
 
 import io
+import sys
 
 from lxml import etree
 
@@ -427,7 +428,7 @@ class KafNafParser:
         if self.factuality_layer is not None:
             for fact in self.factuality_layer.get_factvalues():
                 yield fact
-                
+
     def get_factualities(self):
         """
         Iterator that returns the factualities form the factualities layer. Us it as:
@@ -621,7 +622,8 @@ class KafNafParser:
         if filename is None:
             with io.BytesIO() as buffer:
                 self.dump(filename=buffer)
-                print(buffer.getvalue().decode("UTF-8"))
+                bytes = buffer.getvalue()
+                getattr(sys.stdout, 'buffer', sys.stdout).write(bytes)
         else:
             self.tree.write(filename,encoding='UTF-8',pretty_print=True,xml_declaration=True)
 
@@ -1008,6 +1010,27 @@ class KafNafParser:
             self.root.append(self.dependency_layer.get_node())
         self.dependency_layer.add_dependency(my_dep)
 
+    def create_dependency(self, _from, to, function, comment=None):
+        """
+        Create a new dependency object and add it to the dependency layer
+        @type _from: string
+        @param _from: term id of the child node
+        @type _to: string
+        @param _to: term id of the parent node
+        @type function: string
+        @param function: grammatical function (relation) between parent and child
+        @type comment: string
+        @param comment: optional comment to be included
+        """
+        new_dependency = Cdependency()
+        new_dependency.set_from(_from)
+        new_dependency.set_to(to)
+        new_dependency.set_function(function)
+        if comment:
+            new_dependency.set_comment(comment)
+        self.add_dependency(new_dependency)
+        return new_dependency
+
     def add_tlink(self,my_tlink):
         """
         Adds a tlink to the temporalRelations layer
@@ -1063,6 +1086,27 @@ class KafNafParser:
             self.root.append(self.entity_layer.get_node())
         self.entity_layer.add_entity(entity)
 
+    def create_entity(self, entity_type, term_ids, id=None):
+        """
+        Create a new (named) entity and add it to the entities layer
+        @type entity_type: string
+        @param entity_type: The type of the entity
+        @type term_ids: list
+        @param term_ids: list of term ids
+        @type id: string
+        @param id: optional id of the entity
+        """
+        new_entity = Centity(type=self.type)
+        if id is None:
+            n = 1 if self.entity_layer is None else len(self.entity_layer.map_entity_id_to_node) + 1
+            id = "e{n}".format(**locals())
+        new_entity.set_id(id)
+        new_entity.set_type(entity_type)
+        references = Creferences()
+        references.add_span(term_ids)
+        new_entity.add_reference(references)
+        self.add_entity(new_entity)
+        return new_entity
 
     def add_coreference(self, coreference):
         """
@@ -1075,6 +1119,30 @@ class KafNafParser:
             self.root.append(self.coreference_layer.get_node())
         self.coreference_layer.add_coreference(coreference)
 
+    def create_coreference(self, coref_type, term_ids, id=None):
+        """
+        Create a new coreference object and add it to the coreferences layer
+        @type coref_type: string
+        @param coref_type: type of the coreference object
+        @type term_ids: list
+        @param term_ids: list of term ids
+        @type id: string
+        @param id: optional id of the entity
+        """
+        if id is None:
+            if self.coreference_layer is None:
+                i = 1
+            else:
+                corefs = (l for l in self.coreference_layer.get_corefs() if l.get_type == coref_type)
+                i = len(list(corefs)) + 1
+            id = "co{coref_type}{i}".format(**locals())
+
+        new_coref = Ccoreference(type=self.type)
+        new_coref.set_id(id)
+        new_coref.set_type(coref_type)
+        new_coref.add_span(term_ids)
+        self.add_coreference(new_coref)
+        return new_coref
 
     def add_constituency_tree(self,my_tree):
         """

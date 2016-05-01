@@ -159,7 +159,11 @@ class Centities:
                 
     
     def add_entity(self,ent):
+        if ent.get_id() in self.map_entity_id_to_node:
+            raise ValueError("Entity with id {} already exists!"
+                             .format(ent.get_id()))
         self.node.append(ent.get_node())
+        self.map_entity_id_to_node[ent.get_id()] = ent.get_node()
                                         
     def get_entity(self,entity_id):
         """
