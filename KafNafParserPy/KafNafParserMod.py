@@ -686,6 +686,19 @@ class KafNafParser:
 
         if self.header is not None:
             self.header.remove_lp('factualitylayer')
+            
+            
+    def remove_factualities_layer(self):
+        """
+        Removes the factualities layer (the new version) (if exists) of the object (in memory)
+        """
+        if self.factuality_layer is not None:
+            this_node = self.factuality_layer.get_node()
+            self.root.remove(this_node)
+            self.factuality_layer = None
+
+        if self.header is not None:
+            self.header.remove_lp('factualities')
 
     def remove_constituency_layer(self):
         """
