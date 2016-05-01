@@ -86,6 +86,13 @@ class Ccoreference:
         new_span = Cspan()
         new_span.create_from_ids(term_span)
         self.node.append(new_span.get_node())
+        
+    def remove_span(self,span):
+        """
+        Removes a specific span from the coref object
+        """
+        this_node = span.get_node()
+        self.node.remove(this_node)
     
     def get_spans(self):
         """
@@ -97,7 +104,7 @@ class Ccoreference:
             yield Cspan(node_span)
             
     def get_external_references(self):
-        """
+        """    
         Iterator to get the external references
         @rtype: L{CexternalReference}
         @return: iterator for external references
@@ -170,5 +177,15 @@ class Ccoreferences:
             for node_coref in self.__get_corefs_nodes():
                 node_coref.set('id',node_coref.get('coid'))
                 del node_coref.attrib['coid']
-                    
-            
+    
+    
+    def remove_coreference(self,coid):
+        """
+        Removes the coreference with specific identifier
+        @type coid: string
+        @param coid: the coreference identifier
+        """
+        for this_node in self.node.findall('coref'):
+            if this_node.get('id') == coid:
+                self.node.remove(this_node)
+                break
