@@ -195,6 +195,28 @@ class Cfactualities:
         Adds a factuality element to the layer
         """
         self.node.append(factval.get_node())
+    
+    
+    
+    def remove_this_factuality(self,factuality_id):
+        """
+        Removes the factuality for the given factuality identifier
+        @type factuality_id: string
+        @param factuality_id: the factuality identifier to be removed
+        """
+        for fact in self.get_factualities():
+            if fact.get_id() == factuality_id:
+                self.node.remove(fact.get_node())
+                break
+    
+       
+    def remove_factuality(self, fid):
+        """
+        Removes a factuality element with a specific id from the layer
+        """
+        for node_pre in self.node.findall('factuality'):
+            if node_pre.get('id') == fid:
+                self.node.remove(node_pre)
 
 
     def get_factualities(self):
