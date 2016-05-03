@@ -1079,14 +1079,14 @@ class KafNafParser:
 
     def add_factuality(self,my_fact):
         """
-        Adds a factvalue to the factuality layer
-        @type my_fact: L{Cfactvalue}
-        @param my_fact: factvalue object
+        Adds a factuality to the factuality layer
+        @type my_fact: L{Cfactuality}
+        @param my_fact: factuality object
         """
         if self.factuality_layer is None:
-            self.factuality_layer = Cfactualitylayer()
+            self.factuality_layer = Cfactualities()
             self.root.append(self.factuality_layer.get_node())
-        self.factuality_layer.add_factvalue(my_fact)
+        self.factuality_layer.add_factuality(my_fact)
 
     def add_entity(self,entity):
         """
