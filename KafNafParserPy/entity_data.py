@@ -5,6 +5,7 @@ Parser for the entity layer in KAF/NAF
 ## Modified for KAF NAF adaptation
 from lxml import etree
 from lxml.objectify import dump
+import re
 
 from .references_data import *
 from .external_references_data import *
@@ -35,6 +36,7 @@ class Centity:
         @param c: comment for the element
         """
         c = c.replace('--','- -')
+        c = re.sub("-$", "- ", c)
         self.node.insert(0,etree.Comment(c))
         
     def get_node(self):
