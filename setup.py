@@ -11,7 +11,7 @@ except ImportError:
 
 
 setup(name='KafNafParserPy',
-      version='1.6',
+      version='1.81',
       description='Parser for KAF/NAF files in Python',
       author='Ruben Izquierdo',
       author_email='rubensanvi@gmail.com',
