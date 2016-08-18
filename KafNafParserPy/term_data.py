@@ -51,7 +51,7 @@ class Cterm:
         """
         Sets the identifier for the term
         @type i: string
-        @param i: lemma identifier
+        @param i: chunk identifier
         """
         if self.type == 'NAF':
             self.node.set('id',i)
@@ -131,9 +131,9 @@ class Cterm:
         
     def set_span(self,this_span):
         """
-        Sets the span for the lemma
+        Sets the span for the term
         @type this_span: L{Cspan}
-        @param this_span: lemma identifier
+        @param this_span: term identifier
         """
         self.node.append(this_span.get_node())
         
