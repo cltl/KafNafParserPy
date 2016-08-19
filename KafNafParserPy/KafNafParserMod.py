@@ -84,6 +84,7 @@ class KafNafParser:
         self.temporalRelations_layer = None
         self.factuality_layer = None
         self.markable_layer = None
+        self.chunk_layer = None
 
 
         ## Specific feature extractor for complicated layers
@@ -115,6 +116,10 @@ class KafNafParser:
         node_term = self.root.find('terms')
         if node_term is not None:
             self.term_layer = Cterms(node=node_term,type=self.type)
+
+        node_chunk = self.root.find('chunks')
+        if node_chunk is not None:
+            self.chunk_layer = Cchunks(node=node_chunk,type=self.type)
 
         node_entity = self.root.find('entities')
         if node_entity is not None:
@@ -236,6 +241,11 @@ class KafNafParser:
         if self.term_layer is not None:
             self.term_layer.to_kaf()
 
+
+        ## Convert the chunk layer
+        if self.chunk_layer is not None:
+            self.chunk_layer.to_kaf()
+
         ## Convert the entity layer
         if self.entity_layer is not None:
             self.entity_layer.to_kaf()
@@ -301,6 +311,9 @@ class KafNafParser:
         if self.term_layer is not None:
             self.term_layer.to_naf()
 
+        ## Convert the chunk layer
+        if self.chunk_layer is not None:
+            self.chunk_layer.to_naf()
 
         ## Convert the entity layer
         if self.entity_layer is not None:
@@ -485,6 +498,15 @@ class KafNafParser:
             for markable in self.markable_layer:
                 yield markable
 
+    def get_chunks(self):
+        """Iterator that returns all the chunks from the chunk layer
+        @rtype: L{Cchunk}
+        @return: list of chunk objects
+        """
+        if self.chunk_layer is not None:
+            for chunk in self.chunk_layer:
+                yield chunk
+
     def get_markable(self,markable_id):
         """
         Returns a markable object for the specified markable_id
@@ -516,12 +538,26 @@ class KafNafParser:
         """
         Returns a term object for the specified term_id
         @type term_id:string
-        @param term_id: token identifier
+        @param term_id: term identifier
         @rtype: L{Cterm}
         @return: term object
         """
         if self.term_layer is not None:
             return self.term_layer.get_term(term_id)
+        else:
+            return None
+
+
+    def get_chunk(self,chunk_id):
+        """
+        Returns a chunk object for the specified chunk_id
+        @type chunk_id:string
+        @param chunk_id: chunk identifier
+        @rtype: L{Cchunk}
+        @return: chunk object
+        """
+        if self.chunk_layer is not None:
+            return self.chunk_layer.get_chunk(chunk_id)
         else:
             return None
 
@@ -755,6 +791,19 @@ class KafNafParser:
         if self.header is not None:
             self.header.remove_lp('terms')
 
+
+
+    def remove_chunk_layer(self):
+        """
+        Removes the chunk layer (if exists) of the object (in memory)
+        """
+        if self.chunk_layer is not None:
+            this_node = self.chunk_layer.get_node()
+            self.root.remove(this_node)
+            self.chunk_layer = None
+
+        if self.header is not None:
+            self.header.remove_lp('chunks')
 
 
     def remove_text_layer(self):
