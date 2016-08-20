@@ -169,6 +169,19 @@ def create_span_from_folia_words(folia_word_list):
         naf_span.append(naf_term_id)
     return naf_span
 
+
+def add_span_to_elem(naf_elem, span_ids):
+    '''
+    Creates a NAF span object from a list of ids and adds this to the naf element
+    :param naf_elem: a naf element
+    :param span_ids: a list of ids that composes the span
+    :return: None
+    '''
+
+    span = Cspan()
+    span.create_from_ids(span_ids)
+    naf_elem.set_span(span)
+
 def chunking_to_chunks_layer(folia_obj, naf_obj):
     '''
     Extract chunks from FoLiA object and add to NAF's chunk layer
@@ -178,19 +191,36 @@ def chunking_to_chunks_layer(folia_obj, naf_obj):
     '''
     chunk_id = 1
     for chunk in folia_obj.select(folia.Chunk):
-        myChunk = Cchunk()
-        myChunk.set_id('c' + str(chunk_id))
+        naf_chunk = Cchunk()
+        naf_chunk.set_id('c' + str(chunk_id))
         chunk_id += 1
         naf_span = create_span_from_folia_words(chunk.wrefs())
-        span = Cspan()
-        span.create_from_ids(naf_span)
-        myChunk.set_span(span)
-        myChunk.set_phrase(chunk.cls)
+        add_span_to_elem(naf_chunk, naf_span)
+        naf_chunk.set_phrase(chunk.cls)
         #add phrase, head (when possible)
         if len(naf_span) == 1:
-            myChunk.set_head(naf_span[0])
-        naf_obj.add_chunk(myChunk)
+            naf_chunk.set_head(naf_span[0])
+        naf_obj.add_chunk(naf_chunk)
 
+
+def entities_to_entity_layer(folia_obj, naf_obj):
+    '''
+    Retrieves all entities from folia obj and adds them to naf entity layer
+    :param folia_obj: folia object
+    :param naf_obj: naf object
+    :return: None
+    '''
+    entity_id = 1
+    for entity in folia_obj.select(folia.Entity):
+        naf_entity = Centity()
+        naf_entity.set_id('e' + str(entity_id))
+        entity_id += 1
+        naf_span = create_span_from_folia_words(entity.wrefs())
+        entity_references = Creferences()
+        add_span_to_elem(entity_references, naf_span)
+        naf_entity.add_reference(entity_references)
+        naf_entity.set_type(entity.cls)
+        naf_obj.add_entity(naf_entity)
 
 def check_overall_info(folia_obj):
     '''
@@ -222,11 +252,10 @@ def convert_file_to_naf(inputfolia, outputnaf=None):
     text_to_text_layer(folia_obj, naf_obj)
     add_raw_from_text_layer(naf_obj)
     chunking_to_chunks_layer(folia_obj, naf_obj)
+    entities_to_entity_layer(folia_obj, naf_obj)
     naf_obj.dump(outputnaf)
 
     header_to_header_layer(folia_obj, naf_obj)
-    # print(foliaObj.version)
-
 
 def main(argv=None):
     # option to add: keep original identifiers...
