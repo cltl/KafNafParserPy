@@ -1,0 +1,57 @@
+This file provides an overview of information that is provided by only one of the formats.
+It serves as a todo list for format updates; i.e. information that is not made explicit in
+one of the formats, but is added by the conversion script is not presented here.
+
+#########################################################################################
+#											#
+#			In NAF, but not in FoLiA					#
+#											#
+#########################################################################################
+
+1. Term layer:
+
+FoLiA only has a text layer, but this layer contains most information provided by the term layer.
+
+Missing information:
+	* the attribute 'type' with possible values 'open' and 'closed'.
+		=> can be derived from pos (morphofeat or head); needs to be done for each possible set
+	* particles that are separated from their stem in the token layer form (in principle) one term.
+		=> not clear if the current modules producing NAF actually do this; to be examined once examples have been found.
+
+
+2. Chunk layer:
+
+Missing information:
+	* the attribute 'head' indicating the head of the chunk. This is obligatory in NAF.
+		=> conversion folia2naf adds the head if singleton; as soon as dependencies are covered, they will be used for larger chunks.
+
+#########################################################################################
+#											#
+#			In FoLiA, but not in NAF					#
+#											#
+#########################################################################################
+
+1. Text to text and terms:
+
+Missing information:
+	* <w/> NAF does not have a 'class' for words (either token or terms)
+		=> see if this can be added in generic annotation scheme (see below)
+	* <pos/> NAF places 'set' in header (if provided), confidence not an attribute for term for now
+		=> propose as possible attribute (pos_confidence) to NAF partners
+	* <pos/feat/> NAF does not provide this additional classification of components of the pos class.
+		=> see if this can be added in generic annotation scheme (see below)
+	* <morphology/> NAF currently does not support more finegrained morphological information
+		=> to be investigated: design first proposal for adding 'morphology layer' to NAF
+
+*****generic annotation scheme*****
+
+NAF uses 'externalReferences' as a generic way to link mentions to interpretations in external resources (e.g. DBpedia, WordNet, FrameNet).
+It has been discussed previously whether we can also use this mechanism to capture (e.g.) alternative analyses by PoS-taggers, etc.
+We are currently looking into this. Possibly, this will become a variation of externalReferences (since the PoS is a grammatical property, 
+rather than a meaning representation).
+
+
+2. Chunk layer:
+
+Missing information:
+	* confidence attribute for chunks. This can be added, but we need to know what the confidence in FoLiA represents.
