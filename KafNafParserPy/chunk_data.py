@@ -80,7 +80,7 @@ class Cchunk:
         """
         return self.node.get('phrase')
 
-    def set_head(self,p):
+    def set_phrase(self,p):
         """
         Sets the phrase type for the chunk
         @type p: string
