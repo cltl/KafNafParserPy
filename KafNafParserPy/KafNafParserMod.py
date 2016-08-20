@@ -950,6 +950,18 @@ class KafNafParser:
             self.root.append(self.term_layer.get_node())
         self.term_layer.add_term(term_obj)
 
+
+    def add_chunk(self,chunk_obj):
+        """
+        Adds a chunk to the chunk layer
+        @type chunk_obj: L{Cchunk}
+        @param chunk_obj: the chunk object
+        """
+        if self.chunk_layer is None:
+            self.chunk_layer = Cchunks(type=self.type)
+            self.root.append(self.chunk_layer.get_node())
+        self.chunk_layer.add_chunk(chunk_obj)
+
     def create_term(self, lemma, pos, morphofeat, tokens, id=None):
         """
         Create a new term and add it to the term layer
