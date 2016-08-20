@@ -55,3 +55,8 @@ rather than a meaning representation).
 
 Missing information:
 	* confidence attribute for chunks. This can be added, but we need to know what the confidence in FoLiA represents.
+
+3. Entity layer:
+
+Missing information:
+	* confidence attribute for entity. This can be added for external references. Also possible to adapt NAF, but we need to clarify whether FoLiA confidence is about the label or identification+label.
