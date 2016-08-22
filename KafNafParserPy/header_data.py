@@ -267,7 +267,7 @@ class Clp:
     """
     This class encapsulates the linguistic processor element in the header
     """
-    def __init__(self,node=None,name="",version="",timestamp=None,btimestamp=None,etimestamp=None):
+    def __init__(self,node=None,name="",version="",timestamp=None,btimestamp=None,etimestamp=None,hostname=None):
         """
         Constructor of the object
         @type node: xml Element or None (to create an empty one)
@@ -291,7 +291,10 @@ class Clp:
             self.set_endTimestamp(etimestamp)
             
             #For the hostnameimport platform
-            self.node.set('hostname',platform.node())
+            if hostname is None:
+                self.node.set('hostname',platform.node())
+            else:
+                self.node.set('hostname',hostname)
             
         else:
             self.node = node
@@ -344,9 +347,6 @@ class Clp:
             import time
             etimestamp = time.strftime('%Y-%m-%dT%H:%M:%S%Z')
         self.node.set('endTimestamp',etimestamp)
-
-
-
 
 
     def get_node(self):

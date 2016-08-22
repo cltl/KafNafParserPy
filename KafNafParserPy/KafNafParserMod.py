@@ -1044,9 +1044,10 @@ class KafNafParser:
         @type header: L{CHeader}
         @param header: the header object
         """
+        self.header = header
         self.root.insert(0,header.get_node())
 
-    def add_linguistic_processor(self, layer ,my_lp):
+    def add_linguistic_processor(self, layer, my_lp):
         """
         Adds a linguistic processor to the header
         @type my_lp: L{Clp}
