@@ -6,9 +6,8 @@ from operator import itemgetter
 import sys
 
 def get_max_distr_dict(my_dict):
-    vect = my_dict.items()
+    vect = [(k, my_dict[k]) for k in sorted(my_dict, key=my_dict.get, reverse=True)]
     if len(vect) !=0:
-        vect.sort(key=itemgetter(1),reverse=True)
         return vect[0]
     return None
     
@@ -126,7 +125,7 @@ class Cdependency_extractor:
         ####
 
         for sent_id, distr in self.root_for_sentence.items():
-            ## get_max_distr_dict imported from VUA_pylib.common
+            ## get_max_distr_dict originally imported from VUA_pylib.common; now fixed to work with python3
             most_freq,c = get_max_distr_dict(distr)
             self.root_for_sentence[sent_id] = most_freq
 
