@@ -119,11 +119,11 @@ class Ctime:
 
     def get_functionInDocument(self):
         """
-        Returns the timex functionnInDocument
+        Returns the timex functionInDocument
         @rtype: string
-        @return: the timex functionnInDocument
+        @return: the timex functionInDocument
         """
-        return self.node.get('functionnInDocument')
+        return self.node.get('functionInDocument')
 
 
     def set_functionInDocument(self, f):
@@ -133,6 +133,187 @@ class Ctime:
         @param f: timex functionInDocument
         """
         self.node.set('functionInDocument',f)
+
+
+    def get_beginPoint(self):
+        """
+        Returns the timex beginPoint
+        @rtype: string
+        @return: the timex beginPoint
+        """
+        return self.node.get('beginPoint')
+        
+        
+    def set_beginPoint(self, bp):
+        """
+        Sets the beginPoint for the timex
+        @type bp: string
+        @param bp: timex beginPoint
+        """
+        self.node.set('beginPoint',bp)
+
+
+    def get_endPoint(self):
+        """
+        Returns the timex endPoint
+        @rtype: string
+        @return: the timex beginPoint
+        """
+        return self.node.get('endPoint')
+        
+        
+    def set_endPoint(self, ep):
+        """
+        Sets the endPoint for the timex
+        @type ep: string
+        @param ep: timex endPoint
+        """
+        self.node.set('endPoint',ep)
+
+
+    def get_quant(self):
+        """
+        Returns the timex quant
+        @rtype: string
+        @return: the timex quant
+        """
+        return self.node.get('quant')
+        
+        
+    def set_quant(self, q):
+        """
+        Sets the quant for the timex
+        @type q: string
+        @param q: timex quant
+        """
+        self.node.set('quant',q)
+
+
+    def get_freq(self):
+        """
+        Returns the timex freq
+        @rtype: string
+        @return: the timex freq
+        """
+        return self.node.get('freq')
+        
+        
+    def set_freq(self, f):
+        """
+        Sets the freq for the timex
+        @type f: string
+        @param f: timex freq
+        """
+        self.node.set('freq',f)
+
+
+    def get_temporalFunction(self):
+        """
+        Returns the timex temporalFunction
+        @rtype: string
+        @return: the timex temporalFunction
+        """
+        return self.node.get('temporalFunction')
+        
+        
+    def set_temporalFunction(self, tf):
+        """
+        Sets the temporalFunction for the timex
+        @type tf: string
+        @param tf: timex temporalFunction
+        """
+        self.node.set('temporalFunction',tf)
+
+
+    def get_value(self):
+        """
+        Returns the timex value
+        @rtype: string
+        @return: the timex value
+        """
+        return self.node.get('value')
+        
+        
+    def set_value(self, v):
+        """
+        Sets the value for the timex
+        @type v: string
+        @param v: timex value
+        """
+        self.node.set('value',v)
+
+
+    def get_valueFromFunction(self):
+        """
+        Returns the timex valueFromFunction
+        @rtype: string
+        @return: the timex valueFromFunction
+        """
+        return self.node.get('valueFromFunction')
+        
+        
+    def set_valueFromFunction(self, v):
+        """
+        Sets the valueFromFunction for the timex
+        @type v: string
+        @param v: timex valueFromFunction
+        """
+        self.node.set('valueFromFunction',v)
+
+    def get_mod(self):
+        """
+        Returns the timex mod
+        @rtype: string
+        @return: the timex mod
+        """
+        return self.node.get('mod')
+        
+        
+    def set_mod(self, m):
+        """
+        Sets the mod for the timex
+        @type m: string
+        @param m: timex mod
+        """
+        self.node.set('mod',m)
+
+
+    def get_anchorTimeID(self):
+        """
+        Returns the timex anchorTimeID
+        @rtype: string
+        @return: the timex anchorTimeID
+        """
+        return self.node.get('anchorTimeID')
+        
+        
+    def set_anchorTimeID(self, ati):
+        """
+        Sets the anchorTimeID for the timex
+        @type ati: string
+        @param ati: timex anchorTimeID
+        """
+        self.node.set('anchorTimeID',ati)
+
+
+    def get_comment(self):
+        """
+        Returns the timex comment
+        @rtype: string
+        @return: the timex comment
+        """
+        return self.node.get('comment')
+        
+        
+    def set_comment(self, c):
+        """
+        Sets the comment for the timex
+        @type c: string
+        @param c: timex comment
+        """
+        self.node.set('comment',ati)
+
+
 
 
 class CtimeExpressions:
