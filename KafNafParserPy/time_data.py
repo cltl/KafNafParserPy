@@ -81,7 +81,7 @@ class Ctime:
 
     def get_value(self):
         """
-        Returns the timex valuee
+        Returns the timex value
         @rtype: string
         @return: the timex value
         """
@@ -157,7 +157,7 @@ class Ctime:
         """
         Returns the timex endPoint
         @rtype: string
-        @return: the timex beginPoint
+        @return: the timex endPoint
         """
         return self.node.get('endPoint')
         
@@ -223,24 +223,6 @@ class Ctime:
         @param tf: timex temporalFunction
         """
         self.node.set('temporalFunction',tf)
-
-
-    def get_value(self):
-        """
-        Returns the timex value
-        @rtype: string
-        @return: the timex value
-        """
-        return self.node.get('value')
-        
-        
-    def set_value(self, v):
-        """
-        Sets the value for the timex
-        @type v: string
-        @param v: timex value
-        """
-        self.node.set('value',v)
 
 
     def get_valueFromFunction(self):
@@ -311,7 +293,7 @@ class Ctime:
         @type c: string
         @param c: timex comment
         """
-        self.node.set('comment',ati)
+        self.node.set('comment',c)
 
 
 

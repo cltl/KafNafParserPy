@@ -33,14 +33,6 @@ class Cholder:
         """
         self.node.append(my_span.get_node())
 
-    def set_comment(self,c):
-        """
-        Sets the comment for the element
-        @type c: string
-        @param c: comment for the element
-        """
-        c = ' '+c.replace('-','').strip()+' '
-        self.node.insert(0,etree.Comment(c) )
         
     def get_span(self):
         """
@@ -52,6 +44,41 @@ class Cholder:
         if span_obj is not None:
             return Cspan(span_obj)
         return None
+    
+    def set_comment(self,c):
+        """
+        Sets the comment for the element
+        @type c: string
+        @param c: comment for the element
+        """
+        c = ' '+c.replace('-','').strip()+' '
+        self.node.insert(0,etree.Comment(c))
+
+
+    def get_comment(self):
+        """
+        Returns the comment
+        @rtype: string
+        @return: the comment
+        """
+        return self.node_comment
+
+
+    def set_type(self,t):
+        """
+        Sets the type of holder
+        @type t: string
+        @param t: type of holder
+        """
+        self.node.set('type',t)
+    
+    def get_type(self):
+        """
+        Returns the type of holder
+        @rtype: string
+        @return: the type of holder
+        """
+        return self.node.get('type')
         
     def __str__(self):
         return dump(self.node)  
@@ -146,7 +173,16 @@ class Cexpression:
         @param c: comment for the element
         """
         c = ' '+c.replace('-','').strip()+' ' 
-        self.node.insert(0,etree.Comment(c)) 
+        self.node.insert(0,etree.Comment(c))
+    
+    
+    def get_comment(self):
+        """
+        Returns the comment
+        @rtype: string
+        @return: the comment
+        """
+        return self.node_comment
     
     def set_polarity(self,pol):
         """
@@ -179,7 +215,57 @@ class Cexpression:
         @return: the strength for the expression
         """
         return self.node.get('strength')
-        
+    
+    def set_subjectivity(self,s):
+        """
+        Sets the subjectivity for the expression
+        @type s: string
+        @param s: subjectivity for the expression
+        """
+        self.node.set('subjectivity',s)
+    
+    def get_subjectivity(self):
+        """
+        Returns the subjectivity for the expression
+        @rtype: string
+        @return: the subjectivity for the expression
+        """
+        return self.node.get('subjectivity')
+    
+    
+    def set_sentiment_semantic_type(self,sst):
+        """
+        Sets the sentiment_semantic_type for the expression
+        @type sst: string
+        @param sst: sentiment_semantic_type for the expression
+        """
+        self.node.set('sentiment_semantic_type',sst)
+    
+    def get_sentiment_semantic_type(self):
+        """
+        Returns the sentiment_semantic_type for the expression
+        @rtype: string
+        @return: the sentiment_semantic_type for the expression
+        """
+        return self.node.get('sentiment_semantic_type')
+    
+    
+    def set_sentiment_product_feature(self,spf):
+        """
+        Sets the sentiment_product_feature for the expression
+        @type spf: string
+        @param spf: sentiment_product_feature for the expression
+        """
+        self.node.set('sentiment_product_feature',spf)
+    
+    def get_sentiment_product_feature(self):
+        """
+        Returns the sentiment_product_feature for the expression
+        @rtype: string
+        @return: the sentiment_product_feature for the expression
+        """
+        return self.node.get('sentiment_product_feature')
+    
     def set_span(self,my_span):
         """
         Sets the span with the provided span object
