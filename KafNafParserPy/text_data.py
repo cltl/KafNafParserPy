@@ -122,8 +122,8 @@ class Cwf:
     def get_para(self):
         """
         Returns the paragraph for the token
-        @rtype p: string
-        @return p: the paragraph identifier
+        @rtype: string
+        @return: the paragraph identifier
         """
         return self.node.get('para')
         
@@ -134,6 +134,38 @@ class Cwf:
         @param p: the paragraph identifier
         """
         self.node.set('para',p)
+
+    def get_page(self):
+        """
+        Returns the page number for the token
+        @rtype: string
+        @return: the page number
+        """
+        return self.node.get('page')
+
+    def set_page(self, p):
+        """
+        Set the page number for the token
+        @type p: string
+        @param p: the page number
+        """
+        self.node.set('page', p)
+
+    def get_xpath(self):
+        """
+        Returns the xpath expression for the token
+        @rtype: string
+        @return: the xpath expression
+        """
+        return self.node.get('xpath')
+
+    def set_xpath(self, xp):
+        """
+        Set the xpath expression for the token
+        @type xp: string
+        @param xp: the xpath expression
+        """
+        self.node.set('xpath', xp)
     
     
 class Ctext:
