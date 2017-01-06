@@ -46,8 +46,7 @@ class CfileDesc:
     def get_node(self):
         return self.node
     
-    
-    #self.title=''    #self.author=''    #self.creationtime=''    #self.filename=''    #self.filetype=''    #self.pages=''
+
     def set_title(self,t):
         '''
         Sets the title
@@ -225,8 +224,7 @@ class Cpublic:
         else:
             self.node = node
             
-        #self.publicId = ''
-        #slf.uri = ''
+
     def get_node(self):
         return self.node
     
@@ -256,7 +254,7 @@ class Cpublic:
         
     def get_publicid(self):
         '''
-        Returne the publicId
+        Return the publicId
         @return: title
         @rtype: string
         '''
@@ -306,6 +304,14 @@ class Clp:
         @param name: name of the linguistic processor
         """
         self.node.set('name',name)
+
+    def get_name(self):
+        '''
+        Return the name
+        @return: name
+        @rtype: string
+        '''
+        return self.node.get('name')
         
     def set_version(self,version):
         """
@@ -314,6 +320,14 @@ class Clp:
         @param version: version of the linguistic processor
         """
         self.node.set('version',version)
+
+    def get_version(self):
+        '''
+        Return the version
+        @return: version
+        @rtype: string
+        '''
+        return self.node.get('version')
         
     def set_timestamp(self,timestamp=None):
         """
@@ -326,6 +340,15 @@ class Clp:
             timestamp = time.strftime('%Y-%m-%dT%H:%M:%S%Z')
         self.node.set('timestamp',timestamp)
 
+    def get_timestamp(self):
+        '''
+        Return the timestamp
+        @return: timestamp
+        @rtype: string
+        '''
+        return self.node.get('timestamp')
+
+
     def set_beginTimestamp(self,btimestamp=None):
         """
         Set the begin timestamp of the linguistic processor, set to None for the current time
@@ -336,6 +359,15 @@ class Clp:
             import time
             btimestamp = time.strftime('%Y-%m-%dT%H:%M:%S%Z')
         self.node.set('beginTimestamp',btimestamp)
+
+    def get_beginTimestamp(self):
+        '''
+        Return the begin timestamp
+        @return: begin timestamp
+        @rtype: string
+        '''
+        return self.node.get('beginTimestamp')
+
 
     def set_endTimestamp(self,etimestamp=None):
         """
@@ -348,6 +380,29 @@ class Clp:
             etimestamp = time.strftime('%Y-%m-%dT%H:%M:%S%Z')
         self.node.set('endTimestamp',etimestamp)
 
+    def get_endTimestamp(self):
+        '''
+        Return the end timestamp
+        @return: end timestamp
+        @rtype: string
+        '''
+        return self.node.get('endTimestamp')
+
+    def set_hostname(self, hn):
+        """
+        Set the hostname of the linguistic processor
+        @type hn:string
+        @param hn: hostname of the linguistic processor
+        """
+        self.node.set('hostname', hn)
+
+    def get_hostname(self):
+        '''
+        Return the hostname
+        @return: hostname
+        @rtype: string
+        '''
+        return self.node.get('hostname')
 
     def get_node(self):
         """
