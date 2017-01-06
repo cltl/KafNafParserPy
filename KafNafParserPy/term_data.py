@@ -195,7 +195,7 @@ class Cterm:
         @param span_list: list of wf ids forming span
         """
         this_span = Cspan()
-        this_span.create_from_targets(span_list)
+        this_span.create_from_ids(span_list)
         self.node.append(this_span.get_node())
         
     def get_sentiment(self):
@@ -314,7 +314,7 @@ class Cterms:
     def __get_node_terms(self):
         for node_term in self.node.findall('term'):
             yield node_term
-            
+
     def __iter__(self):
         """
         Iterator that returns single term objects in the layer
