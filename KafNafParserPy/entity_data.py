@@ -78,6 +78,11 @@ class Centity:
         return self.node.get('type')
     
     def set_type(self,t):
+        """
+        Sets the type for the entity
+        @type t: string
+        @param t: entity type
+        """
         self.node.set('type',t)
         
     def get_references(self):
@@ -135,8 +140,13 @@ class Centity:
         """
         return self.node.get('source')
     
-    def set_source(self,t):
-        self.node.set('source',t)
+    def set_source(self,s):
+        """
+        Sets the source for the entity
+        @type s: string
+        @param s: entity source
+        """
+        self.node.set('source',s)
     
 class Centities:
     """

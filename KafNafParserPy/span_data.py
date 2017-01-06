@@ -55,7 +55,6 @@ class Ctarget:
         """
         return self.node.get('head')
 
-
     def set_as_head(self):
         """
         Sets value of head to 'yes' (defines target as head)
