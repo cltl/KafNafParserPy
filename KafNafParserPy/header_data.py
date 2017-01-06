@@ -452,7 +452,18 @@ class ClinguisticProcessors:
         @param my_lp: linguistic processor object
         """
         self.node.append(my_lp.get_node())
-        
+
+
+    def get_linguistic_processors(self):
+        """
+        Returns the linguistic processor element in the linguistic processors node
+        @rtype: L{Clp}
+        @return: iterator of linguistic processors
+        """
+        for node in self.node.findall('lp'):
+            yield Clp(node)
+
+
     def get_node(self):
         """
         Returns the node of the element
@@ -519,7 +530,6 @@ class CHeader:
             return fileDescObj.get('creationtime')
         else:
             return None
-        
            
     def get_publicId(self):
         """
@@ -535,11 +545,44 @@ class CHeader:
     
     def set_publicId(self,publicId):
         '''
-        Sets the publicId object
-        @param publicId: a publicId object
-        @type publicId: L{CpublicId}
+        Sets the publicId to the public object
+        @param publicId: a publicId (title of article)
+        @type publicId: string
         '''
-        self.node.insert(0,publicId.get_node())
+        publicObj = self.node.find('public')
+        if publicObj is not None:
+            publicObj.set_publicId(publicId)
+        else:
+            publicObj = Cpublic()
+            publicObj.set_publicId(publicId)
+            self.set_public(publicObj)
+
+    def get_uri(self):
+        """
+        Returns the uri defined in the header
+        @rtype: String
+        @return: the uri defined in public of header
+        """
+        publicObj = self.node.find('public')
+        if publicObj is not None:
+            return publicObj.get('uri')
+        else:
+            return None
+
+    def set_uri(self, uri):
+        '''
+        Sets the uri to the public object
+        @param uri: a uri
+        @type uri: string
+        '''
+        publicObj = self.node.find('public')
+        if publicObj is not None:
+            publicObj.set_publicId(uri)
+        else:
+            publicObj = Cpublic()
+            publicObj.set_publicId(uri)
+            self.set_public(publicObj)
+
 
     def add_linguistic_processors(self,linpro):
         """Adds a linguistic processors element
@@ -558,8 +601,7 @@ class CHeader:
             if this_node.get('layer') == layer:
                 self.node.remove(this_node)
                 break
-            
-        
+
     def add_linguistic_processor(self, layer ,my_lp):
         """
         Adds a linguistic processor to a certain layer
@@ -602,6 +644,26 @@ class CHeader:
         @type fileDesc: L{CfileDesc}
         '''
         self.node.insert(0,fileDesc.get_node())
+
+    def get_public(self):
+        '''
+        Returns the public object or None if there is no such element
+        @return: the public object
+        @rtype: L{Cpublic}
+        '''
+        node = self.node.find('public')
+        if node is not None:
+            return Cpublic(node=node)
+        else:
+            return None
+
+    def set_public(self, public):
+        '''
+        Sets the public object
+        @param public: a public object
+        @type public: L{Cpublic}
+        '''
+        self.node.insert(0, public.get_node())
         
         
             
