@@ -43,46 +43,6 @@ class Ctlink:
         """
         return self.node.get('id')
 
-    def get_from(self):
-        """
-        Returns the from attribute of the tlink
-        @rtype: string
-        @return: the from attribute
-        """
-        return self.node.get('from')
-
-    def get_fromType(self):
-        """
-        Returns the from attribute of the tlink
-        @rtype: string
-        @return: the from attribute
-        """
-        return self.node.get('fromType')
-
-    def get_to(self):
-        """
-        Returns the to attribute of the tlink
-        @rtype: string
-        @return: the to attribute
-        """
-        return self.node.get('to')
-
-    def get_toType(self):
-        """
-        Returns the to attribute of the tlink
-        @rtype: string
-        @return: the to attribute
-        """
-        return self.node.get('toType')
-
-    def get_relType(self):
-        """
-        Returns the to attribute of the tlink
-        @rtype: string
-        @return: the to attribute
-        """
-        return self.node.get('relType')
-
     def set_id(self,this_id):
         """
         Set the identifier for the token
@@ -90,6 +50,14 @@ class Ctlink:
         @param this_id: the identifier
         """
         return self.node.set('id',this_id)
+
+    def get_from(self):
+        """
+        Returns the from attribute of the tlink
+        @rtype: string
+        @return: the from attribute
+        """
+        return self.node.get('from')
 
     def set_from(self, f):
         """
@@ -99,6 +67,14 @@ class Ctlink:
         """
         self.node.set('from',f)
 
+    def get_fromType(self):
+        """
+        Returns the from attribute of the tlink
+        @rtype: string
+        @return: the from attribute
+        """
+        return self.node.get('fromType')
+
     def set_fromType(self, f):
         """
         Sets the from attribute
@@ -106,6 +82,14 @@ class Ctlink:
         @param f: the from attribute
         """
         self.node.set('fromType',f)
+
+    def get_to(self):
+        """
+        Returns the to attribute of the tlink
+        @rtype: string
+        @return: the to attribute
+        """
+        return self.node.get('to')
 
     def set_to(self,t):
         """
@@ -115,6 +99,14 @@ class Ctlink:
         """
         self.node.set('to',t)
 
+    def get_toType(self):
+        """
+        Returns the to attribute of the tlink
+        @rtype: string
+        @return: the to attribute
+        """
+        return self.node.get('toType')
+
     def set_toType(self,t):
         """
         Sets the to attribute
@@ -122,6 +114,15 @@ class Ctlink:
         @param t: the to attribute
         """
         self.node.set('toType',t)
+
+    def get_relType(self):
+        """
+        Returns the to attribute of the tlink
+        @rtype: string
+        @return: the to attribute
+        """
+        return self.node.get('relType')
+
 
     def set_relType(self,t):
         """

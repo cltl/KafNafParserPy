@@ -176,7 +176,6 @@ class Cexpression:
         c = ' '+c.replace('-','').strip()+' ' 
         self.node.insert(0,etree.Comment(c))
     
-    
     def get_comment(self):
         """
         Returns the comment

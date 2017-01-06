@@ -108,7 +108,7 @@ class Centity:
         @param ext_ref: the external reference object
         @type ext_ref: L{CexternalReference}
         """
-        #check if the externalreferences sublayer exist for the role, and create it in case
+        #check if the externalreferences sublayer exist for the entity, and create it in case
         node_ext_refs = self.node.find('externalReferences')
         ext_refs = None
         if node_ext_refs == None:
@@ -197,7 +197,7 @@ class Centities:
                 if entity_node.get(label_id) == entity_id:
                     return Centity(node=entity_node, type=self.type)                                                                
             return None       
-        
+
     def add_external_reference_to_entity(self,entity_id,ext_ref):
         """
         Adds an external reference to a entity specified by the entity identifier
@@ -212,7 +212,7 @@ class Centities:
             entity.add_external_reference(ext_ref)
         else:
             print>>sys.stderr,'Trying to add a reference to the entity',entity_id,'but can not be found in this file'
-        
+
 
     def get_node(self):
         """

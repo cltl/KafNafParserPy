@@ -78,7 +78,6 @@ class Ctime:
         """
         self.node.set('type',t)
 
-
     def get_value(self):
         """
         Returns the timex value
