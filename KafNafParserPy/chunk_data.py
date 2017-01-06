@@ -88,6 +88,22 @@ class Cchunk:
         """
         self.node.set('phrase',p)
 
+    def get_case(self):
+        """
+        Returns the case type of the chunk
+        @rtype: string
+        @return: the chunk's case type
+        """
+        return self.node.get('case')
+
+    def set_case(self,c):
+        """
+        Sets the case type for the chunk
+        @type c: string
+        @param c: case label
+        """
+        self.node.set('case',c)
+
     def get_span(self):
         """
         Returns the span object of the chunk
@@ -194,3 +210,6 @@ class Cchunks:
                              .format(chunk_obj.get_id()))
         self.node.append(chunk_obj.get_node())
         self.idx[chunk_obj.get_id()] = chunk_obj
+
+
+    
