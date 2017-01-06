@@ -20,25 +20,7 @@ class Cterm_sentiment:
         if node is None:
             self.node = etree.Element('sentiment')
         else:
-            self.node = node 
-        #self.resource = self.polarity = self.strength = self.subjectivity = self.semantic_type = self.modifier = self.marker = self.product_feature = ''
-        #if node is not None:
-        #    self.resource = node.get('resource','')
-        #    self.polarity = node.get('polarity','')
-        #    self.strength = node.get('strength','')
-        #    self.subjectivity = node.get('subjectivity','')
-        #self.semantic_type = node.get('sentiment_semantic_type','')
-        #    self.modifier = node.get('sentiment modifier','')
-        #    self.marker = node.get('sentiment_marker','')
-        #    self.product_feature = node.get('sentiment product feature','')
-    
-    def set_resource(self,r):
-        """
-        Sets the resource for the sentiment element
-        @type r: string
-        @param r: the resource for the element
-        """
-        self.node.set('resource',r)
+            self.node = node
     
     def get_node(self):
         """
@@ -63,15 +45,65 @@ class Cterm_sentiment:
         @param p: the polarity for the element
         """
         self.node.set('polarity',p)
-    
+
+    def get_resource(self):
+        """
+        Returns the resource of the element
+        @rtype: string
+        @return: the resource of the element
+        """
+        return self.node.get('resource')
+
+    def set_resource(self, r):
+        """
+        Sets the resource for the sentiment element
+        @type r: string
+        @param r: the resource for the element
+        """
+        self.node.set('resource', r)
+
+    def get_strength(self):
+        """
+        Returns the strength of the element
+        @rtype: string
+        @return: the strength of the element
+        """
+        return self.node.get('strength')
+
+    def set_strength(self, s):
+        """
+        Sets the strength for the sentiment element
+        @type s: string
+        @param s: the strength for the element
+        """
+        self.node.set('strength', s)
+
+    def get_subjectivity(self):
+        """
+        Returns the subjectivity of the element
+        @rtype: string
+        @return: the subjectivity of the element
+        """
+        return self.node.get('subjectivity')
+
+    def set_subjectivity(self, s):
+        """
+        Sets the subjectivity for the sentiment element
+        @type s: string
+        @param s: the subjectivity for the element
+        """
+        self.node.set('subjectivity', s)
+
+    # old version of function (non standard name); leaving in case used somewhere
     def get_modifier(self):
         """
-        Returns the modifier of the element
+        Returns the sentiment modifier of the element
         @rtype: string
-        @return: the modifier of the element
+        @return: the sentiment modifier of the element
         """
         return self.node.get('sentiment_modifier')
-    
+
+    #old version of function (non standard name); leaving in case used somewhere
     def set_modifier(self,sm):
         """
         Sets the sentiment modifier for the sentiment element
@@ -79,6 +111,70 @@ class Cterm_sentiment:
         @param sm: the modifier for the element
         """
         self.node.set('sentiment_modifier',sm)
+
+    def get_sentiment_modifier(self):
+        """
+        Returns the sentiment modifier of the element
+        @rtype: string
+        @return: the sentiment modifier of the element
+        """
+        return self.node.get('sentiment_modifier')
+
+    def set_sentiment_modifier(self, sm):
+        """
+        Sets the sentiment modifier for the sentiment element
+        @type sm: string
+        @param sm: the sentiment modifier for the element
+        """
+        self.node.set('sentiment_modifier', sm)
+
+    def get_sentiment_semantic_type(self):
+        """
+        Returns the sentiment semantic type of the element
+        @rtype: string
+        @return: the sentiment semantic type of the element
+        """
+        return self.node.get('sentiment_semantic_type')
+
+    def set_sentiment_semantic_type(self, st):
+        """
+        Sets the sentiment semantic type for the sentiment element
+        @type st: string
+        @param st: the sentiment semantic type for the element
+        """
+        self.node.set('sentiment_semantic_type', st)
+
+    def get_sentiment_marker(self):
+        """
+        Returns the sentiment marker of the element
+        @rtype: string
+        @return: the sentiment marker of the element
+        """
+        return self.node.get('sentiment_marker')
+
+    def set_sentiment_marker(self, sm):
+        """
+        Sets the sentiment marker for the sentiment element
+        @type sm: string
+        @param sm: the sentiment marker for the element
+        """
+        self.node.set('sentiment_marker', sm)
+
+    def get_sentiment_product_feature(self):
+        """
+        Returns the sentiment product feature of the element
+        @rtype: string
+        @return: the sentiment product feature of the element
+        """
+        return self.node.get('sentiment_product_feature')
+
+    def set_sentiment_product_feature(self, spf):
+        """
+        Sets the sentiment product feature for the sentiment element
+        @type sm: string
+        @param sm: the sentiment product feature for the element
+        """
+        self.node.set('sentiment_product_feature', spf)
 
     def __str__(self):
         return dump(self.node)
