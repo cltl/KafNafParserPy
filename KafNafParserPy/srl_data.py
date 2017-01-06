@@ -64,6 +64,39 @@ class Crole:
         @type sRole: string
         """
         self.node.set('semRole',sRole)
+
+    #copies of get_sem_role and set_sem_role functions with names corresponding to NAF elements
+    def get_semRole(self):
+        """
+        Returns the semRole attribute of the element
+        @rtype: string
+        @return: the semRole of the element
+        """
+        return self.node.get('semRole')
+
+    def set_semRole(self, sRole):
+        """
+        Sets the semantic role
+        @param sRole: the semantic role
+        @type sRole: string
+        """
+        self.node.set('semRole', sRole)
+
+    def get_confidence(self):
+        """
+        Returns the confidence of the element
+        @rtype: string
+        @return: the confidence of the element
+        """
+        return self.node.get('confidence')
+
+    def set_confidence(self, conf):
+        """
+        Assigns the confidence to the element
+        @param conf: the confidence of the predicate
+        @type conf: string
+        """
+        self.node.set('confidence',conf)
     
     def get_external_references(self):
         """
@@ -194,7 +227,7 @@ class Cpredicate:
         @param conf: the confidence of the predicate
         @type conf: string
         """
-        self.node.set('uri',uri)
+        self.node.set('confidence',conf)
         
     def get_span(self):
         """
@@ -234,7 +267,7 @@ class Cpredicate:
         @param ext_ref: the external reference object
         @type ext_ref: L{CexternalReference}
         """
-        #check if the externalreferences sublayer exist for the role, and create it in case
+        #check if the externalreferences sublayer exist for the predicate, and create it in case
         node_ext_refs = self.node.find('externalReferences')
         ext_refs = None
         if node_ext_refs == None:

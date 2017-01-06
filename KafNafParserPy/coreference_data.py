@@ -114,7 +114,23 @@ class Ccoreference:
             ext_refs = CexternalReferences(node)
             for ext_ref in ext_refs:
                 yield ext_ref
-            
+
+    def add_external_reference(self, ext_ref):
+        """
+        Adds an external reference to the coref element
+        @param ext_ref: the external reference object
+        @type ext_ref: L{CexternalReference}
+        """
+        # check if the externalreferences sublayer exist for the coref element, and create it in case
+        node_ext_refs = self.node.find('externalReferences')
+        ext_refs = None
+        if node_ext_refs == None:
+            ext_refs = CexternalReferences()
+            self.node.append(ext_refs.get_node())
+        else:
+            ext_refs = CexternalReferences(node_ext_refs)
+
+        ext_refs.add_external_reference(ext_ref)
 
 class Ccoreferences:
     """
