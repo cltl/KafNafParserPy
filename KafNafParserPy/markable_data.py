@@ -23,7 +23,7 @@ class Cmarkable:
         """
         self.type = type
         if node is None:
-            self.node = etree.Element('markable')
+            self.node = etree.Element('mark')
         else:
             self.node = node
 
@@ -193,7 +193,7 @@ class Cmarkables:
                 del node.attrib['mid']
                 
     def __get_node_markables(self):
-        for node_markable in self.node.findall('markable'):
+        for node_markable in self.node.findall('mark'):
             yield node_markable
             
     def __iter__(self):
@@ -223,7 +223,26 @@ class Cmarkables:
         @param markable_obj: the markable object
         """
         self.node.append(markable_obj.get_node())
-           
+
+    def get_mark(self, mark_id):
+        """
+        Returns the markable object for the supplied identifier
+        @type mark_id: string
+        @param mark_id: term identifier
+        """
+        if mark_id in self.idx:
+            return Cmarkable(self.idx[mark_id], self.type)
+        else:
+            return None
+
+    def add_mark(self, mark_obj):
+        """
+        Adds a markable object to the layer
+        @type mark_obj: L{Cmarkable}
+        @param mark_obj: the markable object
+        """
+        self.node.append(mark_obj.get_node())
+
     def add_external_reference(self,markable_id, external_ref):
         """
         Adds an external reference for the given markable
