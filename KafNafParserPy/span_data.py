@@ -42,8 +42,25 @@ class Ctarget:
     def set_head(self,head):
         """
         Sets value of head
+        @type head: string
+        @param head: the head value for the element
         """
         self.node.set('head',head)
+
+    def get_head(self):
+        """
+        Returns the head of the element
+        @rtype: string
+        @return: the head of the element
+        """
+        return self.node.get('head')
+
+
+    def set_as_head(self):
+        """
+        Sets value of head to 'yes' (defines target as head)
+        """
+        self.node.set('head','yes')
         
     def is_head(self):
         """
