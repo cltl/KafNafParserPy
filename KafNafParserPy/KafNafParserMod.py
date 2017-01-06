@@ -48,6 +48,7 @@ from .temporal_data import *
 from .factuality_data import *
 from .markable_data import *
 from .chunk_data import *
+from .attribution_data import *
 
 
 class KafNafParser:
@@ -86,6 +87,7 @@ class KafNafParser:
         self.factuality_layer = None
         self.markable_layer = None
         self.chunk_layer = None
+        self.attribution_layer = None
 
 
         ## Specific feature extractor for complicated layers
@@ -133,6 +135,10 @@ class KafNafParser:
         node_opinions = self.root.find('opinions')
         if node_opinions is not None:
             self.opinion_layer = Copinions(node_opinions,type=self.type)
+
+        node_attribution = self.root.find('attribution')
+        if node_attribution is not None:
+            self.attribution_layer = Cattribution(node_attribution,type=self.type)
 
         # Definition KAF/NAF is the same
         node_constituency = self.root.find('constituency')
@@ -292,6 +298,12 @@ class KafNafParser:
         if self.factuality_layer is not None:
             self.factuality_layer.to_kaf()
 
+
+        ## Convert the attribution_layer
+        ## It is not defined on KAF so we assme both will be similar
+        if self.attribution_layer is not None:
+            self.attribution_layer.to_kaf()
+
     def to_naf(self):
         """
         Converts a KAF object to NAF (in memory). You will have to use the method dump later to save it as a new NAF file
@@ -346,8 +358,6 @@ class KafNafParser:
         if self.coreference_layer is not None:
             self.coreference_layer.to_naf()
 
-
-
         ## Convert the temporalRelations layer
         ## It is not defined on KAF so we assume both will be similar
         if self.temporalRelations_layer is not None:
@@ -368,6 +378,12 @@ class KafNafParser:
         ## It is not defined on KAF so we assume both will be similar
         if self.markable_layer is not None:
             self.markable_layer.to_naf()        #Changes identifier attribute nothing else...
+
+
+        ## Convert the attribution_layer
+        ## It is not defined on KAF so we assme both will be similar
+        if self.attribution_layer is not None:
+            self.attribution_layer.to_naf()
 
 
     def print_constituency(self):
@@ -507,6 +523,17 @@ class KafNafParser:
         if self.chunk_layer is not None:
             for chunk in self.chunk_layer:
                 yield chunk
+
+
+    def get_statements(self):
+        """Iterator that returns all the statements from the attribution layer
+        @rtype: L{Cstatement}
+        @return: list of statement objects
+        """
+        if self.attribution_layer is not None:
+            for statement in self.attribution_layer:
+                yield statement
+
 
     def get_markable(self,markable_id):
         """
@@ -807,6 +834,19 @@ class KafNafParser:
             self.header.remove_lp('chunks')
 
 
+    def remove_chunk_layer(self):
+        """
+        Removes the attribution layer (if exists) of the object (in memory)
+        """
+        if self.attribution_layer is not None:
+            this_node = self.attribution_layer.get_node()
+            self.root.remove(this_node)
+            self.attribution_layer = None
+
+        if self.header is not None:
+            self.header.remove_lp('attribution')
+
+
     def remove_text_layer(self):
         """
         Removes the text layer (if exists) of the object (in memory)
@@ -1013,6 +1053,18 @@ class KafNafParser:
             self.opinion_layer = Copinions()
             self.root.append(self.opinion_layer.get_node())
         self.opinion_layer.add_opinion(opinion_obj)
+
+    def add_statement(self,statement_obj):
+        """
+        Adds a statement to the attribution layer
+        @type statement_obj: L{Cstatement}
+        @param statement_obj: the statement object
+        """
+        if self.attribution_layer is None:
+            self.attribution_layer = Cattribution()
+            self.root.append(self.attribution_layer.get_node())
+        self.attribution_layer.add_statement(statement_obj)
+
 
 
     def add_predicate(self, predicate_obj):
