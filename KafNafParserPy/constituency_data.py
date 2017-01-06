@@ -172,32 +172,32 @@ class Cedge:
     
     def get_from(self):
         """
-        Returns the from label
+        Returns the from node identifier of the relation
         @rtype: string
-        @return: the from label of the relation
+        @return: the from node identifier of the relation
         """
         return self.node.get('from')
     
     def set_from(self,this_from):
         """
-        Sets the identifier for the element
-        @param this_from: from label
+        Sets the from node identifier for the element
+        @param this_from: from node identifier of the relation
         @type this_from: string
         """
         self.node.set('from',this_from)
     
     def get_to(self):
         """
-        Returns the to label
+        Returns the to node identifier
         @rtype: string
-        @return:  the to label of the relation
+        @return:  the to node identifier of the relation
         """
         return self.node.get('to')
     
     def set_to(self,this_to):
         """
-        Sets the identifier for the element
-        @param this_to: to label
+        Sets the to node identifier for the element
+        @param this_to: to node identifier of the relation
         @type this_to: string
         """
         self.node.set('to',this_to)
@@ -221,10 +221,18 @@ class Cedge:
         """
         Returns whether the from is head of the constituent (None if not)
         @rtype: string
-        @return:  the to label of the relation
+        @return: the head value
         """
         
         return self.node.get('head')
+
+    def set_head(self, hv):
+        """
+        Sets the head value for the edge element (see also 'set_as_head')
+        @param hv: head value
+        @type hv: string
+        """
+        self.node.set('head',hv)
             
 
 
@@ -254,7 +262,7 @@ class Ctree:
     def __str__(self):
         return dump(self.node)
     
-    ## Fore getting non terminals
+
     def __get_nt_nodes(self):
         for nt_node in self.node.findall('nt'):
             yield nt_node
@@ -267,9 +275,7 @@ class Ctree:
         """
         for nt_node in self.__get_nt_nodes():
             yield Cnonterminal(nt_node)
-    ##################################
-            
-    ## Fore getting  terminals
+
     def __get_t_nodes(self):
         for t_node in self.node.findall('t'):
             yield t_node
@@ -282,8 +288,22 @@ class Ctree:
         """
         for t_node in self.__get_t_nodes():
             yield Cterminal(t_node)
-    ##################################            
-            
+
+    def get_type(self):
+        """
+        Returns the type of the tree
+        @rtype: string
+        @return: the tree type
+        """
+        return self.node.get('type')
+
+    def set_type(self, t):
+        """
+        Sets the type for the tree
+        @type t: string
+        @param t: type for the tree
+        """
+        self.node.set('type', t)
 
     def get_terminals_as_list(self):
         """
@@ -296,7 +316,6 @@ class Ctree:
             terminalList.append(Cterminal(t_node))
         return terminalList
 
-     ## Fore getting  edges
     def __get_edge_nodes(self):
         for t_node in self.node.findall('edge'):
             yield t_node
@@ -309,15 +328,48 @@ class Ctree:
         """
         for edge_node in self.__get_edge_nodes():
             yield Cedge(edge_node)
-    ##################################  
-    
+
+    #original function
     def append_element(self,this_element):
         """
         Appends a node to the tree, could be a terminal or non terminal or edge
         @param this_element: the element to be appended
         @type this_element: object
         """
-        self.node.append(this_element.get_node())        
+        self.node.append(this_element.get_node())
+
+    #expected functions (called add_X, where X is 'element', 'non_terminal', 'terminal', 'edge')
+    def add_element(self,this_element):
+        """
+        Appends a node to the tree, could be a terminal or non terminal or edge
+        @param this_element: the element to be appended
+        @type this_element: object
+        """
+        self.node.append(this_element.get_node())
+
+    def add_non_terminal(self,this_nonterminal):
+        """
+        Appends a node to the tree; for non terminals
+        @param this_nonterminal: the element to be appended
+        @type this_nonterminal: Cnonterminal object
+        """
+        self.node.append(this_nonterminal.get_node())
+
+    def add_terminal(self,this_terminal):
+        """
+        Appends a node to the tree; for terminals
+        @param this_terminal: the element to be appended
+        @type this_terminal: Cterminal object
+        """
+        self.node.append(this_terminal.get_node())
+
+    def add_edge(self,this_edge):
+        """
+        Appends a node to the tree; for edges
+        @param this_edge: the element to be appended
+        @type this_edge: Cedge object
+        """
+        self.node.append(this_edge.get_node())
 
     def get_edges_as_list(self):
         """
@@ -329,8 +381,6 @@ class Ctree:
         for edge_node in self.__get_edge_nodes():
             my_edges.append(Cedge(edge_node))
         return my_edges
-    ##################################          
-            
     
 
 class Cconstituency:

@@ -43,22 +43,6 @@ class Cdependency:
         @return: the from attribute
         """
         return self.node.get('from')
-    
-    def get_to(self):
-        """
-        Returns the to attribute of the dependency
-        @rtype: string
-        @return: the to attribute
-        """
-        return self.node.get('to')
-    
-    def get_function(self):
-        """
-        Returns the function attribute of the dependency
-        @rtype: string
-        @return: the function attribute
-        """
-        return self.node.get('rfunc')
 
     def set_from(self, f):
         """
@@ -67,7 +51,15 @@ class Cdependency:
         @param f: the from attribute
         """
         self.node.set('from',f)
-    
+
+    def get_to(self):
+        """
+        Returns the to attribute of the dependency
+        @rtype: string
+        @return: the to attribute
+        """
+        return self.node.get('to')
+
     def set_to(self,t):
         """
         Sets the to attribute
@@ -83,7 +75,30 @@ class Cdependency:
         @param f: the function attribute
         """
         self.node.set('rfunc',f)
-        
+
+    def get_function(self):
+        """
+        Returns the function attribute of the dependency
+        @rtype: string
+        @return: the function attribute
+        """
+        return self.node.get('rfunc')
+
+    def set_case(self,c):
+        """
+        Sets the case attribute
+        @type c: string
+        @param c: the case attribute
+        """
+        self.node.set('case',c)
+
+    def get_case(self):
+        """
+        Returns the case attribute of the dependency
+        @rtype: string
+        @return: the case attribute
+        """
+        return self.node.get('case')
 
     def set_comment(self,c):
         """
