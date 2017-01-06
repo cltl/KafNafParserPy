@@ -89,17 +89,55 @@ class Cterm:
         @param p: pos-tag
         """
         self.node.set('pos',p)
-        
+
+    def get_type(self):
+        """
+        Returns the type of the term
+        @rtype: string
+        @return: the term type
+        """
+        return self.node.get('type')
            
     def set_type(self,t):
         """
-        Sets the type for the lemma
+        Sets the type for the term
         @type t: string
         @param t: type for the term
         """
         self.node.set('type',t)
-        
-            
+
+    def get_case(self):
+        """
+        Returns the case of the term
+        @rtype: string
+        @return: the term case
+        """
+        return self.node.get('case')
+
+    def set_case(self, c):
+        """
+        Sets the case for the term
+        @type c: string
+        @param c: case for the term
+        """
+        self.node.set('case', c)
+
+    def get_head(self):
+        """
+        Returns the head of the (compound) term
+        @rtype: string
+        @return: the term head
+        """
+        return self.node.get('head')
+
+    def set_head(self, h):
+        """
+        Sets the head for the term
+        @type h: string
+        @param h: head for the term
+        """
+        self.node.set('head', h)
+
     def get_morphofeat(self):
         """
         Returns the morphofeat attribute of the term
@@ -107,7 +145,6 @@ class Cterm:
         @return: the term morphofeat feature
         """
         return self.node.get('morphofeat')
-
    
     def set_morphofeat(self,m):
         """
@@ -116,7 +153,7 @@ class Cterm:
         @param m: the morphofeat value
         """
         self.node.set('morphofeat',m)
-        
+
     def get_span(self):
         """
         Returns the span object of the term
@@ -133,8 +170,32 @@ class Cterm:
         """
         Sets the span for the term
         @type this_span: L{Cspan}
-        @param this_span: term identifier
+        @param this_span: the term span
         """
+        self.node.append(this_span.get_node())
+
+    def get_span_ids(self):
+        """
+        Returns the span object of the term
+        @rtype: List
+        @return: the term span as list of wf ids
+        """
+        node_span = self.node.find('span')
+        if node_span is not None:
+            mySpan = Cspan(node_span)
+            span_ids = mySpan.get_span_ids()
+            return span_ids
+        else:
+            return []
+
+    def set_span_from_ids(self, span_list):
+        """
+        Sets the span for the term from list of ids
+        @type span_list: []
+        @param span_list: list of wf ids forming span
+        """
+        this_span = Cspan()
+        this_span.create_from_targets(span_list)
         self.node.append(this_span.get_node())
         
     def get_sentiment(self):
@@ -149,7 +210,14 @@ class Cterm:
             return None
         else:
             return Cterm_sentiment(sent_node)
-        
+
+    def add_sentiment(self, sentiment):
+        """
+        Sets the sentiment value for the term
+        @type this_span: L{Cterm_sentiment}
+        @param sentiment: the term sentiment
+        """
+        self.node.append(sentiment.get_node())
         
     def add_external_reference(self,ext_ref):
         """
@@ -191,8 +259,8 @@ class Cterm:
         """
         for ex_ref_node in self.node.findall('externalReferences'):
             self.node.remove(ex_ref_node)
-        
-    
+
+
 class Cterms:
     """
     This class encapsulates the term layer (collection of term objects)
