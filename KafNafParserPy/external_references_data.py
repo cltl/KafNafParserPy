@@ -52,22 +52,6 @@ class CexternalReference:
         @param resource: the resource of the element
         """
         self.node.set('resource',resource)
-    
-    def set_confidence(self,confidence):
-        """
-        Sets the confidence for the element
-        @type confidence: string
-        @param confidence: the confidence of the element
-        """
-        self.node.set('confidence',confidence)
-    
-    def set_reference(self,reference):
-        """
-        Sets the reference for the element
-        @type reference: string
-        @param reference: the reference of the element
-        """
-        self.node.set('reference',reference)
 
     def get_resource(self):
         """
@@ -76,7 +60,15 @@ class CexternalReference:
         @return: the resource of the element
         """
         return self.node.get('resource')
-        
+
+    def set_confidence(self, confidence):
+        """
+        Sets the confidence for the element
+        @type confidence: string
+        @param confidence: the confidence of the element
+        """
+        self.node.set('confidence', confidence)
+
     def get_confidence(self):
         """
         Returns the confidence of the element
@@ -84,6 +76,14 @@ class CexternalReference:
         @return: the confidence of the element
         """
         return self.node.get('confidence')
+
+    def set_reference(self, reference):
+        """
+        Sets the reference for the element
+        @type reference: string
+        @param reference: the reference of the element
+        """
+        self.node.set('reference', reference)
         
     def get_reference(self):
         """
@@ -109,21 +109,37 @@ class CexternalReference:
         """
         return self.node.get('reftype')
 
-    def set_source(self,r):
+    def set_source(self,s):
         """
         Sets the source for the element
-        @type r: string
-        @param r: the source of the element
+        @type s: string
+        @param s: the source of the element
         """
-        self.node.set('source',r) 
+        self.node.set('source',s)
         
     def get_source(self):
         """
         Returns the source attribute of the element
-        @rtype: string
+            @rtype: string
         @return: the source attribute of the element
         """
         return self.node.get('source')
+
+    def set_status(self, s):
+        """
+        Sets the status for the element
+        @type s: string
+        @param s: the status of the element
+        """
+        self.node.set('status', s)
+
+    def get_status(self):
+        """
+        Returns the status attribute of the element
+        @rtype: string
+        @return: the status attribute of the element
+        """
+        return self.node.get('status')
 
 
 class CexternalReferences:
@@ -165,5 +181,14 @@ class CexternalReferences:
         """
         for node in self.node.findall('externalRef'):
             yield CexternalReference(node)
- 
-    
+
+    def get_external_references(self):
+        """
+        Iterator that returns all the external reference objects of the external references object
+        @rtype: L{CexternalReference}
+        @return: the external reference objects
+        """
+        for ext_ref_node in self.node.findall('externalRef'):
+            ext_refs_obj = CexternalReference(ext_ref_node)
+            for ref in ext_refs_obj:
+                yield ref
