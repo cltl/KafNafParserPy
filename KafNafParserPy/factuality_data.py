@@ -23,13 +23,17 @@ class Cfactval:
 
     def get_node(self):
         """
-        Returns the node
+        Returns the node of the element
+        @rtype: xml Element
+        @return: the node of the element
         """
         return self.node
 
     def get_resource(self):
         """
         Returns the resource that defines the factuality value
+        @return: resource name
+        @rtype: string
         """
         return self.node.get('resource')
 
@@ -45,9 +49,10 @@ class Cfactval:
     def get_value(self):
         """
         Returns the value of the factVal element
+        @return: factuality value
+        @rtype: string
         """
         return self.node.get('value')
-
 
     def set_value(self,v):
         """
@@ -60,6 +65,8 @@ class Cfactval:
     def get_confidence(self):
         """
         Returns the confidence of the factVal element
+        @return: confidence value
+        @rtype: string
         """
         return self.node.get('confidence')
 
@@ -74,18 +81,20 @@ class Cfactval:
     
     def get_source(self):
         """
-        Returns the sourcee of the factVal element
+        Returns the source of the factVal element
+        @return: source of annotation
+        @rtype: string
         """
         return self.node.get('source')
 
 
-    def set_source(self,c):
+    def set_source(self,s):
         """
-        Sets confidence for the factVal element
-        @type c: string
-        @param c: the value for the element
+        Sets source for the factVal element
+        @type s: string
+        @param s: the source of the element
         """
-        self.node.set('source',c)
+        self.node.set('source',s)
 
 class Cfactuality:
 
@@ -145,6 +154,15 @@ class Cfactuality:
         self.node.append(my_span.get_node())
 
     def add_factval(self,fval):
+        """
+        Sets the id of the element
+        @type this_id: L{Cspan}
+        @param this_id: the resource defining factuality
+        """
+        self.node.append(fval.get_node())
+
+    #copy of function add_factval with expected name
+    def add_factVal(self,fval):
         """
         Sets the id of the element
         @type this_id: L{Cspan}
