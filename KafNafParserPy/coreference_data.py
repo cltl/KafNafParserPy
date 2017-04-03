@@ -65,9 +65,7 @@ class Ccoreference:
         """
         if self.type == 'NAF':
             return self.node.get('type')
-        
-        
-        
+
     def set_type(self, this_type):
         """
         Sets the type of the coreference object
@@ -86,6 +84,14 @@ class Ccoreference:
         new_span = Cspan()
         new_span.create_from_ids(term_span)
         self.node.append(new_span.get_node())
+
+    def add_span_object(self, nafSpan):
+        """
+        Adds naf span object in the references
+        @type term_span: list
+        @param term_span: list of term ids
+        """
+        self.node.append(nafSpan.get_node())
         
     def remove_span(self,span):
         """
