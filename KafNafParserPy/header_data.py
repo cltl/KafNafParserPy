@@ -537,9 +537,9 @@ class CHeader:
         @rtype: String
         @return: the publicId defined in public of header
         """
-        publicObj = self.node.find('public')
+        publicObj = self.get_public()
         if publicObj is not None:
-            return publicObj.get('publicId')
+            return publicObj.get_publicid()
         else:
             return None
     
@@ -549,12 +549,12 @@ class CHeader:
         @param publicId: a publicId (title of article)
         @type publicId: string
         '''
-        publicObj = self.node.find('public')
+        publicObj = self.get_public()
         if publicObj is not None:
-            publicObj.set_publicId(publicId)
+            publicObj.set_publicid(publicId)
         else:
             publicObj = Cpublic()
-            publicObj.set_publicId(publicId)
+            publicObj.set_publicid(publicId)
             self.set_public(publicObj)
 
     def get_uri(self):
@@ -563,9 +563,9 @@ class CHeader:
         @rtype: String
         @return: the uri defined in public of header
         """
-        publicObj = self.node.find('public')
+        publicObj = self.get_public()
         if publicObj is not None:
-            return publicObj.get('uri')
+            return publicObj.get_uri()
         else:
             return None
 
@@ -575,12 +575,12 @@ class CHeader:
         @param uri: a uri
         @type uri: string
         '''
-        publicObj = self.node.find('public')
+        publicObj = self.get_public()
         if publicObj is not None:
-            publicObj.set_publicId(uri)
+            publicObj.set_uri(uri)
         else:
             publicObj = Cpublic()
-            publicObj.set_publicId(uri)
+            publicObj.set_uri(uri)
             self.set_public(publicObj)
 
 
