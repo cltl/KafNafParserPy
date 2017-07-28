@@ -40,5 +40,8 @@ nosetests.xml
 \#*\#
 .\#*
 
+# Pycharm
+.idea
+
 env
 env3
