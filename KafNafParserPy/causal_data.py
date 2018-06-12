@@ -2,6 +2,8 @@
 Parser for the clink layer in KAF/NAF
 """
 from lxml import etree
+from lxml.objectify import dump
+
 
 class Cclink:
     """

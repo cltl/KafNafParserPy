@@ -2,7 +2,7 @@
 Parser for the dependency layer in KAF/NAF
 """
 from lxml import etree
-#from lxml.objectify import dump
+from lxml.objectify import dump
 
 
 class Cdependency:
