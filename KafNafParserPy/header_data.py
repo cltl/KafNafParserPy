@@ -3,8 +3,8 @@ This is a parser for the header section of KAF/NAF
 """
 
 from lxml import etree
-import time
-import platform 
+import platform
+
 
 class CfileDesc:
     """

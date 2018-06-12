@@ -2,6 +2,10 @@
 Parser for the tlink layer in KAF/NAF
 """
 from lxml import etree
+from lxml.objectify import dump
+
+from .span_data import Cspan
+
 
 class Ctlink:
     """

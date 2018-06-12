@@ -5,9 +5,9 @@ Parser for the attribution layer
 # Modified for KAF/NAF
 
 from lxml import etree
-from lxml.objectify import dump
 
-
+from .span_data import Cspan
+from .term_data import Cterm
 
 
 class Cstatement:

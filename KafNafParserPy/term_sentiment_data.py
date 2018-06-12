@@ -6,6 +6,7 @@ This module is a parser for the sentiment elements in NAF/KAF terms
 from lxml import etree
 from lxml.objectify import dump
 
+
 class Cterm_sentiment:
     """
     This class encapsulates the sentiment element

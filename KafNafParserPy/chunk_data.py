@@ -5,7 +5,7 @@ from __future__ import print_function
 
 from lxml import etree
 
-from .span_data import *
+from .span_data import Cspan
 
 
 class Cchunk:
@@ -195,7 +195,7 @@ class Cchunks:
         @param chunk_id: chunk identifier
         """
         if chunk_id in self.idx:
-            return Cchunk(self.idx[term_id], self.type)
+            return Cchunk(self.idx[chunk_id], self.type)
         else:
             return None
 
