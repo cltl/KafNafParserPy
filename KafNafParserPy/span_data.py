@@ -7,6 +7,7 @@ Parser for the span element
 from lxml import etree
 from lxml.objectify import dump
 
+
 class Ctarget:
     """
     This class encapsulates the target element within a span object

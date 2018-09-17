@@ -5,9 +5,9 @@ from __future__ import print_function
 
 from lxml import etree
 
-from .span_data import *
-from .external_references_data import *
-from .term_sentiment_data import *
+from .span_data import Cspan
+from .external_references_data import CexternalReferences
+from .term_sentiment_data import Cterm_sentiment
 
 
 class Cterm:

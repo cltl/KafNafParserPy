@@ -2,15 +2,16 @@
 Parser for the entity layer in KAF/NAF
 """
 
-## Modified for KAF NAF adaptation
+# Modified for KAF NAF adaptation
 from lxml import etree
 from lxml.objectify import dump
 import re
+import sys
 
-from .references_data import *
-from .external_references_data import *
-    
-    
+from .external_references_data import CexternalReferences
+from .references_data import Creferences
+
+
 class Centity:
     """
     This class encapsulates the entity element in KAF/NAF

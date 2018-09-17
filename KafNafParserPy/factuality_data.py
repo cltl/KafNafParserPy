@@ -3,8 +3,9 @@ Parser for the factvalue layer in KAF/NAF
 """
 
 from lxml import etree
+from lxml.objectify import dump
 
-from .span_data import *
+from .span_data import Cspan
 
 
 class Cfactval:
@@ -258,9 +259,6 @@ class Cfactualities:
 
     def __str__(self):
         return dump(self.node)
-
-
-
 
 
 class Cfactvalue:
