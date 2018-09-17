@@ -181,7 +181,15 @@ class Ccoreferences:
         """
         for coref_node in self.__get_corefs_nodes():
             yield Ccoreference(coref_node,self.type)
-            
+
+    def __iter__(self):
+        """
+        Iterator that returns all the coreference objects
+        @rtype: L{Ccoreference}
+        @return: list of coreference objects (iterator)
+        """
+        return self.get_corefs()
+
     def to_kaf(self):
         """
         Converts the coreference layer to KAF
