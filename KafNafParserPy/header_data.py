@@ -417,17 +417,30 @@ class ClinguisticProcessors:
     """
     This class encapsulates the linguistic processors element in the header
     """
-    def __init__(self,node=None):
+    def __init__(self,node=None,type='NAF'):
         """
         Constructor of the object
         @type node: xml Element or None (to create and empty one)
         @param node:  this is the node of the element. If it is None it will create a new object
         """
-        self.type = 'KAF/NAF'
+        self.type = type
         if node is None:
             self.node = etree.Element('linguisticProcessors')
         else:
             self.node = node
+
+    def __get_node_lps(self):
+        for node_lp in self.node.findall('lp'):
+            yield node_lp
+
+    def __iter__(self):
+        """
+        Iterator that returns single linguistic processor objects in the layer
+        @rtype: L{Clp}
+        @return: lp objects
+        """
+        for node_lp in self.__get_node_lps():
+            yield Clp(node_lp,self.type)
             
     def get_layer(self):
         """
@@ -590,6 +603,19 @@ class CHeader:
         @param linpro: linguistic processors element
         """
         self.node.append(linpro.get_node())
+
+    def __get_node_linguisticProcessors(self):
+        for node_linguisticProcessors in self.node.findall('linguisticProcessors'):
+            yield node_linguisticProcessors
+
+    def __iter__(self):
+        """
+        Iterator that returns single linguistic processors objects in the layer
+        @rtype: L{Clinguistic}
+        @return: lp objects
+        """
+        for node_linguisticProcessors in self.__get_node_linguisticProcessors():
+            yield ClinguisticProcessors(node_linguisticProcessors,self.type)
         
     def remove_lp(self,layer):
         """

@@ -392,6 +392,25 @@ class KafNafParser:
         """
         print(self.constituency_layer)
 
+    def get_linguisticProcessors(self):
+        """Iterator that returns all the linguistic processors layers from the header
+        @rtype: L{ClinguisticProcessors}
+        @return: list of linguisticProcessors objects
+        """
+        if self.header is not None:
+            for linguisticProcessor in self.header:
+                yield linguisticProcessor
+
+    def get_lps(self):
+        """Iterator that returns all the lp objects from linguistic processors layers from the header
+        @rtype: L{Clp}
+        @return: list of lp objects
+        """
+        if self.header is not None:
+            for linguisticProcessor in self.header:
+                for lp in linguisticProcessor:
+                    yield lp
+
     def get_trees(self):
         """
         Iterator that returns the constituency trees
