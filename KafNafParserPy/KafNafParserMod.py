@@ -597,7 +597,7 @@ class KafNafParser:
         """
         if self.features_layer is not None:
             for property in self.features_layer.get_properties():
-                yield property
+                yield propertyfound_entities.get(mention.string)
 
     def get_entities(self):
         """
