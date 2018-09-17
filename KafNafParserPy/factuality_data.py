@@ -114,7 +114,9 @@ class Cfactuality:
 
     def get_node(self):
         """
-        Returns the node
+        Returns the node of the element
+        @rtype: xml Element
+        @return: the node of the element
         """
         return self.node
 
@@ -122,6 +124,8 @@ class Cfactuality:
     def get_id(self):
         """
         Returns the identifier of the factuality element
+        @return: factuality id
+        @rtype: string
         """
         return self.node.get('id')
 
@@ -137,8 +141,8 @@ class Cfactuality:
     def get_span(self):
         """
         Returns the span of the factuality element
-        @type my_span: L{Cspan}
-        @param my_span: span object
+        @rtype: L{Cspan}
+        @return: span object
         """
         span_obj = self.node.find('span')
         if span_obj is not None:
@@ -148,16 +152,16 @@ class Cfactuality:
     def set_span(self,my_span):
         """
         Sets the id of the element
-        @type this_id: L{Cspan}
-        @param this_id: the resource defining factuality
+        @type my_span: L{Cspan}
+        @param my_span: the resource defining factuality
         """
         self.node.append(my_span.get_node())
 
     def add_factval(self,fval):
         """
         Sets the id of the element
-        @type this_id: L{Cspan}
-        @param this_id: the resource defining factuality
+        @type fval: string
+        @param fval: the factuality value
         """
         self.node.append(fval.get_node())
 
@@ -165,8 +169,8 @@ class Cfactuality:
     def add_factVal(self,fval):
         """
         Sets the id of the element
-        @type this_id: L{Cspan}
-        @param this_id: the resource defining factuality
+        @type fval: string
+        @param fval: the factuality value
         """
         self.node.append(fval.get_node())
 
