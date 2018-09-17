@@ -844,7 +844,7 @@ class KafNafParser:
             self.header.remove_lp('chunks')
 
 
-    def remove_chunk_layer(self):
+    def remove_attribution_layer(self):
         """
         Removes the attribution layer (if exists) of the object (in memory)
         """
