@@ -542,18 +542,6 @@ class CHeader:
             return publicObj.get_publicid()
         else:
             return None
-
-    def get_uri(self):
-        """
-        Returns the public uri defined in the header
-        @rtype: String
-        @return: the uri defined in public of header
-        """
-        publicObj = self.node.find('public')
-        if publicObj is not None:
-            return publicObj.get('uri')
-        else:
-            return None
     
     def set_publicId(self,publicId):
         '''
