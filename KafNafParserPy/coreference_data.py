@@ -156,7 +156,16 @@ class Ccoreferences:
             self.node = etree.Element('coreferences')
         else:
             self.node = node
-    
+
+    def __iter__(self):
+        """
+        Iterator that returns single coreference objects in the layer
+        @rtype: L{Ccoreference}
+        @return: coreferences objects
+        """
+        for node_coref in self.__get_corefs_nodes():
+            yield Ccoreference(node_coref, self.type)
+
     def add_coreference(self,coreference):
         self.node.append(coreference.get_node())        
             

@@ -506,6 +506,16 @@ class KafNafParser:
             for term in self.term_layer:
                 yield term
 
+
+    def get_coreferences(self):
+        """Iterator that returns all the terms from the term layer
+        @rtype: L{Ccoreference}
+        @return: list of term objects
+        """
+        if self.coreference_layer is not None:
+            for coreference in self.coreference_layer:
+                yield coreference
+
     def get_markables(self):
         """Iterator that returns all the markables from the markable layer
         @rtype: L{Cmarkable}
