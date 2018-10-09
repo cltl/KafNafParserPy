@@ -899,6 +899,17 @@ class KafNafParser:
         if self.header is not None:
             self.header.remove_lp('coreferences')
 
+    
+    def remove_markable_layer(self):
+        """
+            Removes the markable layer (if exists) of the object (in memory)
+            """
+        if self.markable_layer is not None:
+            this_node = self.markable_layer.get_node()
+            self.root.remove(this_node)
+        if self.header is not None:
+            self.header.remove_lp('markables')
+
 
     def convert_factualitylayer_to_factualities(self):
         """
