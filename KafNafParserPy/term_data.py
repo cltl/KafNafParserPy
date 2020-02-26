@@ -36,7 +36,7 @@ class Cterm:
         """
         return self.node
             
-    def get_id(self):
+    def get_id(self) -> str:
         """
         Returns the term identifier
         @rtype: string
@@ -47,7 +47,7 @@ class Cterm:
         elif self.type == 'KAF':
             return self.node.get('tid')
     
-    def set_id(self,i):
+    def set_id(self, i: str):
         """
         Sets the identifier for the term
         @type i: string
@@ -58,7 +58,7 @@ class Cterm:
         elif self.type == 'KAF':
             self.node.set('tid',i)
                     
-    def get_lemma(self):
+    def get_lemma(self) -> str:
         """
         Returns the lemma of the object
         @rtype: string
@@ -66,7 +66,7 @@ class Cterm:
         """
         return self.node.get('lemma')
     
-    def set_lemma(self,l):
+    def set_lemma(self, l: str):
         """
         Sets the lemma for the term
         @type l: string

@@ -26,6 +26,7 @@ __author__ = 'Ruben Izquierdo Bevia'
 
 import io
 import sys
+from typing import Iterable, List
 
 from lxml import etree
 
@@ -508,7 +509,7 @@ class KafNafParser:
         return self.lang
 
 
-    def get_tokens(self):
+    def get_tokens(self) -> Iterable[Cwf]:
         """Iterator that returns all the tokens from the text layer
         @rtype: L{Cwf}
         @return: list of token objects
@@ -516,7 +517,7 @@ class KafNafParser:
         for token in self.text_layer:
             yield token
 
-    def get_terms(self):
+    def get_terms(self) -> Iterable[Cterm]:
         """Iterator that returns all the terms from the term layer
         @rtype: L{Cterm}
         @return: list of term objects
@@ -526,7 +527,7 @@ class KafNafParser:
                 yield term
 
 
-    def get_coreferences(self):
+    def get_coreferences(self) -> Iterable[Ccoreference]:
         """Iterator that returns all the terms from the term layer
         @rtype: L{Ccoreference}
         @return: list of term objects
@@ -577,7 +578,7 @@ class KafNafParser:
         else:
             return None
 
-    def get_token(self,token_id):
+    def get_token(self, token_id: str) -> Cwf:
         """
         Returns a token object for the specified token_id
         @type token_id:string
@@ -591,7 +592,7 @@ class KafNafParser:
             return None
 
 
-    def get_term(self,term_id):
+    def get_term(self, term_id: str) -> Cterm:
         """
         Returns a term object for the specified term_id
         @type term_id:string
@@ -1341,7 +1342,7 @@ class KafNafParser:
 
     ## EXTRA FUNCTIONS
     ## Gets the token identifiers in the span of a term id
-    def get_dict_tokens_for_termid(self, term_id):
+    def get_dict_tokens_for_termid(self, term_id: str) -> List[str]:
         """
         Returns the tokens ids that are the span of the term specified
         @type term_id: string
@@ -1357,7 +1358,7 @@ class KafNafParser:
         return self.dict_tokens_for_tid.get(term_id,[])
 
     ## Maps a list of token ids to term ids
-    def map_tokens_to_terms(self,list_tokens):
+    def map_tokens_to_terms(self, list_tokens: Iterable[str]) -> List[str]:
         """
         Maps a list of token ids to the corresponding term ids
         @type list_tokens: list
