@@ -2,6 +2,8 @@
 Parser for the references objects in KAF/NAF
 """
 # Modified for NAF/KAf
+from typing import Iterable, Iterator
+
 from lxml import etree
 
 from .span_data import Cspan
@@ -11,7 +13,7 @@ class Creferences:
     """
     This class encapsulates the references objects in KAF/NAF
     """
-    def __init__(self,node=None):
+    def __init__(self, node=None):
         """
         Constructor of the object
         @type node: xml Element or None (to create and empty one)
@@ -31,7 +33,7 @@ class Creferences:
         """
         return self.node
     
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Cspan]:
         """
         Iterator that returns all the span objects in the reference
         @rtype: L{Cspan}
@@ -40,7 +42,7 @@ class Creferences:
         for span_node in self.node.findall('span'):
             yield Cspan(span_node)
             
-    def add_span(self,term_span):
+    def add_span(self, term_span: Iterable[str]):
         """
         Adds a list of term ids a new span in the references
         @type term_span: list
@@ -50,7 +52,7 @@ class Creferences:
         new_span.create_from_ids(term_span)
         self.node.append(new_span.get_node())
 
-    def get_span(self):
+    def get_span(self) -> Cspan:
         """
         Returns the span object of the reference
         @rtype: L{Cspan}
@@ -62,7 +64,7 @@ class Creferences:
         else:
             return None
     
-    def set_span(self,this_span):
+    def set_span(self,this_span: Cspan):
         """
         Sets the span for the lemma
         @type this_span: L{Cspan}

@@ -545,7 +545,7 @@ class KafNafParser:
             for markable in self.markable_layer:
                 yield markable
 
-    def get_chunks(self):
+    def get_chunks(self) -> Iterable[Cchunk]:
         """Iterator that returns all the chunks from the chunk layer
         @rtype: L{Cchunk}
         @return: list of chunk objects
@@ -555,7 +555,7 @@ class KafNafParser:
                 yield chunk
 
 
-    def get_statements(self):
+    def get_statements(self) -> Iterable[Cstatement]:
         """Iterator that returns all the statements from the attribution layer
         @rtype: L{Cstatement}
         @return: list of statement objects
@@ -565,7 +565,7 @@ class KafNafParser:
                 yield statement
 
 
-    def get_markable(self,markable_id):
+    def get_markable(self, markable_id: str) -> Cmarkable:
         """
         Returns a markable object for the specified markable_id
         @type markable_id:string
@@ -606,7 +606,7 @@ class KafNafParser:
             return None
 
 
-    def get_chunk(self,chunk_id):
+    def get_chunk(self, chunk_id: str) -> Cchunk:
         """
         Returns a chunk object for the specified chunk_id
         @type chunk_id:string
@@ -619,7 +619,7 @@ class KafNafParser:
         else:
             return None
 
-    def get_properties(self):
+    def get_properties(self) -> Cproperty:
         """
         Returns all the properties of the features layer (iterator)
         @rtype: L{Cproperty}
@@ -629,7 +629,7 @@ class KafNafParser:
             for property in self.features_layer.get_properties():
                 yield propertyfound_entities.get(mention.string)
 
-    def get_entities(self):
+    def get_entities(self) -> Iterable[Centity]:
         """
         Returns a list of all the entities in the object
         @rtype: L{Centity}
@@ -640,7 +640,7 @@ class KafNafParser:
                 yield entity
 
 
-    def get_entity(self,entity_id):
+    def get_entity(self, entity_id: str) -> Centity:
         """
         Returns an entity object for the specified entity_id
         @type entity_id:string
@@ -654,7 +654,7 @@ class KafNafParser:
             return None
 
 
-    def get_opinions(self):
+    def get_opinions(self) -> Iterable[Copinion]:
         """
         Returns a list of all the opinions in the object
         @rtype: L{Copinion}
@@ -664,7 +664,7 @@ class KafNafParser:
             for opinion in self.opinion_layer.get_opinions():
                 yield opinion
 
-    def get_predicates(self):
+    def get_predicates(self) -> Iterable[Cpredicate]:
         """
         Returns a list of all the predicates in the object
         @rtype: L{Cpredicate}
@@ -674,7 +674,7 @@ class KafNafParser:
             for pred in self.srl_layer.get_predicates():
                 yield pred
 
-    def get_raw(self):
+    def get_raw(self) -> str:
         """
         Returns the raw text as a string
         @rtype: string
@@ -683,7 +683,7 @@ class KafNafParser:
         if self.raw is not None:
             return self.raw
 
-    def set_raw(self,text):
+    def set_raw(self, text: str):
         """
         Sets the text of the raw element (or creates the layer if does not exist)
         @param text: text of the raw layer
@@ -695,7 +695,7 @@ class KafNafParser:
             self.root.insert(0,node_raw)
         node_raw.text = etree.CDATA(text)
 
-    def get_timeExpressions(self):
+    def get_timeExpressions(self) -> Iterable[Ctime]:
         """
         Returns a list of all the timeexpressions in the text
         @rtype: L{Ctime}

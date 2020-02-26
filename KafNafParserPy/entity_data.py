@@ -3,6 +3,8 @@ Parser for the entity layer in KAF/NAF
 """
 
 # Modified for KAF NAF adaptation
+from typing import Iterable
+
 from lxml import etree
 from lxml.objectify import dump
 import re
@@ -30,7 +32,7 @@ class Centity:
         else:
             self.node = node
 
-    def set_comment(self,c):
+    def set_comment(self, c: str):
         """
         Sets the comment for the element
         @type c: string
@@ -59,7 +61,7 @@ class Centity:
         elif self.type == 'KAF':
             return self.node.get('eid')
 
-    def set_id(self,i):
+    def set_id(self, i: str):
         """
         Sets the identifier for the entity
         @type i: string
@@ -70,7 +72,7 @@ class Centity:
         elif self.type == 'KAF':
             self.node.set('eid',i)
                 
-    def get_type(self):
+    def get_type(self) -> str:
         """
         Returns the type of the entity
         @rtype: string
@@ -78,7 +80,7 @@ class Centity:
         """
         return self.node.get('type')
     
-    def set_type(self,t):
+    def set_type(self, t: str):
         """
         Sets the type for the entity
         @type t: string
@@ -86,7 +88,7 @@ class Centity:
         """
         self.node.set('type',t)
         
-    def get_references(self):
+    def get_references(self) -> Iterable[Creferences]:
         """
         Returns the references of the entity
         @rtype: L{Creferences}
@@ -95,7 +97,7 @@ class Centity:
         for ref_node in self.node.findall('references'):
             yield Creferences(ref_node)
 
-    def add_reference(self,ref):
+    def add_reference(self, ref: Creferences):
         """
         Adds a reference to the layer
         @type ref: L{Creferences}
@@ -103,7 +105,7 @@ class Centity:
         """
         self.node.append(ref.get_node())
                     
-    def add_external_reference(self,ext_ref):
+    def add_external_reference(self, ext_ref: CexternalReferences):
         """
         Adds an external reference to the entity
         @param ext_ref: the external reference object
@@ -121,7 +123,7 @@ class Centity:
         ext_refs.add_external_reference(ext_ref)  
         
         
-    def get_external_references(self):
+    def get_external_references(self) -> Iterable[CexternalReferences]:
         """
         Returns the external references of the element
         @rtype: L{CexternalReference}
@@ -133,7 +135,7 @@ class Centity:
             for ext_ref in ext_refs:
                 yield ext_ref    
     
-    def get_source(self):
+    def get_source(self) -> str:
         """
         Returns the source of the entity
         @rtype: string
@@ -141,7 +143,7 @@ class Centity:
         """
         return self.node.get('source')
     
-    def set_source(self,s):
+    def set_source(self, s: str):
         """
         Sets the source for the entity
         @type s: string
