@@ -52,7 +52,7 @@ from .attribution_data import *
 
 
 class KafNafParser:
-    def __init__(self,filename=None,type=None):
+    def __init__(self, filename=None, type=None, strip_cdata=True):
         """
         The constructor for the parser
         @type filename: string
@@ -64,7 +64,7 @@ class KafNafParser:
         self.tree = None
         if filename is not None:
             self.filename = filename
-            self.tree = etree.parse(filename,etree.XMLParser(remove_blank_text=True))
+            self.tree = etree.parse(filename,etree.XMLParser(remove_blank_text=True, strip_cdata=strip_cdata))
         else:
             self.tree = etree.ElementTree(etree.Element(type))
         self.root = self.tree.getroot()
