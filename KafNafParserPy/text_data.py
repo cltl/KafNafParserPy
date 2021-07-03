@@ -31,7 +31,7 @@ class Cwf:
         """
         return self.node
     
-    def set_id(self,this_id):
+    def set_id(self, this_id: str):
         """
         Set the identifier for the token
         @type this_id: string
@@ -42,7 +42,7 @@ class Cwf:
         elif self.type == 'KAF':
             return self.node.set('wid',this_id)
                 
-    def get_id(self):
+    def get_id(self) -> str:
         """
         Returns the token identifier
         @rtype: string
@@ -53,7 +53,7 @@ class Cwf:
         elif self.type == 'KAF':
             return self.node.get('wid')
     
-    def set_text(self,this_text):
+    def set_text(self, this_text: str):
         """
         Set the text for the token
         @type this_text: string
@@ -61,7 +61,7 @@ class Cwf:
         """
         self.node.text = etree.CDATA(this_text)
         
-    def get_text(self):
+    def get_text(self) -> str:
         """
         Returns the text of the token
         @rtype: string
@@ -69,15 +69,15 @@ class Cwf:
         """
         return self.node.text
     
-    def set_sent(self,this_sent):
+    def set_sent(self, this_sent: str):
         """
         Set the sentence for the token
         @type this_sent: string
         @param this_sent: the sentence identifier
         """
-        self.node.set('sent',this_sent)
+        self.node.set('sent', this_sent)
         
-    def get_sent(self):
+    def get_sent(self) -> str:
         """
         Returns the sentence of the token
         @rtype: string
@@ -85,7 +85,7 @@ class Cwf:
         """
         return self.node.get('sent')
     
-    def get_offset(self):
+    def get_offset(self) -> str:
         """
         Returns the offset of the token
         @rtype: string
@@ -94,7 +94,7 @@ class Cwf:
         return self.node.get('offset')
     
 
-    def set_offset(self,offset):
+    def set_offset(self, offset: str):
         """
         Set the offset for the token
         @type offset: string

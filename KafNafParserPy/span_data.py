@@ -3,6 +3,7 @@ Parser for the span element
 """
 
 # Modified for KAF/NAF
+from typing import Iterator, Iterable, List
 
 from lxml import etree
 from lxml.objectify import dump
@@ -24,7 +25,7 @@ class Ctarget:
         else:
             self.node = node
             
-    def get_id(self):
+    def get_id(self) -> str:
         """
         Returns the id of the element
         @rtype: string
@@ -32,7 +33,7 @@ class Ctarget:
         """
         return self.node.get('id')
     
-    def set_id(self,this_id):
+    def set_id(self, this_id: str):
         """
         Set the id of the element
         @type this_id: string
@@ -40,7 +41,7 @@ class Ctarget:
         """
         self.node.set('id',this_id)
     
-    def set_head(self,head):
+    def set_head(self, head: str):
         """
         Sets value of head
         @type head: string
@@ -48,7 +49,7 @@ class Ctarget:
         """
         self.node.set('head',head)
 
-    def get_head(self):
+    def get_head(self) -> str:
         """
         Returns the head of the element
         @rtype: string
@@ -62,7 +63,7 @@ class Ctarget:
         """
         self.node.set('head','yes')
         
-    def is_head(self):
+    def is_head(self) -> bool:
         """
         Returns whether this target is set as head or not
         @rtype: boolean
@@ -84,7 +85,7 @@ class Cspan:
     """
     This class encapsulates a span object in KAF/NAF
     """
-    def __init__(self,node=None):
+    def __init__(self, node=None):
         """
         Constructor of the object
         @type node: xml Element or None (to create and empty one)
@@ -109,7 +110,7 @@ class Cspan:
                 break
         return id_head
              
-    def add_target_id(self,this_id):
+    def add_target_id(self, this_id: str):
         """
         Adds a new target to the span with the specified id
         @type this_id: string
@@ -119,7 +120,7 @@ class Cspan:
         new_target.set_id(this_id)
         self.node.append(new_target.get_node())
              
-    def create_from_ids(self,list_ids):
+    def create_from_ids(self, list_ids: Iterable[str]):
         """
         Adds new targets to the span with the specified ids
         @type list_ids: list
@@ -130,7 +131,7 @@ class Cspan:
             new_target.set_id(this_id)
             self.node.append(new_target.get_node())
 
-    def create_from_targets(self,list_targs):
+    def create_from_targets(self, list_targs: Iterable[Ctarget]):
         """
         Adds new targets to the span that are defined in a list
         @type list_targs: list
@@ -138,23 +139,20 @@ class Cspan:
         """
         for this_target in list_targs:
             self.node.append(this_target.get_node())
-    
 
-    def add_target(self,target):
+    def add_target(self, target: Ctarget):
         """
         Adds a target object to the span
         @type target: L{Ctarget}
         @param target: target object
         """
         self.node.append(target.get_node())
-                   
-
 
     def __get_target_nodes(self):
         for target_node in self.node.findall('target'):
             yield target_node
     
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Ctarget]:
         """
         Iterator taht returns the target objects
         @rtype: L{Ctarget}
@@ -163,7 +161,7 @@ class Cspan:
         for target_node in self.__get_target_nodes():
             yield Ctarget(target_node)
             
-    def get_span_ids(self):
+    def get_span_ids(self) -> List[str]:
         """
         Returns the list of target ids for the span
         @rtype: list
